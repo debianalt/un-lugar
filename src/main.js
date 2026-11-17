@@ -209,6 +209,7 @@ function focusNote(id, fly) {
 
 function legend(id) {
   const t = T[lang].s, L = $('#legend');
+  L.dataset.id = id;
   const sw = (c, label, cls = '') => `<span><i class="sw ${cls}" style="background:${c}"></i>${label}</span>`;
   if (id === 'radar') L.innerHTML = `<b>${t.radar.legend}</b>`;
   else if (id === 'relief') L.innerHTML = `<b>${t.relief.legend}</b><div class="grad" style="background:linear-gradient(90deg,#f7f4ec,#e3cc93,#c56a1b,#6b1d0c)"></div><div style="display:flex;justify-content:space-between"><span>0 m</span><span>8</span><span>16</span><span>30 m +</span></div>`;
