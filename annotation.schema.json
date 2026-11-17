@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Annotation on an Earth-observation layer",
+  "description": "One statement about what a layer shows or misses at a place. The register is mandatory: a statement never travels without saying what kind of statement it is.",
+  "type": "object",
+  "required": ["id", "register", "about", "place", "date", "statement", "source", "review", "visibility"],
+  "properties": {
+    "id": { "type": "string" },
+    "register": {
+      "enum": ["measured", "interpreted", "situated", "speculated"],
+      "description": "measured: an instrument reading. interpreted: a reading of the data by someone. situated: what people in the place saw or said. speculated: a guess nobody has tested."
+    },
+    "about": { "type": "string", "description": "The layer or product the statement refers to." },
+    "place": { "type": "string", "description": "A name people use for the place." },
+    "lngLat": {
+      "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2,
+      "description": "Optional. Leave it out when the place must not be pinned; precision is decided by whoever owns the knowledge."
+    },
+    "date": { "type": "string", "description": "Date of what is described (ISO 8601), not of the annotation." },
+    "statement": { "type": "object", "description": "The statement, keyed by language code.", "additionalProperties": { "type": "string" } },
+    "source": {
+      "type": "object", "required": ["title"],
+      "properties": { "title": { "type": "string" }, "url": { "type": "string" } }
+    },
+    "review": {
+      "type": "object", "required": ["by", "method"],
+      "description": "Who checked the statement and against what. 'nobody yet' is a valid answer and must be shown.",
+      "properties": { "by": { "type": "string" }, "date": { "type": "string" }, "method": { "type": "string" } }
+    },
+    "visibility": {
+      "enum": ["public source", "public by decision of the owners", "shared with named groups", "withdrawn"],
+      "description": "Who may see it. Community knowledge is never 'public source'."
+    },
+    "decided_by": { "type": "string", "description": "For community knowledge: the body that decided the visibility, and when." }
+  }
+}

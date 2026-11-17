@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>One Place, Every Eye</title>
+<meta name="description" content="What each open Earth-observation product sees, and misses, on one bend of the Uruguay River." />
+<meta name="theme-color" content="#f9f8f4" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div id="app">
+  <aside id="text">
+    <header>
+      <div class="bar">
+        <span class="kicker" data-t="kicker"></span>
+        <button id="lang" type="button" aria-label="Language"></button>
+      </div>
+      <h1 data-t="title"></h1>
+      <p class="lede" data-t="lede"></p>
+      <p class="small" data-t="status"></p>
+    </header>
+    <main id="sections"></main>
+    <footer>
+      <p class="small" data-t="footer"></p>
+    </footer>
+  </aside>
+  <div id="mapwrap">
+    <div id="map" role="img" aria-label="Map of El Soberbio on the Uruguay River"></div>
+    <div id="legend" aria-live="polite"></div>
+  </div>
+</div>
+<div id="tip" role="tooltip" hidden></div>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
