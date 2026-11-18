@@ -118,8 +118,8 @@ function reliefChart(t) {
 
 function pixels(t) {
   const k = 0.42; // screen pixels per metre
-  const items = [[t.house, 10], [t.s1, 10], [t.dem, 30], [t.merit, 90], [t.hex, 174]];
-  return h('div', { class: 'figure' }, `<h3>${t.pix}</h3><div class="pix">${items.map(([n, m], i) => `<div><i style="width:${Math.max(m * k, 4)}px;height:${Math.max(m * k, 4)}px;${i === 0 ? 'background:#17181a;' : ''}${i === 4 ? 'clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);width:' + 2 * m * k + 'px;height:' + 1.73 * m * k + 'px;' : ''}"></i>${n}<br>${i === 0 ? '≈ ' : ''}${m} m</div>`).join('')}</div>`);
+  const items = [[t.house, 10], [t.s1, 10], [t.dem, 30], [t.merit, 90]]; // all squares: the number is the side
+  return h('div', { class: 'figure' }, `<h3>${t.pix}</h3><div class="pix">${items.map(([n, m], i) => `<div><i style="width:${Math.max(m * k, 4)}px;height:${Math.max(m * k, 4)}px;${i === 0 ? 'background:#17181a;' : ''}"></i>${n}<br>${i === 0 ? '≈ ' : ''}${m} m</div>`).join('')}</div>`);
 }
 
 // ------------------------------------------------------------------ sections

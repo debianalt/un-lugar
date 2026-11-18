@@ -17,11 +17,11 @@ export const T = {
     s: {
       radar: {
         num: '01 · Radar',
-        h: 'In {kept} radar passes there was one flood, and the radar saw less water',
+        h: 'The river rose sixteen metres and the radar saw less water',
         p: [
           'Sentinel-1 is the open radar most flood maps rely on, because it sees through cloud. Between 2015 and 2026 it passed {kept} times over this corridor with good coverage and a reading of the gauge at the port within 48 hours.',
           'With the river between 0 and 12 m, the water it detects stays near {median} hectares: it is the river itself. Only {above} of the {kept} passes found the river above the evacuation level of 13 m. It was on {floodDate}, at {floodH} m, and it detected {floodW} hectares, less than on an ordinary day.',
-          'The cause is not established. The banks are steep and covered with forest, and the water may rise under the trees, where the signal of this radar does not reach. NISAR, a radar built to see under forest, did not confirm it either in two rises of the river in October 2026.'
+          'The cause is not established. The banks are steep and covered with forest, and the water may rise under the trees, where the signal of this radar does not reach. NISAR, a radar built to see under forest, did not confirm it either in two rises of the river in October 2026. SAOCOM, Argentina\'s L-band radar, imaged this bend on 5 November 2023 with the river at 14 m; its images reach CONICET researchers through an agreement with CONAE, the national space agency.'
         ],
         fig: 'Water detected by Sentinel-1 against river height',
         sub: 'Each dot is one satellite pass. Hectares of open water in a 20 × 20 km corridor.',
@@ -42,7 +42,7 @@ export const T = {
         x: 'Distance along the line (m)', y: 'Elevation (m)', river: 'river',
         legend: 'Gap between the highest and the lowest of four elevation models',
         pix: 'How big one cell of each product is, next to a house',
-        house: 'a house', s1: 'Sentinel-1', dem: 'FABDEM, GLO-30', merit: 'MERIT', hex: 'map cell used here'
+        house: 'a house', s1: 'Sentinel-1', dem: 'FABDEM, GLO-30', merit: 'MERIT'
       },
       water: {
         num: '03 · Water',
@@ -122,11 +122,11 @@ export const T = {
     s: {
       radar: {
         num: '01 · Radar',
-        h: 'En {kept} pasadas de radar hubo una crecida, y el radar vio menos agua',
+        h: 'El río subió dieciséis metros y el radar vio menos agua',
         p: [
           'Sentinel-1 es el radar abierto que usan casi todos los mapas de inundación, porque ve a través de las nubes. Entre 2015 y 2026 pasó {kept} veces sobre este corredor con buena cobertura y una lectura del hidrómetro del puerto a menos de 48 horas.',
           'Con el río entre 0 y 12 m, el agua que detecta se queda cerca de {median} hectáreas: es el río mismo. Sólo {above} de las {kept} pasadas encontró el río por encima de la cota de evacuación de 13 m. Fue el {floodDate}, con {floodH} m, y detectó {floodW} hectáreas, menos que un día cualquiera.',
-          'La causa no está establecida. Las barrancas son empinadas y tienen monte, y es posible que el agua suba bajo los árboles, donde la señal de este radar no llega. NISAR, un radar hecho para ver bajo el monte, tampoco lo confirmó en dos subidas del río de octubre de 2026.'
+          'La causa no está establecida. Las barrancas son empinadas y tienen monte, y es posible que el agua suba bajo los árboles, donde la señal de este radar no llega. NISAR, un radar hecho para ver bajo el monte, tampoco lo confirmó en dos subidas del río de octubre de 2026. SAOCOM, el radar argentino de banda L, tomó esta curva el 5 de noviembre de 2023 con el río en 14 m; sus imágenes llegan a los investigadores del CONICET por un convenio con la CONAE.'
         ],
         fig: 'Agua detectada por Sentinel-1 según la altura del río',
         sub: 'Cada punto es una pasada del satélite. Hectáreas de agua abierta en un corredor de 20 × 20 km.',
@@ -147,7 +147,7 @@ export const T = {
         x: 'Distancia sobre la línea (m)', y: 'Elevación (m)', river: 'río',
         legend: 'Diferencia entre el más alto y el más bajo de cuatro modelos de elevación',
         pix: 'Cuánto mide una celda de cada producto, al lado de una casa',
-        house: 'una casa', s1: 'Sentinel-1', dem: 'FABDEM, GLO-30', merit: 'MERIT', hex: 'celda de este mapa'
+        house: 'una casa', s1: 'Sentinel-1', dem: 'FABDEM, GLO-30', merit: 'MERIT'
       },
       water: {
         num: '03 · Agua',
