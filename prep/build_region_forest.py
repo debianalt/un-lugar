@@ -81,14 +81,19 @@ def main():
         mbw AS (
             SELECT h3, sum(n) FILTER (g = 'forest') AS mb_forest, sum(n) FILTER (g = 'plantation') AS mb_plantation,
                    sum(n) FILTER (g = 'treecrop') AS mb_treecrop, sum(n) FILTER (g = 'other') AS mb_other,
-                   sum(n) AS mb_total FROM mb GROUP BY 1)
+                   sum(n) AS mb_total FROM mb GROUP BY 1),
+        lead AS (
+            SELECT h3, arg_max(clase, n) AS mb_lead FROM (
+                SELECT h3, clase, sum(n_px) AS n FROM '{(FUENTES / 'uso/uso_h3_anio_clase.parquet').as_posix()}'
+                WHERE anio = {YEAR} AND clase IN (3, 4, 5, 6, 49) GROUP BY 1, 2) GROUP BY 1)
         SELECT f.h3, f.px_total AS f_total, f.primario + f.regeneracion AS f_forest, f.plantado + f.plantacion AS f_plantation,
                f.cultivo_arboreo AS f_treecrop, f.otras AS f_other,
                coalesce(m.mb_forest, 0) AS mb_forest, coalesce(m.mb_plantation, 0) AS mb_plantation,
                coalesce(m.mb_treecrop, 0) AS mb_treecrop, coalesce(m.mb_other, 0) AS mb_other, coalesce(m.mb_total, 0) AS mb_total,
-               g.px_total AS g_total, g.arb5_{YEAR} AS g_tree
+               g.px_total AS g_total, g.arb5_{YEAR} AS g_tree, l.mb_lead
         FROM '{(FUENTES / 'forty/forty_h3.parquet').as_posix()}' f
         LEFT JOIN mbw m USING (h3)
+        LEFT JOIN lead l USING (h3)
         LEFT JOIN '{(FUENTES / 'glad/glad_h3.parquet').as_posix()}' g USING (h3)
         ORDER BY f.h3""").df()
     n = len(df)
@@ -130,6 +135,16 @@ def main():
         c = pairs.setdefault(key, [0, 0.0])
         c[0] += 1
         c[1] += h
+
+    # The largest group: MapBiomas says forest, ForTy says other land. Which MapBiomas forest class leads in those cells?
+    # 3 closed forest, 4 open forest, 6 flooded forest, whose legend reads "trees, shrubs or a mix of both".
+    big = (kind == 'forest') & (a == CODE['other']) & (b == CODE['forest'])
+    lead = df['mb_lead'].fillna(0).to_numpy()
+    names = {3: 'closed_forest', 4: 'open_forest', 6: 'flooded_forest'}
+    legend = {'cells': int(big.sum()), 'ha': round(float(ha[big].sum())),
+              'by_leading_mapbiomas_class': {names.get(int(c), str(int(c))): {'cells': int((big & (lead == c)).sum()), 'ha': round(float(ha[big & (lead == c)].sum()))}
+                                             for c in sorted(set(lead[big]))},
+              'note': 'MapBiomas Argentina defines flooded forest as natural cover of trees, shrubs or a mix of both in areas under the influence of water. ForTy follows the forest definition of FAO.'}
 
     # second question: half the cell or more under trees, three products
     seen_f = df[[f'f_{g}' for g in G]].to_numpy().sum(axis=1)
@@ -178,9 +193,9 @@ def main():
            'disagreements': [{'forty': x, 'mapbiomas': y, 'cells': c, 'ha': round(h),
                               'about': 'forest' if x in ('forest', 'plantation') or y in ('forest', 'plantation') else 'crops'}
                              for (x, y), (c, h) in sorted(pairs.items(), key=lambda kv: -kv[1][0])],
-           'trees_three_products': trees, 'map': {'file': 'region_forest.geojson', 'parent_resolution': PARENT_RES, 'cells': len(feats)}}
+           'mapbiomas_forest_forty_other': legend, 'trees_three_products': trees, 'map': {'file': 'region_forest.geojson', 'parent_resolution': PARENT_RES, 'cells': len(feats)}}
     json.dump(out, open(OUT / 'region_forest.json', 'w'), separators=(',', ':'))
-    print(json.dumps({k: out[k] for k in ('region', 'by_province', 'control_el_soberbio_frame_argentine_cells', 'trees_three_products')}, indent=1))
+    print(json.dumps({k: out[k] for k in ('region', 'control_el_soberbio_frame_argentine_cells', 'mapbiomas_forest_forty_other')}, indent=1))
     for d in out['disagreements'][:12]:
         print(d)
 

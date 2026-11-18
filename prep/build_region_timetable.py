@@ -172,16 +172,19 @@ def main():
     by_enso = {k: sum(1 for _, e in eps if e['enso'] == k) for k in ('nino', 'neutral', 'nina')}
     # rises at neighbouring gauges are often one flood: same river, peaks no more than ten days apart
     floods = []
-    for river, date, seen in sorted((s['river'], pd.Timestamp(e['date']), e['passes_inside'] > 0) for s, e in eps):
+    for river, date, seen, ph in sorted((s['river'], pd.Timestamp(e['date']), e['passes_inside'] > 0, e['enso'] or '') for s, e in eps):
         if floods and floods[-1][0] == river and (date - floods[-1][1]).days <= 10:
             floods[-1][1], floods[-1][2] = date, floods[-1][2] or seen
+            floods[-1][3].add(ph)
         else:
-            floods.append([river, date, seen])
+            floods.append([river, date, seen, {ph}])
     months = oni[stations[0]['first'][:7]:END[:7]]
     out = {'until': END, 'gauges': len(stations), 'gauges_without_level': left_out,
            'gauges_never_above': [s['name'] for s in stations if s['rises'] == 0],
            'rises': len(eps), 'rises_with_a_pass': sum(e['passes_inside'] > 0 for _, e in eps),
            'floods_distinct': len(floods), 'floods_distinct_with_a_pass': sum(f[2] for f in floods),
+           'floods_distinct_in_nino_months': sum('nino' in f[3] for f in floods),
+           'passes_above': sum(s['passes_above'] for s in stations), 'expected_passes_above': round(sum(s['expected_passes_above'] for s in stations), 1),
            'rises_under_3_days': len(short), 'rises_under_3_days_with_a_pass': sum(e['passes_inside'] > 0 for e in short),
            'rises_by_enso': by_enso,
            'months_by_enso': {'nino': int((months >= 0.5).sum()), 'neutral': int(((months > -0.5) & (months < 0.5)).sum()),
