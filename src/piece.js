@@ -1,12 +1,12 @@
 // The Timetable, a first sketch of the piece proposed for LAS Art Foundation.
-// Eleven years of one river as sound and light: the river is heard all the time, and it is seen only when a
+// Eleven years of one river as sound and light: the river is heard all the time, as filtered noise, and it is seen only when a
 // Sentinel-1 pass falls on it. Data: public/data/timetable_daily.json and timetable.json (prep/build_timetable.py).
 // Light is drawn as thin lines and small dots, never as a flash of the whole panel.
 
 const TXT = {
   en: {
     h: 'The Timetable, a first sketch',
-    sub: 'Eleven years in two minutes. The river is the sound: the tone follows the gauge at the port, and a second voice joins it above 13 m. The radar is the only light: each Sentinel-1 pass shows the river as it was at that hour.',
+    sub: 'Eleven years in two minutes. The river is the sound: the water gets louder and wider as the gauge at the port rises, and rougher above 13 m. The radar is the only light: each Sentinel-1 pass shows the river as it was at that hour.',
     play: 'Play', pause: 'Pause', again: 'Play again', soundOn: 'Sound on', soundOff: 'Sound off',
     idle: 'Press play. Sound starts with it.',
     now: '{date} · river at {h} m', nowNone: '{date} · no gauge reading',
@@ -18,7 +18,7 @@ const TXT = {
   },
   es: {
     h: 'The Timetable, un primer boceto',
-    sub: 'Once años en dos minutos. El río es el sonido: el tono sigue al hidrómetro del puerto, y sobre los 13 m se le suma una segunda voz. El radar es la única luz: cada pasada de Sentinel-1 muestra el río como estaba a esa hora.',
+    sub: 'Once años en dos minutos. El río es el sonido: el agua se oye más fuerte y más ancha a medida que sube el hidrómetro del puerto, y más áspera sobre los 13 m. El radar es la única luz: cada pasada de Sentinel-1 muestra el río como estaba a esa hora.',
     play: 'Reproducir', pause: 'Pausa', again: 'Otra vez', soundOn: 'Sonido activado', soundOff: 'Sonido apagado',
     idle: 'Apretá reproducir. El sonido empieza ahí.',
     now: '{date} · río en {h} m', nowNone: '{date} · sin lectura del hidrómetro',
@@ -29,6 +29,12 @@ const TXT = {
     aria: 'Once años del río Uruguay en El Soberbio: puntos donde una pasada de radar vio el río, marcas donde subió sobre 13 m.'
   }
 };
+
+// How the water follows the gauge: louder and wider as the river rises. Exported so that it can be checked without a browser.
+const FLOOD_HZ = 180, FLOOD_GAIN = 0.8;
+const share = (m) => Math.max(0, Math.min(m, 21)) / 21;
+export const riverGain = (m) => 0.18 + 0.4 * share(m);            // loudness of the river layer
+export const riverCutoff = (m) => 350 * 2 ** (share(m) * 2.6);    // Hz: 350 at 0 m, about 2,100 at 21 m; small speakers carry little below that
 
 const SECONDS = 120, TOP_M = 21, DARK = '#0b0c0e', PALE = '#9fc2ee', LIT = '#ffd98a', MUTE = '#5d6168';
 let stopPrevious = null;   // the page is rebuilt when the language changes: the running sketch must stop first
@@ -93,26 +99,42 @@ export function piece(DAILY, TT, lang, { h, fill, nf, day }) {
     count.textContent = T > d0 ? fill(t.count, { n: nf(n), seen: nf(seen) }) : '';
   }
 
-  // ---- sound: one voice for the river, a second above the level, a tick for each pass
-  const pitch = (m) => 110 * 2 ** ((Math.max(0, Math.min(m, TOP_M)) / TOP_M) * 2.4);
+  // ---- sound: the river is filtered noise, like water; a rougher layer joins it above the level; a drop for each pass
   function startAudio() {
     if (audio) return audio.ctx.resume();
     const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
     const c = new AC(), master = c.createGain(); master.gain.value = sound ? 1 : 0; master.connect(c.destination);
-    const voice = (type) => { const o = c.createOscillator(), g = c.createGain(); o.type = type; g.gain.value = 0; o.connect(g).connect(master); o.start(); return { o, g }; };
-    audio = { ctx: c, master, river: voice('sine'), flood: voice('triangle') };
+    // brown noise, generated here: no audio file. The end is faded into the start so that the loop has no click.
+    const n = c.sampleRate * 6, fade = Math.floor(c.sampleRate * 0.5), buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+    for (let k = 0, v = 0; k < n; k++) { v = (v + 0.02 * (Math.random() * 2 - 1)) / 1.02; d[k] = v * 3.5; }
+    for (let k = 0; k < fade; k++) { const a = k / fade; d[k] = d[k] * a + d[n - fade + k] * (1 - a); }
+    const layer = (type, q, offset) => {
+      const src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+      src.buffer = buf; src.loop = true; src.loopEnd = (n - fade) / c.sampleRate; f.type = type; f.Q.value = q; g.gain.value = 0;
+      src.connect(f).connect(g); src.start(0, offset); return { f, g };
+    };
+    const river = layer('lowpass', 0.7, 0), flood = layer('bandpass', 1.1, 2.3);
+    river.g.connect(master);
+    // the flood layer is low and rough: its loudness trembles a dozen times a second
+    const rough = c.createGain(), lfo = c.createOscillator(), depth = c.createGain();
+    rough.gain.value = 0.6; lfo.frequency.value = 12; depth.gain.value = 0.4; lfo.connect(depth).connect(rough.gain); lfo.start();
+    flood.f.frequency.value = FLOOD_HZ; flood.g.connect(rough).connect(master);
+    audio = { ctx: c, master, river, flood };
   }
   function tone() {
     if (!audio) return;
-    const m = level[Math.floor(T)], at = audio.ctx.currentTime;
-    audio.river.g.gain.setTargetAtTime(m == null || !playing ? 0 : 0.09, at, 0.05);
-    audio.flood.g.gain.setTargetAtTime(m != null && m >= ev && playing ? 0.11 : 0, at, 0.04);
-    if (m != null) { audio.river.o.frequency.setTargetAtTime(pitch(m), at, 0.05); audio.flood.o.frequency.setTargetAtTime(pitch(m) * 1.5 * 1.012, at, 0.05); }
+    const m = level[Math.floor(T)], at = audio.ctx.currentTime, on = m != null && playing;
+    audio.river.g.gain.setTargetAtTime(on ? riverGain(m) : 0, at, 0.08);
+    audio.flood.g.gain.setTargetAtTime(on && m >= ev ? FLOOD_GAIN : 0, at, 0.06);
+    if (m != null) audio.river.f.frequency.setTargetAtTime(riverCutoff(m), at, 0.08);
   }
   function tick(lit) {
     if (!audio) return;
-    const c = audio.ctx, o = c.createOscillator(), g = c.createGain(), at = c.currentTime, len = lit ? 2.2 : 0.035;
-    o.type = 'sine'; o.frequency.value = lit ? 1320 : 2400; g.gain.setValueAtTime(lit ? 0.16 : 0.025, at); g.gain.exponentialRampToValueAtTime(0.0001, at + len);
+    const c = audio.ctx, o = c.createOscillator(), g = c.createGain(), at = c.currentTime, len = lit ? 2.4 : 0.09;
+    o.type = 'sine';
+    if (lit) o.frequency.value = 1320;                                   // the one pass that met a flood: a bell
+    else { o.frequency.setValueAtTime(1500, at); o.frequency.exponentialRampToValueAtTime(480, at + 0.07); }   // every other pass: a drop
+    g.gain.setValueAtTime(lit ? 0.2 : 0.07, at); g.gain.exponentialRampToValueAtTime(0.0001, at + len);
     o.connect(g).connect(audio.master); o.start(at); o.stop(at + len + 0.02);
   }
 
