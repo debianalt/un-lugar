@@ -100,8 +100,10 @@ export const T = {
         p: [
           'Every note says what kind of statement it is and where it comes from. The situated notes are, for now, what the newspapers reported of what residents and firefighters saw.',
           'Each report is set against other sources of the same flood: a second outlet, a communiqué of the civil defence board, the gauge. The note says whether they agree, differ, or whether there is only one. The author has also gone over these reports with local consultants, researchers of the Universidad Nacional de Misiones and residents of El Soberbio.',
-          'Next come the sources no newspaper carries: communiqués of associations, cooperatives and communities, local radio stations, and what residents post on social networks.'
+          'Next come the sources no newspaper carries: communiqués of associations, cooperatives and communities, local radio stations, and what residents post on social networks.',
+          'Any note can be contested. The link under each one opens a public question: what is wrong, on what source, what it should say. The note stays in view with the objection until it is corrected, kept with the objection shown, or withdrawn, and what changed is listed under it. This route is for notes from public sources; what residents know follows the rules they set.'
         ],
+        contest: 'Contest this note', history: 'What changed ({n})', contested: 'Contested', contestedLink: 'the objection',
         reg: { measured: 'Measured', interpreted: 'Interpreted', situated: 'Situated', speculated: 'Speculated' },
         regHelp: { measured: 'an instrument reading', interpreted: 'a reading of the data by someone', situated: 'what people in the place saw or said', speculated: 'a guess nobody has tested' },
         who: { author: 'the author of this page', 'nobody yet': 'nobody yet', 'nobody independent yet': 'nobody but the author of this page' },
@@ -222,8 +224,10 @@ export const T = {
         p: [
           'Cada nota dice qué clase de afirmación es y de dónde sale. Las notas situadas son, por ahora, lo que publicaron los diarios sobre lo que vieron vecinos y bomberos.',
           'Cada nota se contrasta con otras fuentes de la misma crecida: un segundo medio, un comunicado de Defensa Civil, el hidrómetro. La nota dice si coinciden, si difieren o si hay una sola. El autor repasó además estas notas con consultores locales, investigadores de la Universidad Nacional de Misiones y residentes de El Soberbio.',
-          'Siguen las fuentes que ningún diario recoge: comunicados de asociaciones, cooperativas y comunidades, radios de la zona y lo que publican los residentes en las redes sociales.'
+          'Siguen las fuentes que ningún diario recoge: comunicados de asociaciones, cooperativas y comunidades, radios de la zona y lo que publican los residentes en las redes sociales.',
+          'Cualquier nota se puede objetar. El enlace que hay debajo de cada una abre una pregunta pública: qué está mal, con qué fuente, qué debería decir. La nota sigue a la vista con la objeción hasta que se corrige, se mantiene con la objeción a la vista o se retira, y lo que cambió queda listado debajo. Este camino es para las notas de fuente pública; lo que saben los residentes sigue las reglas que ellos pongan.'
         ],
+        contest: 'Objetar esta nota', history: 'Qué cambió ({n})', contested: 'Objetada', contestedLink: 'la objeción',
         reg: { measured: 'Medido', interpreted: 'Interpretado', situated: 'Situado', speculated: 'Especulado' },
         regHelp: { measured: 'la lectura de un instrumento', interpreted: 'una lectura de los datos hecha por alguien', situated: 'lo que vio o dijo la gente del lugar', speculated: 'una conjetura que nadie probó' },
         who: { author: 'el autor de esta página', 'nobody yet': 'nadie todavía', 'nobody independent yet': 'nadie más que el autor de esta página' },

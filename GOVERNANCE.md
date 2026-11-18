@@ -23,6 +23,16 @@ A statement can change register when evidence arrives. The change is recorded, a
 
 Each annotation shows who checked it and against what. "Nobody yet" is shown as plainly as a review. A reviewer cannot be the only source of the statement they review: the author's own tests are marked "nobody independent yet" until someone else has checked them. Today the situated notes are press reports, each set against other public sources of the same flood: a second outlet, an official communiqué, the gauge. The author has gone over them with local consultants, university researchers and residents of El Soberbio. The author's own tests have no independent reviewer yet. Disagreement between a note and a layer is kept on the map, since it is what the map is for.
 
+### Contesting a note
+
+Any annotation from a public source can be contested by anyone. The link under each note opens a public issue in this repository with three questions: what is wrong, on what source, and what the note should say. A message to the author by any other way is entered as an issue by the author, with the name the person chooses or none.
+
+While the issue is open the note stays on the map and shows that it is contested. It ends in one of three ways: the note is corrected; it is kept, and the objection stays in view beside it; or it is withdrawn. Whoever raised the objection does not need to agree for it to end, but the reason is written in the issue. No deadline is promised.
+
+Every change to a note after its first publication is listed under it, with the date and the commit. The list records changes, not readers. So far every change was raised by the author; no one else has contested a note yet.
+
+This route does not apply to what the people of the place know. That follows the next section.
+
 ## What the people of the place know
 
 These rules are a proposal to put before the people concerned. Nothing is collected until they have answered.

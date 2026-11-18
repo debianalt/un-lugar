@@ -51,7 +51,18 @@
             "url": "https://alerta.ina.gob.ar/a5/"
           }
         ]
-      }
+      },
+      "history": [
+        {
+          "date": "2026-11-18",
+          "commit": "72699f4",
+          "change": {
+            "en": "The report was set against other sources of the same flood, and the note says whether they agree.",
+            "es": "La nota se contrastó con otras fuentes de la misma crecida, y dice si coinciden."
+          },
+          "by": "author"
+        }
+      ]
     },
     {
       "id": "s-2015-07-firefighters",
@@ -99,7 +110,18 @@
             "url": "https://www.canal12misiones.com/?p=530388"
           }
         ]
-      }
+      },
+      "history": [
+        {
+          "date": "2026-11-18",
+          "commit": "72699f4",
+          "change": {
+            "en": "The report was set against other sources of the same flood, and the note says whether they agree.",
+            "es": "La nota se contrastó con otras fuentes de la misma crecida, y dice si coinciden."
+          },
+          "by": "author"
+        }
+      ]
     },
     {
       "id": "s-2017-05-31",
@@ -143,7 +165,18 @@
             "url": "https://alerta.ina.gob.ar/a5/"
           }
         ]
-      }
+      },
+      "history": [
+        {
+          "date": "2026-11-18",
+          "commit": "72699f4",
+          "change": {
+            "en": "The report was set against other sources of the same flood, and the note says whether they agree.",
+            "es": "La nota se contrastó con otras fuentes de la misma crecida, y dice si coinciden."
+          },
+          "by": "author"
+        }
+      ]
     },
     {
       "id": "s-2017-06-06",
@@ -187,7 +220,18 @@
             "url": "https://alerta.ina.gob.ar/a5/"
           }
         ]
-      }
+      },
+      "history": [
+        {
+          "date": "2026-11-18",
+          "commit": "72699f4",
+          "change": {
+            "en": "The report was set against other sources of the same flood, and the note says whether they agree.",
+            "es": "La nota se contrastó con otras fuentes de la misma crecida, y dice si coinciden."
+          },
+          "by": "author"
+        }
+      ]
     },
     {
       "id": "s-2023-10-18",
@@ -239,7 +283,18 @@
             "url": "https://alerta.ina.gob.ar/a5/"
           }
         ]
-      }
+      },
+      "history": [
+        {
+          "date": "2026-11-18",
+          "commit": "72699f4",
+          "change": {
+            "en": "The report was set against other sources of the same flood, and the note says whether they agree.",
+            "es": "La nota se contrastó con otras fuentes de la misma crecida, y dice si coinciden."
+          },
+          "by": "author"
+        }
+      ]
     },
     {
       "id": "s-2023-11-18",
@@ -287,7 +342,18 @@
             "url": "https://alerta.ina.gob.ar/a5/"
           }
         ]
-      }
+      },
+      "history": [
+        {
+          "date": "2026-11-18",
+          "commit": "72699f4",
+          "change": {
+            "en": "The report was set against other sources of the same flood, and the note says whether they agree.",
+            "es": "La nota se contrastó con otras fuentes de la misma crecida, y dice si coinciden."
+          },
+          "by": "author"
+        }
+      ]
     },
     {
       "id": "s-2025-06-30",
@@ -331,7 +397,18 @@
             "url": "https://alerta.ina.gob.ar/a5/"
           }
         ]
-      }
+      },
+      "history": [
+        {
+          "date": "2026-11-18",
+          "commit": "72699f4",
+          "change": {
+            "en": "The report was set against other sources of the same flood, and the note says whether they agree.",
+            "es": "La nota se contrastó con otras fuentes de la misma crecida, y dice si coinciden."
+          },
+          "by": "author"
+        }
+      ]
     },
     {
       "id": "s-2026-07-24",
@@ -382,7 +459,18 @@
             "url": "https://alerta.ina.gob.ar/a5/"
           }
         ]
-      }
+      },
+      "history": [
+        {
+          "date": "2026-11-18",
+          "commit": "72699f4",
+          "change": {
+            "en": "The report was set against other sources of the same flood, and the note says whether they agree.",
+            "es": "La nota se contrastó con otras fuentes de la misma crecida, y dice si coinciden."
+          },
+          "by": "author"
+        }
+      ]
     },
     {
       "id": "m-gauge-vs-press",
@@ -416,7 +504,18 @@
           "es": "Las lecturas las toma y las controla la Prefectura Naval Argentina. Acá la serie diaria se compara con las alturas citadas en notas de prensa fechadas."
         }
       },
-      "visibility": "public source"
+      "visibility": "public source",
+      "history": [
+        {
+          "date": "2026-11-18",
+          "commit": "f605969",
+          "change": {
+            "en": "The note now says who takes and checks the gauge readings: Prefectura Naval Argentina.",
+            "es": "La nota ahora dice quién toma y controla las lecturas del hidrómetro: la Prefectura Naval Argentina."
+          },
+          "by": "author"
+        }
+      ]
     },
     {
       "id": "m-radar-flat",
@@ -450,7 +549,18 @@
           "es": "Superficie de agua por pasada (VV por debajo de −15 dB) con la lectura del hidrómetro más cercana en el tiempo."
         }
       },
-      "visibility": "public source"
+      "visibility": "public source",
+      "history": [
+        {
+          "date": "2026-11-17",
+          "commit": "d6d8c5f",
+          "change": {
+            "en": "The statement said the detected water does not grow between 0 and 16 m. It now says between 0 and 12 m, and that above the evacuation level there is a single pass. The check was restated as made by nobody but the author.",
+            "es": "La afirmación decía que el agua detectada no crece entre 0 y 16 m. Ahora dice entre 0 y 12 m, y que sobre la cota de evacuación hay una sola pasada. La revisión pasó a constar como hecha sólo por el autor."
+          },
+          "by": "author"
+        }
+      ]
     },
     {
       "id": "i-model-vs-press",
@@ -481,7 +591,27 @@
           "es": "Salida de la simulación a cada altura informada, comparada con las familias informadas."
         }
       },
-      "visibility": "public source"
+      "visibility": "public source",
+      "history": [
+        {
+          "date": "2026-11-17",
+          "commit": "d6d8c5f",
+          "change": {
+            "en": "The check was restated as made by nobody but the author: the test and its review came from the same person.",
+            "es": "La revisión pasó a constar como hecha sólo por el autor: la prueba y su revisión eran de la misma persona."
+          },
+          "by": "author"
+        },
+        {
+          "date": "2026-11-18",
+          "commit": "aaddbc3",
+          "change": {
+            "en": "\"The model\" became \"the flood simulation\", so that it is not mistaken for an elevation model or a map made by AI.",
+            "es": "«El modelo» pasó a ser «la simulación de crecida», para que no se confunda con un modelo de elevación ni con un mapa hecho por IA."
+          },
+          "by": "author"
+        }
+      ]
     },
     {
       "id": "i-threshold-late",
@@ -512,7 +642,27 @@
           "es": "Alturas a las que la simulación alcanza las primeras viviendas contra las alturas a las que se informaron evacuaciones."
         }
       },
-      "visibility": "public source"
+      "visibility": "public source",
+      "history": [
+        {
+          "date": "2026-11-17",
+          "commit": "d6d8c5f",
+          "change": {
+            "en": "The check was restated as made by nobody but the author: the test and its review came from the same person.",
+            "es": "La revisión pasó a constar como hecha sólo por el autor: la prueba y su revisión eran de la misma persona."
+          },
+          "by": "author"
+        },
+        {
+          "date": "2026-11-18",
+          "commit": "aaddbc3",
+          "change": {
+            "en": "\"The model\" became \"the flood simulation\", so that it is not mistaken for an elevation model or a map made by AI.",
+            "es": "«El modelo» pasó a ser «la simulación de crecida», para que no se confunda con un modelo de elevación ni con un mapa hecho por IA."
+          },
+          "by": "author"
+        }
+      ]
     },
     {
       "id": "i-press-silence",
@@ -543,7 +693,27 @@
           "es": "Lugares nombrados en las notas de prensa comparados con las zonas que alcanza la simulación."
         }
       },
-      "visibility": "public source"
+      "visibility": "public source",
+      "history": [
+        {
+          "date": "2026-11-17",
+          "commit": "d6d8c5f",
+          "change": {
+            "en": "The check was restated as made by nobody but the author: the test and its review came from the same person.",
+            "es": "La revisión pasó a constar como hecha sólo por el autor: la prueba y su revisión eran de la misma persona."
+          },
+          "by": "author"
+        },
+        {
+          "date": "2026-11-18",
+          "commit": "aaddbc3",
+          "change": {
+            "en": "\"The model\" became \"the flood simulation\", so that it is not mistaken for an elevation model or a map made by AI.",
+            "es": "«El modelo» pasó a ser «la simulación de crecida», para que no se confunda con un modelo de elevación ni con un mapa hecho por IA."
+          },
+          "by": "author"
+        }
+      ]
     },
     {
       "id": "x-flooded-forest",
@@ -613,5 +783,6 @@
       },
       "visibility": "public source"
     }
-  ]
+  ],
+  "contest": "https://github.com/debianalt/un-lugar/issues/new?template=contest-note.md"
 }

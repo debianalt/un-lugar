@@ -173,6 +173,75 @@
           }
         }
       }
+    },
+    "history": {
+      "type": "array",
+      "description": "What changed in this annotation after it was first published, oldest first. It records changes, not readers. A change that cannot be traced to the public history of the repository is not listed.",
+      "items": {
+        "type": "object",
+        "required": [
+          "date",
+          "change"
+        ],
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "change": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "by": {
+            "type": "string",
+            "description": "Who raised it: 'author', or the name the person chose when contesting."
+          },
+          "commit": {
+            "type": "string",
+            "description": "The commit of the public repository that made the change."
+          },
+          "issue": {
+            "type": "string",
+            "description": "The public issue where it was contested, if any."
+          }
+        }
+      }
+    },
+    "contested": {
+      "type": "object",
+      "required": [
+        "url"
+      ],
+      "description": "An open objection to this annotation. The annotation stays on the map with the objection in view until it is settled: corrected, kept with the objection shown, or withdrawn.",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "since": {
+          "type": "string"
+        },
+        "summary": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      }
     }
   }
 }

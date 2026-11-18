@@ -10,6 +10,8 @@ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import { T } from './i18n.js';
 import { timetable } from './timetable.js';
 import { piece } from './piece.js';
+
+const REPO = 'https://github.com/debianalt/un-lugar';
 import { region } from './region.js';
 
 maplibregl.setWorkerUrl(workerUrl); // maplibre-gl 6 is ESM-only: the worker URL must be set before the first map
@@ -198,7 +200,7 @@ function build() {
       for (const a of D.notes) {
         const src = !a.source.url ? L(a.source.title) : `<a href="${a.source.url}" target="_blank" rel="noopener">${L(a.source.title)}</a>`;
         const n = h('div', { class: 'note', 'data-id': a.id, 'data-reg': a.register, tabindex: '0', style: `border-left-color:${COLOR[a.register]}` },
-          `<div class="meta">${shape(a.register)}<b>${s.reg[a.register]}</b><span>${a.date ? day(a.date, 'short') : ''}</span><span>${L(a.place)}</span></div><p>${a.statement[lang]}</p><div class="src">${s.source}: ${src}</div>${a.contrast ? `<div class="con con-${a.contrast.status}"><b>${s.con[a.contrast.status]}</b> ${L(a.contrast.text)} <span class="consrc">${(a.contrast.sources ?? []).map((c) => (c.url ? `<a href="${c.url}" target="_blank" rel="noopener">${L(c.title)}</a>` : L(c.title))).join(' · ')}</span></div>` : ''}${a.register === 'situated' ? '' : `<details><summary>${a.register === 'speculated' ? s.test : s.review}</summary>${L(a.review.method)}</details>`}`);
+          `<div class="meta">${shape(a.register)}<b>${s.reg[a.register]}</b><span>${a.date ? day(a.date, 'short') : ''}</span><span>${L(a.place)}</span></div><p>${a.statement[lang]}</p><div class="src">${s.source}: ${src}</div>${a.contrast ? `<div class="con con-${a.contrast.status}"><b>${s.con[a.contrast.status]}</b> ${L(a.contrast.text)} <span class="consrc">${(a.contrast.sources ?? []).map((c) => (c.url ? `<a href="${c.url}" target="_blank" rel="noopener">${L(c.title)}</a>` : L(c.title))).join(' · ')}</span></div>` : ''}${a.register === 'situated' ? '' : `<details><summary>${a.register === 'speculated' ? s.test : s.review}</summary>${L(a.review.method)}</details>`}${a.contested ? `<div class="con con-differ"><b>${s.contested}</b> ${L(a.contested.summary ?? '')} <span class="consrc"><a href="${a.contested.url}" target="_blank" rel="noopener">${s.contestedLink}</a></span></div>` : ''}${a.history?.length ? `<details><summary>${fill(s.history, { n: a.history.length })}</summary><ul class="hist">${a.history.map((c) => `<li>${day(c.date, 'short')}: ${L(c.change)}${c.commit ? ` <a href="${REPO}/commit/${c.commit}" target="_blank" rel="noopener">${c.commit}</a>` : ''}</li>`).join('')}</ul></details>` : ''}<div class="contest"><a href="${D.contest}&title=${encodeURIComponent('Note ' + a.id)}" target="_blank" rel="noopener">${s.contest}</a></div>`);
         n.addEventListener('click', (ev) => { if (ev.target.closest('a, summary')) return; focusNote(a.id, true); });
         list.append(n);
       }
@@ -318,7 +320,7 @@ $('#lang').onclick = () => { lang = lang === 'en' ? 'es' : 'en'; try { localStor
 
 const get = (f) => fetch(BASE + f).then((r) => { if (!r.ok) throw new Error(f + ' ' + r.status); return r.json(); });
 Promise.all(['radar.json', 'relief.json', 'water.json', 'forest.json', 'places.json', 'annotations.json', 'timetable.json', 'region_timetable.json', 'region_forest.json', 'timetable_daily.json'].map(get)).then(([radar, relief, water, forest, places, ann, timetable, regionT, regionF, daily]) => {
-  Object.assign(D, { radar, relief, water, forest, places, timetable, regionT, regionF, daily, notes: ann.annotations });
+  Object.assign(D, { radar, relief, water, forest, places, timetable, regionT, regionF, daily, notes: ann.annotations, contest: ann.contest });
   build(); initMap();
   if (location.hash.startsWith('#the-timetable')) requestAnimationFrame(() => document.getElementById('the-timetable')?.scrollIntoView({ block: 'center' }));   // the sections are built after load, so the browser cannot follow the link itself
 }).catch((e) => { $('#sections').innerHTML = `<p>Could not load the data files: ${e.message}</p>`; });
