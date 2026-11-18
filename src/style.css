@@ -83,6 +83,12 @@ td .sw { vertical-align: -1px; }
 .note .src { font-size: 12px; color: var(--ink-3); }
 .note details { font-size: 12px; color: var(--ink-3); }
 .mk { width: 14px; height: 14px; display: inline-block; flex: none; }
+.rises { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; min-height: 14px; }
+.rise { width: 11px; height: 11px; border-radius: 2px; display: block; border: 1px solid rgba(0,0,0,.25); }
+.rise.seen { background: var(--measured); }
+.mute { color: var(--ink-3); font-size: 12px; }
+.hbar { height: 12px; background: #f1f1f2; border-radius: 2px; }
+.hbar i { display: block; height: 100%; border-radius: 2px; }
 .pix { display: flex; align-items: flex-end; gap: 12px; margin: 10px 0 2px; }
 .pix div { text-align: center; font-size: 11.5px; color: var(--ink-3); }
 .pix i { display: block; margin: 0 auto 4px; background: #dcdde0; border: 1px solid var(--ink-3); }

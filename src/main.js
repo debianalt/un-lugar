@@ -9,11 +9,13 @@ import * as maplibregl from 'maplibre-gl';
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import { T } from './i18n.js';
 import { timetable } from './timetable.js';
+import { region } from './region.js';
 
 maplibregl.setWorkerUrl(workerUrl); // maplibre-gl 6 is ESM-only: the worker URL must be set before the first map
 
 const BASE = import.meta.env.BASE_URL + 'data/';
-const ORDER = ['radar', 'relief', 'water', 'forest', 'empty', 'notes'];
+const ORDER = ['radar', 'relief', 'water', 'forest', 'empty', 'notes', 'region'];
+const REGION_BOX = [-63.5, -30.9, -53.4, -21.9];
 const REG = ['measured', 'interpreted', 'situated', 'speculated'];
 const COLOR = { measured: '#1f5ea2', interpreted: '#c56a1b', situated: '#7a5195', speculated: '#1c7b4c' };
 const DEM = { fabdem: ['#1f5ea2', ''], glo30: ['#c56a1b', '6 3'], aw3d30: ['#7a5195', '2 3'], merit: ['#1c7b4c', '9 3 2 3'] };
@@ -144,6 +146,15 @@ function build() {
     h14: nf(sc.height_m, 1), reached14: nf(sc.reached_ha), never14: nf(sc.never_seen_by_jrc_ha), share14: pct(sc.share_never_seen),
     cells: nf(F.cells), forestN: nf(F.about_forest), forestShare: pct(F.about_forest_share), cropN: nf(F.about_crops), forestIn: nf(Math.round(F.cells / F.about_forest))
   };
+  const RT = D.regionT, RF = D.regionF;
+  if (RT && RF) Object.assign(vals, {
+    rGauges: nf(RT.gauges), rRises: nf(RT.rises), rSeen: nf(RT.rises_with_a_pass), rShort: nf(RT.rises_under_3_days), rShortSeen: nf(RT.rises_under_3_days_with_a_pass),
+    rNino: nf(RT.rises_by_enso.nino), rNinoM: nf(RT.months_by_enso.nino), rMonths: nf(RT.months_by_enso.nino + RT.months_by_enso.neutral + RT.months_by_enso.nina),
+    rAbove: nf(RT.gauges - RT.gauges_never_above.length), rNever: RT.gauges_never_above.join(lang === 'es' ? ' y ' : ' and '),
+    rCells: nf(RF.region.cells / 1e6, 1), rShare: pct(RF.region.about_forest_share), rHa: nf(RF.region.about_forest_ha / 1e6, 1),
+    rFormosaIn: nf(Math.round(1 / RF.by_province.Formosa.about_forest_share)), rCropHa: nf(Math.round(RF.region.about_crops_ha / 1000) * 1000),
+    rCropMis: pct(RF.by_province.Misiones.about_crops_ha / RF.region.about_crops_ha), rSplit: pct(RF.trees_three_products.split_share)
+  });
   for (const id of ORDER) {
     const s = t.s[id], sec = h('section', { id, 'data-id': id });
     sec.append(h('span', { class: 'num' }, s.num), h('h2', {}, fill(s.h, vals)));
@@ -170,6 +181,7 @@ function build() {
       sec.append(h('div', { class: 'empty' }, `<p><b>${s.box[0]}</b></p><p>${s.box[1]}</p>`));
       sec.append(h('div', { class: 'figure' }, `<h3>${s.blanks}</h3><div class="key blanks">${['unseen', 'outside', 'withheld'].map((k) => `<span>${blank(k)}${s.blank[k]}</span>`).join('')}</div>`));
     }
+    if (id === 'region' && RT && RF) sec.append(region(RT, RF, lang, { h, fill, nf, day, showTip, hideTip }));
     if (id === 'notes') {
       const fl = h('div', { class: 'filters', role: 'group' });
       for (const k of REG) { const b = h('button', { class: 'chip', type: 'button', 'aria-pressed': String(regOn[k]), title: s.regHelp[k] }, `${shape(k)}${s.reg[k]} · ${D.notes.filter((a) => a.register === k).length}`); b.onclick = () => { regOn[k] = !regOn[k]; b.setAttribute('aria-pressed', String(regOn[k])); syncNotes(); }; fl.append(b); }
@@ -229,6 +241,19 @@ function initMap() {
   });
 }
 
+// The regional layers are heavy and many visitors never reach them: they are added the first time the section shows.
+function addRegion() {
+  if (map.getSource('regionf') || !D.regionT) return;
+  map.addSource('regionf', { type: 'geojson', data: BASE + 'region_forest.geojson' });
+  map.addLayer({ id: 'regionf', type: 'fill', source: 'regionf', paint: { 'fill-color': ['interpolate', ['linear'], ['get', 'f'], 0, '#f3efe6', 0.1, '#e3cc93', 0.25, '#c56a1b', 0.4, '#6b1d0c'], 'fill-opacity': 0.8, 'fill-outline-color': 'rgba(255,255,255,.25)' } }, 'frame');
+  map.addSource('gauges', { type: 'geojson', data: { type: 'FeatureCollection', features: D.regionT.stations.map((s) => ({ type: 'Feature', properties: { name: s.name, rises: s.rises, seen: s.rises_with_a_pass }, geometry: { type: 'Point', coordinates: [s.lon, s.lat] } })) } });
+  map.addLayer({ id: 'gauges', type: 'circle', source: 'gauges', paint: { 'circle-radius': ['+', 4, ['*', 0.6, ['get', 'rises']]], 'circle-color': '#17181a', 'circle-stroke-color': '#fff', 'circle-stroke-width': 1.5 } });
+  map.on('mousemove', 'regionf', (e) => { const p = e.features[0].properties; showTip(e.originalEvent, fill(T[lang].s.region.tipCell, { f: pct(p.f), n: nf(p.n) })); });
+  map.on('mouseleave', 'regionf', hideTip);
+  map.on('mousemove', 'gauges', (e) => { const p = e.features[0].properties; showTip(e.originalEvent, fill(T[lang].s.region.tipGauge, p)); });
+  map.on('mouseleave', 'gauges', hideTip);
+}
+
 function syncNotes() {
   const on = active === 'notes';
   for (const k of markers) { const want = on && regOn[k.a.register]; if (want) k.m.addTo(map); else k.m.remove(); }
@@ -251,6 +276,7 @@ function legend(id) {
   else if (id === 'water' && waterView === 'jrc') L.innerHTML = `<b>${t.water.legendJrc}</b><div class="grad" style="background:linear-gradient(90deg,#aec6dd,#4b81b9,#0b3c79)"></div><div style="display:flex;justify-content:space-between"><span>${t.water.lo}</span><span>${t.water.hi}</span></div>`;
   else if (id === 'water') L.innerHTML = `<b>${t.water.legendModel}</b><div class="key">${sw('#4b81b9', t.water.seen)}${sw('#c56a1b', t.water.never)}</div>`;
   else if (id === 'forest') L.innerHTML = `<b>${t.forest.legend}</b><div class="key">${['agree', 'mixed', 'crop', 'forest'].map((k) => sw(FOREST[k], t.forest[k])).join('')}</div>`;
+  else if (id === 'region') L.innerHTML = `<b>${t.region.legend}</b><div class="grad" style="background:linear-gradient(90deg,#f3efe6,#e3cc93,#c56a1b,#6b1d0c)"></div><div style="display:flex;justify-content:space-between"><span>0</span><span>20</span><span>40${lang === 'es' ? ' %' : '%'} +</span></div><div class="key" style="margin-top:6px"><span><i class="sw" style="background:#17181a;border-radius:50%"></i>${t.region.gauge}</span></div>`;
   else if (id === 'empty') L.innerHTML = `<div class="key"><span>${blank('withheld')}<b style="margin:0">${t.empty.legend}</b></span></div>`;
   else L.innerHTML = `<b>${t.notes.legend}</b><div class="key">${REG.map((k) => `<span>${shape(k)}${t.notes.reg[k]}: ${t.notes.regHelp[k]}</span>`).join('')}</div>`;
 }
@@ -265,9 +291,11 @@ function show(id) {
   for (const k of ['2026', '2023', '2014']) vis('m' + k, id === 'water' && waterView === 'm' + k);
   vis('forest', id === 'forest');
   vis('withheld', id === 'empty');
+  if (id === 'region') addRegion();
+  vis('regionf', id === 'region'); vis('gauges', id === 'region');
   syncNotes();
   const f = D.places.frame, town = [[-54.225, -27.318], [-54.172, -27.275]];
-  const b = id === 'radar' ? [RADAR_BOX.slice(0, 2), RADAR_BOX.slice(2)] : id === 'notes' || id === 'relief' ? town : [f.slice(0, 2), f.slice(2)];
+  const b = id === 'region' ? [REGION_BOX.slice(0, 2), REGION_BOX.slice(2)] : id === 'radar' ? [RADAR_BOX.slice(0, 2), RADAR_BOX.slice(2)] : id === 'notes' || id === 'relief' ? town : [f.slice(0, 2), f.slice(2)];
   map.fitBounds(b, { padding: 30, duration: matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 600 });
 }
 
@@ -281,7 +309,7 @@ function observe() {
 $('#lang').onclick = () => { lang = lang === 'en' ? 'es' : 'en'; try { localStorage.setItem('un_lugar_lang', lang); } catch { /* ignore */ } build(); };
 
 const get = (f) => fetch(BASE + f).then((r) => { if (!r.ok) throw new Error(f + ' ' + r.status); return r.json(); });
-Promise.all(['radar.json', 'relief.json', 'water.json', 'forest.json', 'places.json', 'annotations.json', 'timetable.json'].map(get)).then(([radar, relief, water, forest, places, ann, timetable]) => {
-  Object.assign(D, { radar, relief, water, forest, places, timetable, notes: ann.annotations });
+Promise.all(['radar.json', 'relief.json', 'water.json', 'forest.json', 'places.json', 'annotations.json', 'timetable.json', 'region_timetable.json', 'region_forest.json'].map(get)).then(([radar, relief, water, forest, places, ann, timetable, regionT, regionF]) => {
+  Object.assign(D, { radar, relief, water, forest, places, timetable, regionT, regionF, notes: ann.annotations });
   build(); initMap();
 }).catch((e) => { $('#sections').innerHTML = `<p>Could not load the data files: ${e.message}</p>`; });

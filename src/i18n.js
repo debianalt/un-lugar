@@ -1,5 +1,5 @@
 // All visible text, in English and Spanish. {curly} tokens are filled from the data files.
-const SOURCES = 'Sentinel-1 (Copernicus), NISAR (NASA–ISRO), FABDEM, Copernicus GLO-30, ALOS AW3D30 (JAXA), MERIT, JRC Global Surface Water, MapBiomas Argentina, MapBiomas Brasil, Forest Typology 2020 (Google DeepMind, Google Research, WRI, IIASA), Instituto Nacional del Agua, OpenStreetMap.';
+const SOURCES = 'Sentinel-1 (Copernicus), NISAR (NASA–ISRO), FABDEM, Copernicus GLO-30, ALOS AW3D30 (JAXA), MERIT, JRC Global Surface Water, MapBiomas Argentina, MapBiomas Brasil, Forest Typology 2020 (Google DeepMind, Google Research, WRI, IIASA), GLAD (University of Maryland), Instituto Nacional del Agua, NOAA PSL (Niño 3.4), FAO GAUL, OpenStreetMap.';
 
 export const T = {
   en: {
@@ -7,7 +7,7 @@ export const T = {
     kicker: 'El Soberbio, Uruguay River',
     title: 'One Place, Every Eye',
     lede: 'El Soberbio sits on the Uruguay River, between Argentina and Brazil. When the river passes thirteen metres, families in the low neighbourhoods leave their homes. This is what each open satellite product sees on this bend of the river, and what it does not.',
-    status: 'Frame of 14 by 12 km. Data as of November 2026.',
+    status: 'Frame of 14 by 12 km; two of the tests run over four provinces. Data as of November 2026.',
     footer: `<h2>Who and how</h2>
       <p><b>Who.</b> Raimundo Elías Gómez, anthropologist. CONICET / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones. In 2021 I coordinated in Misiones the geospatial area of the national survey of Indigenous community lands. The rule here comes from that work: what the people of the place know is shown when they decide.</p>
       <p><b>How.</b> The tests are from 2026. The code, written with the assistance of AI coding agents, and the data are open. No note has yet been checked by anyone other than the author of this page, and a note cannot yet be added from here.</p>
@@ -105,6 +105,19 @@ export const T = {
         who: { author: 'the author of this page', 'nobody yet': 'nobody yet', 'nobody independent yet': 'nobody but the author of this page' },
         review: 'How it was checked', by: 'Checked by', source: 'Source',
         legend: 'Annotations by kind of statement'
+      },
+      region: {
+        num: '07 · The region',
+        h: 'Beyond this bend: {rGauges} gauges, {rRises} rises, a radar pass during {rSeen}',
+        p: [
+          'El Soberbio is one case. North-eastern Argentina lies between the Paraná and the Uruguay, with the Iberá wetlands, the Chaco plains and what remains of the Atlantic Forest, beside pine and eucalyptus plantations, yerba mate, tea, crops and cattle. The two tests that need no fieldwork, the timetable and the forest maps, run here over the whole region.',
+          '{rGauges} gauges on the Uruguay, the Iguazú and the Paraná have an evacuation level. Between 2015 and October 2026 the river stood above it {rRises} times at {rAbove} of them; at {rNever}, never. A Sentinel-1 scene covering the gauge started during {rSeen} of those rises. Of the {rShort} that lasted under three days, during {rShortSeen}. {rNino} of the {rRises} came in El Niño months, which were {rNinoM} of the {rMonths} months of the period.',
+          'The forest test covers {rCells} million cells in Misiones, Corrientes, Chaco and Formosa. ForTy and MapBiomas disagree about forest on {rShare} of them, {rHa} million hectares, and in Formosa on one cell in {rFormosaIn}. On another {rCropHa} hectares, {rCropMis} of them in Misiones, MapBiomas maps a perennial crop such as yerba mate or tea and ForTy other land. With a third map, GLAD tree height, and one question only, whether half the cell is under trees, the three give different answers on {rSplit} of the cells.'
+        ],
+        legend: 'Cells where two 2020 maps disagree about forest',
+        gauge: 'river gauge; larger with more rises',
+        tipCell: '{f} of {n} cells disagree about forest',
+        tipGauge: '<b>{name}</b><br>{rises} rises above the evacuation level, a radar pass during {seen}'
       }
     }
   },
@@ -113,7 +126,7 @@ export const T = {
     kicker: 'El Soberbio, río Uruguay',
     title: 'Un lugar, todos los ojos',
     lede: 'El Soberbio está sobre el río Uruguay, entre la Argentina y Brasil. Cuando el río pasa los trece metros, las familias de los barrios bajos salen de sus casas. Acá se muestra qué ve cada producto satelital abierto en esta curva del río, y qué no ve.',
-    status: 'Recuadro de 14 por 12 km. Datos a noviembre de 2026.',
+    status: 'Recuadro de 14 por 12 km; dos de las pruebas corren sobre cuatro provincias. Datos a noviembre de 2026.',
     footer: `<h2>Quién y cómo</h2>
       <p><b>Quién.</b> Raimundo Elías Gómez, antropólogo. CONICET / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones. En 2021 coordiné en Misiones el área geoespacial del relevamiento nacional de tierras de comunidades indígenas. De ese trabajo sale la regla de acá: lo que sabe la gente del lugar se muestra cuando ella lo decide.</p>
       <p><b>Cómo.</b> Las pruebas son de 2026. El código, escrito con asistencia de agentes de programación de IA, y los datos son abiertos. Ninguna nota fue revisada todavía por alguien distinto del autor de esta página, y desde acá todavía no se puede sumar una.</p>
@@ -211,6 +224,19 @@ export const T = {
         who: { author: 'el autor de esta página', 'nobody yet': 'nadie todavía', 'nobody independent yet': 'nadie más que el autor de esta página' },
         review: 'Cómo se revisó', by: 'Revisó', source: 'Fuente',
         legend: 'Anotaciones por clase de afirmación'
+      },
+      region: {
+        num: '07 · La región',
+        h: 'Más allá de esta curva: {rGauges} hidrómetros, {rRises} subidas, una pasada de radar durante {rSeen}',
+        p: [
+          'El Soberbio es un caso. El nordeste argentino está entre el Paraná y el Uruguay, con los esteros del Iberá, la llanura chaqueña y lo que queda de la selva paranaense, junto a plantaciones de pino y eucalipto, yerba mate, té, cultivos y ganadería. Las dos pruebas que no necesitan trabajo de campo, el horario y los mapas de bosque, se corren acá sobre toda la región.',
+          '{rGauges} hidrómetros del Uruguay, el Iguazú y el Paraná tienen cota de evacuación. Entre 2015 y octubre de 2026 el río estuvo sobre esa cota {rRises} veces en {rAbove} de ellos; en {rNever}, nunca. Una escena de Sentinel-1 que cubre el hidrómetro empezó durante {rSeen} de esas subidas. De las {rShort} que duraron menos de tres días, durante {rShortSeen}. {rNino} de las {rRises} llegaron en meses de El Niño, que fueron {rNinoM} de los {rMonths} meses del período.',
+          'La prueba de bosque cubre {rCells} millones de celdas de Misiones, Corrientes, Chaco y Formosa. ForTy y MapBiomas no coinciden sobre el bosque en el {rShare}, {rHa} millones de hectáreas, y en Formosa en una celda de cada {rFormosaIn}. En otras {rCropHa} hectáreas, el {rCropMis} en Misiones, MapBiomas marca un cultivo perenne como la yerba mate o el té y ForTy otras tierras. Con un tercer mapa, la altura de árboles de GLAD, y una sola pregunta, si la mitad de la celda tiene árboles, los tres responden distinto en el {rSplit} de las celdas.'
+        ],
+        legend: 'Celdas donde dos mapas de 2020 no coinciden sobre el bosque',
+        gauge: 'hidrómetro; más grande con más subidas',
+        tipCell: '{f} de {n} celdas no coinciden sobre el bosque',
+        tipGauge: '<b>{name}</b><br>{rises} subidas sobre la cota de evacuación, una pasada de radar durante {seen}'
       }
     }
   }
