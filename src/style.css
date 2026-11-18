@@ -25,7 +25,7 @@ html, body { margin: 0; background: var(--paper); color: var(--ink); font-family
 #lang:hover, #lang:focus-visible { border-color: var(--ink-2); }
 h1 { font-weight: 600; font-size: 40px; line-height: 1.05; margin: 18px 0 12px; letter-spacing: -.02em; }
 h2 { font-weight: 600; font-size: 25px; line-height: 1.16; margin: 0 0 12px; letter-spacing: -.012em; }
-.lede { font-size: 18.5px; line-height: 1.42; color: var(--ink-2); margin: 0 0 12px; }
+.lede { font-size: 21px; font-weight: 500; line-height: 1.34; color: var(--ink); margin: 0 0 14px; letter-spacing: -.005em; }
 .small { font-size: 13px; color: var(--ink-3); margin: 0 0 8px; }
 .small a, p a { color: inherit; text-underline-offset: 2px; }
 section { padding: 34px 0 30px; border-top: 1px solid var(--rule); min-height: 62vh; opacity: .45; transition: opacity .25s; }
@@ -33,7 +33,7 @@ section.on { opacity: 1; }
 section .num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); display: block; margin-bottom: 6px; }
 section p { margin: 0 0 12px; }
 /* Running text is justified, with hyphenation in the page language so a narrow column does not open rivers. */
-.lede, section > p, .empty p, footer p { text-align: justify; hyphens: auto; -webkit-hyphens: auto; hyphenate-limit-chars: 9 4 4; }
+section > p, .empty p, footer p { text-align: justify; hyphens: auto; -webkit-hyphens: auto; hyphenate-limit-chars: 9 4 4; }
 /* Lists of names and links are not justified: product names must not be broken. */
 section > p.small, footer p:nth-of-type(3), footer p:last-child { text-align: left; hyphens: manual; -webkit-hyphens: manual; }
 .figure { background: var(--card); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 14px 10px; margin: 16px 0; }
@@ -102,6 +102,7 @@ footer a { color: inherit; text-underline-offset: 2px; }
   #mapwrap { order: -1; position: sticky; top: 0; height: 44vh; z-index: 5; border-bottom: 1px solid var(--rule); }
   #text { border-right: 0; padding: 20px 16px 60px; }
   h1 { font-size: 32px; }
+  .lede { font-size: 19px; }
   section { min-height: 0; }
   #legend[data-id='notes'], #legend[data-id='forest'] { display: none; } /* on a phone the chips and the bar below the map already carry the key */
   #legend { top: 8px; left: 8px; max-width: 220px; font-size: 11.5px; padding: 6px 8px; }
