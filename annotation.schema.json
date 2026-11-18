@@ -130,6 +130,49 @@
     "decided_by": {
       "type": "string",
       "description": "For community knowledge: the body that decided the visibility, and when."
+    },
+    "contrast": {
+      "type": "object",
+      "required": [
+        "status",
+        "text"
+      ],
+      "description": "How the statement stands against other sources of the same event: 'agree', 'differ', or 'single' when no second source was found. It is not a review: nobody is named.",
+      "properties": {
+        "status": {
+          "enum": [
+            "agree",
+            "differ",
+            "single"
+          ]
+        },
+        "text": {
+          "type": [
+            "string",
+            "object"
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "title"
+            ],
+            "properties": {
+              "title": {
+                "type": [
+                  "string",
+                  "object"
+                ]
+              },
+              "url": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -21,7 +21,7 @@ A statement can change register when evidence arrives. The change is recorded, a
 
 ## Review
 
-Each annotation shows who checked it and against what. "Nobody yet" is shown as plainly as a review. A reviewer cannot be the only source of the statement they review: the author's own tests are marked "nobody independent yet" until someone else has checked them. Today no note has a recorded independent reviewer: local consultants, university researchers and residents of El Soberbio have read the press reports behind the situated notes, but which note each of them read was not written down, so the page does not name a reviewer for any of them. Disagreement between a note and a layer is kept on the map, since it is what the map is for.
+Each annotation shows who checked it and against what. "Nobody yet" is shown as plainly as a review. A reviewer cannot be the only source of the statement they review: the author's own tests are marked "nobody independent yet" until someone else has checked them. Today the situated notes are press reports, each set against other public sources of the same flood: a second outlet, an official communiqué, the gauge. The author has gone over them with local consultants, university researchers and residents of El Soberbio. The author's own tests have no independent reviewer yet. Disagreement between a note and a layer is kept on the map, since it is what the map is for.
 
 ## What the people of the place know
 

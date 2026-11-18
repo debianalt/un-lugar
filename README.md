@@ -20,7 +20,7 @@ The page takes a frame of 14 × 12 km and shows, product by product, what each o
 
 - There is no way to add an annotation from the page. The format is a JSON file.
 - It covers one place in depth. Only the timetable and the forest crossing have been run over the region; the other tests have not been repeated elsewhere.
-- The "situated" notes are newspaper reports, not marks made by residents. Local consultants, university researchers and residents have read them, but which note each of them read was not recorded.
+- The "situated" notes are newspaper reports, not marks made by residents. Each is set against other public sources of the same flood (a second outlet, an official communiqué, the gauge) and says whether they agree.
 - The flood simulation overestimates above about 19 m and starts reaching homes about 2 m later than evacuations begin. The page shows the comparison without correcting it.
 - Above the evacuation level the radar test rests on a single pass. The explanation given for it (water under the forest canopy) is a guess and is recorded as one.
 - No annotation has a recorded independent reviewer.

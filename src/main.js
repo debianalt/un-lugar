@@ -190,7 +190,7 @@ function build() {
       for (const a of D.notes) {
         const src = !a.source.url ? L(a.source.title) : `<a href="${a.source.url}" target="_blank" rel="noopener">${L(a.source.title)}</a>`;
         const n = h('div', { class: 'note', 'data-id': a.id, 'data-reg': a.register, tabindex: '0', style: `border-left-color:${COLOR[a.register]}` },
-          `<div class="meta">${shape(a.register)}<b>${s.reg[a.register]}</b><span>${a.date ? day(a.date, 'short') : ''}</span><span>${L(a.place)}</span></div><p>${a.statement[lang]}</p><div class="src">${s.source}: ${src}</div>${a.register === 'situated' ? '' : `<details><summary>${a.register === 'speculated' ? s.test : s.review}</summary>${L(a.review.method)}</details>`}`);
+          `<div class="meta">${shape(a.register)}<b>${s.reg[a.register]}</b><span>${a.date ? day(a.date, 'short') : ''}</span><span>${L(a.place)}</span></div><p>${a.statement[lang]}</p><div class="src">${s.source}: ${src}</div>${a.contrast ? `<div class="con con-${a.contrast.status}"><b>${s.con[a.contrast.status]}</b> ${L(a.contrast.text)} <span class="consrc">${(a.contrast.sources ?? []).map((c) => (c.url ? `<a href="${c.url}" target="_blank" rel="noopener">${L(c.title)}</a>` : L(c.title))).join(' · ')}</span></div>` : ''}${a.register === 'situated' ? '' : `<details><summary>${a.register === 'speculated' ? s.test : s.review}</summary>${L(a.review.method)}</details>`}`);
         n.addEventListener('click', (ev) => { if (ev.target.closest('a, summary')) return; focusNote(a.id, true); });
         list.append(n);
       }

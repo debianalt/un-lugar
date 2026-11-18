@@ -99,12 +99,14 @@ export const T = {
         h: 'Four kinds of statement, kept apart',
         p: [
           'Every note says what kind of statement it is and where it comes from. The situated notes are, for now, what the newspapers reported of what residents and firefighters saw.',
-          'Local consultants, researchers of the Universidad Nacional de Misiones and residents of El Soberbio have read those reports. Which note each of them read was not recorded; keeping that record, note by note, is part of what comes next.'
+          'Each report is set against other sources of the same flood: a second outlet, a communiqué of the civil defence board, the gauge. The note says whether they agree, differ, or whether there is only one. The author has also gone over these reports with local consultants, researchers of the Universidad Nacional de Misiones and residents of El Soberbio.',
+          'Next come the sources no newspaper carries: communiqués of associations, cooperatives and communities, local radio stations, and what residents post on social networks.'
         ],
         reg: { measured: 'Measured', interpreted: 'Interpreted', situated: 'Situated', speculated: 'Speculated' },
         regHelp: { measured: 'an instrument reading', interpreted: 'a reading of the data by someone', situated: 'what people in the place saw or said', speculated: 'a guess nobody has tested' },
         who: { author: 'the author of this page', 'nobody yet': 'nobody yet', 'nobody independent yet': 'nobody but the author of this page' },
         review: 'How it was checked', test: 'How it could be tested', source: 'Source',
+        con: { agree: 'Other sources agree', differ: 'Other sources differ', single: 'One source only' },
         legend: 'Annotations by kind of statement'
       },
       region: {
@@ -219,12 +221,14 @@ export const T = {
         h: 'Cuatro clases de afirmación, separadas',
         p: [
           'Cada nota dice qué clase de afirmación es y de dónde sale. Las notas situadas son, por ahora, lo que publicaron los diarios sobre lo que vieron vecinos y bomberos.',
-          'Consultores locales, investigadores de la Universidad Nacional de Misiones y residentes de El Soberbio leyeron esas notas. No quedó registrado cuál leyó cada uno; llevar ese registro, nota por nota, es parte de lo que sigue.'
+          'Cada nota se contrasta con otras fuentes de la misma crecida: un segundo medio, un comunicado de Defensa Civil, el hidrómetro. La nota dice si coinciden, si difieren o si hay una sola. El autor repasó además estas notas con consultores locales, investigadores de la Universidad Nacional de Misiones y residentes de El Soberbio.',
+          'Siguen las fuentes que ningún diario recoge: comunicados de asociaciones, cooperativas y comunidades, radios de la zona y lo que publican los residentes en las redes sociales.'
         ],
         reg: { measured: 'Medido', interpreted: 'Interpretado', situated: 'Situado', speculated: 'Especulado' },
         regHelp: { measured: 'la lectura de un instrumento', interpreted: 'una lectura de los datos hecha por alguien', situated: 'lo que vio o dijo la gente del lugar', speculated: 'una conjetura que nadie probó' },
         who: { author: 'el autor de esta página', 'nobody yet': 'nadie todavía', 'nobody independent yet': 'nadie más que el autor de esta página' },
         review: 'Cómo se revisó', test: 'Cómo se podría probar', source: 'Fuente',
+        con: { agree: 'Otras fuentes coinciden', differ: 'Otras fuentes difieren', single: 'Una sola fuente' },
         legend: 'Anotaciones por clase de afirmación'
       },
       region: {

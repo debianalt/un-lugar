@@ -31,7 +31,27 @@
           "es": "Leída por el autor de esta página; las cifras salen del artículo."
         }
       },
-      "visibility": "public source"
+      "visibility": "public source",
+      "contrast": {
+        "status": "differ",
+        "text": {
+          "en": "The next day another outlet counted 350 homes under water, against 250 here. The gauge series gives 22.78 m, against 22.60 m.",
+          "es": "Al día siguiente otro medio contó 350 viviendas bajo agua, contra 250 acá. La serie del hidrómetro da 22,78 m, contra 22,60 m."
+        },
+        "sources": [
+          {
+            "title": "Misiones Online, 28 Jun 2014",
+            "url": "https://misionesonline.net/2014/06/28/hay-mas-de-seis-mil-evacuados-por-la-historica-creciente-del-uruguay/"
+          },
+          {
+            "title": {
+              "en": "Gauge at the port, Instituto Nacional del Agua",
+              "es": "Hidrómetro del puerto, Instituto Nacional del Agua"
+            },
+            "url": "https://alerta.ina.gob.ar/a5/"
+          }
+        ]
+      }
     },
     {
       "id": "s-2015-07-firefighters",
@@ -62,7 +82,24 @@
           "es": "Leída por el autor de esta página; las cifras salen del artículo."
         }
       },
-      "visibility": "public source"
+      "visibility": "public source",
+      "contrast": {
+        "status": "agree",
+        "text": {
+          "en": "Two later reports fall inside the range the firefighters give: families left with the river at 12.90 m in 2017 and at 13.12 m in 2025.",
+          "es": "Dos notas posteriores caen dentro del rango que dan los bomberos: hubo familias que salieron con el río en 12,90 m en 2017 y en 13,12 m en 2025."
+        },
+        "sources": [
+          {
+            "title": "El Territorio, 31 May 2017",
+            "url": "https://www.elterritorio.com.ar/noticias/2017/05/31/531654-el-soberbio-15-familias-evacuadas-por-la-crecida-del-rio-uruguay"
+          },
+          {
+            "title": "Canal 12 Misiones, 30 Jun 2025",
+            "url": "https://www.canal12misiones.com/?p=530388"
+          }
+        ]
+      }
     },
     {
       "id": "s-2017-05-31",
@@ -90,7 +127,23 @@
           "es": "Leída por el autor de esta página; las cifras salen del artículo."
         }
       },
-      "visibility": "public source"
+      "visibility": "public source",
+      "contrast": {
+        "status": "agree",
+        "text": {
+          "en": "The report forecast a peak of 15.40 m. The gauge peaked at 15.5 m the next day.",
+          "es": "La nota pronosticaba un pico de 15,40 m. El hidrómetro llegó a 15,5 m al día siguiente."
+        },
+        "sources": [
+          {
+            "title": {
+              "en": "Gauge at the port, Instituto Nacional del Agua",
+              "es": "Hidrómetro del puerto, Instituto Nacional del Agua"
+            },
+            "url": "https://alerta.ina.gob.ar/a5/"
+          }
+        ]
+      }
     },
     {
       "id": "s-2017-06-06",
@@ -118,7 +171,23 @@
           "es": "Leída por el autor de esta página; las cifras salen del artículo."
         }
       },
-      "visibility": "public source"
+      "visibility": "public source",
+      "contrast": {
+        "status": "single",
+        "text": {
+          "en": "No second report of this rise was found. The gauge peaked at 13.68 m that day.",
+          "es": "No se encontró una segunda nota sobre esta subida. El hidrómetro llegó a 13,68 m ese día."
+        },
+        "sources": [
+          {
+            "title": {
+              "en": "Gauge at the port, Instituto Nacional del Agua",
+              "es": "Hidrómetro del puerto, Instituto Nacional del Agua"
+            },
+            "url": "https://alerta.ina.gob.ar/a5/"
+          }
+        ]
+      }
     },
     {
       "id": "s-2023-10-18",
@@ -146,7 +215,31 @@
           "es": "Leída por el autor de esta página; las cifras salen del artículo."
         }
       },
-      "visibility": "public source"
+      "visibility": "public source",
+      "contrast": {
+        "status": "differ",
+        "text": {
+          "en": "Three reports of the same day: 16.10 m at seven in the morning, then 17.50 m and 17.95 m; \"more than 100\" families in two and \"more than 150\" in the third. The gauge peaked at 17.95 m.",
+          "es": "Tres notas del mismo día: 16,10 m a las siete de la mañana, después 17,50 m y 17,95 m; «más de 100» familias en dos y «más de 150» en la tercera. El hidrómetro llegó a 17,95 m."
+        },
+        "sources": [
+          {
+            "title": "Misiones Online, 18 Oct 2023 (a)",
+            "url": "https://misionesonline.net/2023/10/18/el-soberbio-evacuaron-preventivamente-a-mas-de-cien-familias-por-la-crecida-del-rio-uruguay/"
+          },
+          {
+            "title": "Misiones Online, 18 Oct 2023 (b)",
+            "url": "https://misionesonline.net/2023/10/18/el-soberbio-mas-de-150-familias-fueron-evacuadas-por-la-crecida-del-rio-uruguay/"
+          },
+          {
+            "title": {
+              "en": "Gauge at the port, Instituto Nacional del Agua",
+              "es": "Hidrómetro del puerto, Instituto Nacional del Agua"
+            },
+            "url": "https://alerta.ina.gob.ar/a5/"
+          }
+        ]
+      }
     },
     {
       "id": "s-2023-11-18",
@@ -174,7 +267,27 @@
           "es": "Leída por el autor de esta página; las cifras salen del artículo."
         }
       },
-      "visibility": "public source"
+      "visibility": "public source",
+      "contrast": {
+        "status": "agree",
+        "text": {
+          "en": "A report two days later counts 200 families. The gauge peaked at 19.85 m, against the 19.75 m of the report.",
+          "es": "Una nota de dos días después cuenta 200 familias. El hidrómetro llegó a 19,85 m, contra los 19,75 m de la nota."
+        },
+        "sources": [
+          {
+            "title": "Misiones Online, 20 Nov 2023",
+            "url": "https://misionesonline.net/2023/11/20/crecida-del-rio-uruguay-en-el-soberbio/"
+          },
+          {
+            "title": {
+              "en": "Gauge at the port, Instituto Nacional del Agua",
+              "es": "Hidrómetro del puerto, Instituto Nacional del Agua"
+            },
+            "url": "https://alerta.ina.gob.ar/a5/"
+          }
+        ]
+      }
     },
     {
       "id": "s-2025-06-30",
@@ -202,7 +315,23 @@
           "es": "Leída por el autor de esta página; las cifras salen del artículo."
         }
       },
-      "visibility": "public source"
+      "visibility": "public source",
+      "contrast": {
+        "status": "agree",
+        "text": {
+          "en": "The telemetric gauge peaked at 13.10 m, against the 13.12 m of the report.",
+          "es": "El hidrómetro telemétrico llegó a 13,10 m, contra los 13,12 m de la nota."
+        },
+        "sources": [
+          {
+            "title": {
+              "en": "Gauge at the port, Instituto Nacional del Agua",
+              "es": "Hidrómetro del puerto, Instituto Nacional del Agua"
+            },
+            "url": "https://alerta.ina.gob.ar/a5/"
+          }
+        ]
+      }
     },
     {
       "id": "s-2026-07-24",
@@ -230,7 +359,30 @@
           "es": "Leída por el autor de esta página; las cifras salen del artículo."
         }
       },
-      "visibility": "public source"
+      "visibility": "public source",
+      "contrast": {
+        "status": "differ",
+        "text": {
+          "en": "The communiqué of the municipal civil defence board, the day before, counts 35 families and 104 people, evacuated up to the 16 m line. The telemetric gauge peaked at 15.05 m; the daily reading of Prefectura gives 12.9 m.",
+          "es": "El comunicado de la Junta Municipal de Defensa Civil, el día anterior, cuenta 35 familias y 104 personas, evacuadas hasta la cota 16. El hidrómetro telemétrico llegó a 15,05 m; la lectura diaria de Prefectura da 12,9 m."
+        },
+        "sources": [
+          {
+            "title": {
+              "en": "Communiqué of the civil defence board, in Primera Edición, 23 Jul 2026",
+              "es": "Comunicado de la Junta de Defensa Civil, en Primera Edición, 23 jul 2026"
+            },
+            "url": "https://www.primeraedicion.com.ar/nota/101125693/evacuaron-a-35-familias-en-el-soberbio-por-la-crecida-del-rio-uruguay/"
+          },
+          {
+            "title": {
+              "en": "Gauge at the port, Instituto Nacional del Agua",
+              "es": "Hidrómetro del puerto, Instituto Nacional del Agua"
+            },
+            "url": "https://alerta.ina.gob.ar/a5/"
+          }
+        ]
+      }
     },
     {
       "id": "m-gauge-vs-press",
