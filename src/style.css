@@ -92,6 +92,14 @@ td .sw { vertical-align: -1px; }
 .rises { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; min-height: 14px; }
 .rise { width: 11px; height: 11px; border-radius: 2px; display: block; border: 1px solid rgba(0,0,0,.25); }
 .rise.seen { background: var(--measured); }
+.piece canvas { display: block; width: 100%; border-radius: 4px; background: #0b0c0e; }
+.piece-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; }
+.piece-bar button { font: 500 12px var(--mono); background: none; border: 1px solid var(--rule); border-radius: 4px; padding: 5px 10px; color: var(--ink-2); cursor: pointer; }
+.piece-bar button:hover, .piece-bar button:focus-visible { border-color: var(--ink-2); }
+.piece-bar .pp { background: var(--ink); color: #fff; border-color: var(--ink); min-width: 92px; }
+.piece-bar .now { font: 12px var(--mono); color: var(--ink-2); }
+.sw.tri { width: 0; height: 0; border: 6px solid transparent; border-top: 9px solid #8a8e96; border-bottom: 0; border-radius: 0; background: none; }
+.sw.tri.seen { border-top-color: #e0a92e; }
 tr.grp td { padding-top: 10px; font-weight: 600; font-size: 12.5px; color: var(--ink-2); border-bottom: 0; }
 .mute { color: var(--ink-3); font-size: 12px; }
 .hbar { height: 12px; background: #f1f1f2; border-radius: 2px; }

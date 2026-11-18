@@ -9,6 +9,7 @@ import * as maplibregl from 'maplibre-gl';
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import { T } from './i18n.js';
 import { timetable } from './timetable.js';
+import { piece } from './piece.js';
 import { region } from './region.js';
 
 maplibregl.setWorkerUrl(workerUrl); // maplibre-gl 6 is ESM-only: the worker URL must be set before the first map
@@ -166,7 +167,7 @@ function build() {
     const s = t.s[id], sec = h('section', { id, 'data-id': id });
     sec.append(h('span', { class: 'num' }, s.num), h('h2', {}, fill(s.h, vals)));
     s.p.forEach((p) => sec.append(h('p', {}, fill(p, vals))));
-    if (id === 'radar') { const f = h('div', { class: 'figure' }, `<h3>${s.fig}</h3><p class="sub">${s.sub}</p>`); f.append(radarChart(s)); sec.append(f); if (D.timetable) sec.append(timetable(D.timetable, lang, { h, fill, nf, day, showTip, hideTip })); }
+    if (id === 'radar') { const f = h('div', { class: 'figure' }, `<h3>${s.fig}</h3><p class="sub">${s.sub}</p>`); f.append(radarChart(s)); sec.append(f); if (D.timetable) sec.append(timetable(D.timetable, lang, { h, fill, nf, day, showTip, hideTip })); if (D.timetable && D.daily) sec.append(piece(D.daily, D.timetable, lang, { h, fill, nf, day })); }
     if (id === 'relief') { const f = h('div', { class: 'figure' }, `<h3>${s.fig}</h3><p class="sub">${s.sub}</p>`); f.append(reliefChart(s)); sec.append(f, pixels(s)); }
     if (id === 'water') {
       const seg = h('div', { class: 'seg', role: 'group' });
@@ -316,7 +317,8 @@ function observe() {
 $('#lang').onclick = () => { lang = lang === 'en' ? 'es' : 'en'; try { localStorage.setItem('un_lugar_lang', lang); } catch { /* ignore */ } build(); };
 
 const get = (f) => fetch(BASE + f).then((r) => { if (!r.ok) throw new Error(f + ' ' + r.status); return r.json(); });
-Promise.all(['radar.json', 'relief.json', 'water.json', 'forest.json', 'places.json', 'annotations.json', 'timetable.json', 'region_timetable.json', 'region_forest.json'].map(get)).then(([radar, relief, water, forest, places, ann, timetable, regionT, regionF]) => {
-  Object.assign(D, { radar, relief, water, forest, places, timetable, regionT, regionF, notes: ann.annotations });
+Promise.all(['radar.json', 'relief.json', 'water.json', 'forest.json', 'places.json', 'annotations.json', 'timetable.json', 'region_timetable.json', 'region_forest.json', 'timetable_daily.json'].map(get)).then(([radar, relief, water, forest, places, ann, timetable, regionT, regionF, daily]) => {
+  Object.assign(D, { radar, relief, water, forest, places, timetable, regionT, regionF, daily, notes: ann.annotations });
   build(); initMap();
+  if (location.hash.startsWith('#the-timetable')) requestAnimationFrame(() => document.getElementById('the-timetable')?.scrollIntoView({ block: 'center' }));   // the sections are built after load, so the browser cannot follow the link itself
 }).catch((e) => { $('#sections').innerHTML = `<p>Could not load the data files: ${e.message}</p>`; });

@@ -1,5 +1,6 @@
 """Builds public/data/timetable.json: every rise of the river above the evacuation level
 against the timetable of Sentinel-1 passes.
+It also writes public/data/timetable_daily.json, the river day by day, for the sketch of The Timetable.
 
 Run from the repository root:
 
@@ -108,6 +109,15 @@ def main():
                   'api': 'https://alerta.ina.gob.ar/a5/obs/puntual/observaciones?series_id=<id>'},
         'episodes': episodes}
     json.dump(out, open(OUT / 'timetable.json', 'w'), separators=(',', ':'))
+    # the river day by day, for the sketch of The Timetable (src/piece.js): the highest hourly level of each day
+    daily = h.resample('1D').max().reindex(pd.date_range(origin, t1.floor('D'), freq='1D'))
+    json.dump({'origin': out['origin'], 'evacuation_level_m': EVAC_M, 'unit': 'm above the zero of the gauge',
+               'note': 'highest hourly level of each day, one value per day from origin; null where no reading within 48 h',
+               'level_m': [None if pd.isna(v) else round(float(v), 1) for v in daily],
+               'passes_note': 'every Sentinel-1 pass: days from origin, and the river level at that hour',
+               'passes': [[round((t - origin).total_seconds() / 86400, 2), None if pd.isna(v) else round(float(v), 1)]
+                          for t, v in zip(passes, h.reindex(passes.round('h')).to_numpy())]},
+              open(OUT / 'timetable_daily.json', 'w'), separators=(',', ':'))
     print(f"timetable: {len(episodes)} rises above {EVAC_M} m, {out['days_above']} days ({share:.2%}); "
           f"{out['episodes_with_a_pass']} with a pass; expected by chance {out['expected_passes_above']}; spikes dropped {dropped}")
     for e in episodes:
