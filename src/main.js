@@ -147,10 +147,17 @@ function build() {
     cells: nf(F.cells), forestN: nf(F.about_forest), forestShare: pct(F.about_forest_share), cropN: nf(F.about_crops), forestIn: nf(Math.round(F.cells / F.about_forest))
   };
   const RT = D.regionT, RF = D.regionF;
+  const list = (a) => new Intl.ListFormat(lang === 'es' ? 'es' : 'en-GB', { type: 'conjunction' }).format(a);
+  const span = (a, b, k) => nf(Object.entries(RT.rises_by_year).filter(([y]) => +y >= a && +y <= b).reduce((n, [, v]) => n + v[k], 0));
   if (RT && RF) Object.assign(vals, {
+    rMid: nf(RT.rises_by_duration['3_to_10_days'].rises), rMidSeen: nf(RT.rises_by_duration['3_to_10_days'].with_a_pass),
+    rLong: nf(RT.rises_by_duration.over_10_days.rises), rLongSeen: nf(RT.rises_by_duration.over_10_days.with_a_pass),
+    rEarly: span(2015, 2016, 'rises'), rEarlySeen: span(2015, 2016, 'with_a_pass'), rLate: span(2017, 2100, 'rises'), rLateSeen: span(2017, 2100, 'with_a_pass'),
+    rOutCov: list(RT.gauges_left_out.filter((g) => g.reason === 'coverage').map((g) => g.name)),
+    rOutLev: list(RT.gauges_left_out.filter((g) => g.reason === 'level').map((g) => g.name)), rOutNo: list(RT.gauges_without_level),
     rGauges: nf(RT.gauges), rFloods: nf(RT.floods_distinct), rFloodsSeen: nf(RT.floods_distinct_with_a_pass), rFloodHa: nf(RF.mapbiomas_forest_forty_other.by_leading_mapbiomas_class.flooded_forest.ha / 1e6, 1), rRises: nf(RT.rises), rSeen: nf(RT.rises_with_a_pass), rShort: nf(RT.rises_under_3_days), rShortSeen: nf(RT.rises_under_3_days_with_a_pass),
     rNino: nf(RT.rises_by_enso.nino), rNinoM: nf(RT.months_by_enso.nino), rMonths: nf(RT.months_by_enso.nino + RT.months_by_enso.neutral + RT.months_by_enso.nina),
-    rAbove: nf(RT.gauges - RT.gauges_never_above.length), rNever: RT.gauges_never_above.join(lang === 'es' ? ' y ' : ' and '),
+    rAbove: nf(RT.gauges - RT.gauges_never_above.length), rNever: list(RT.gauges_never_above),
     rCells: nf(RF.region.cells / 1e6, 1), rShare: pct(RF.region.about_forest_share), rHa: nf(RF.region.about_forest_ha / 1e6, 1),
     rFormosaIn: nf(Math.round(1 / RF.by_province.Formosa.about_forest_share)), rCropHa: nf(Math.round(RF.region.about_crops_ha / 1000) * 1000),
     rCropMis: pct(RF.by_province.Misiones.about_crops_ha / RF.region.about_crops_ha), rSplit: pct(RF.trees_three_products.split_share)

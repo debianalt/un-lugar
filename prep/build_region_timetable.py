@@ -1,18 +1,18 @@
 """Builds public/data/region_timetable.json: at every river gauge of the region that has a published evacuation level,
 each rise above that level against the timetable of Sentinel-1 passes over the gauge.
 
-It is build_timetable.py (El Soberbio alone) run on ten gauges of the Uruguay, Iguazú and Paraná rivers.
+It is build_timetable.py (El Soberbio alone) run on the gauges of the Iguazú, Paraná, Uruguay and Paraguay rivers in
+Misiones, Corrientes, Chaco and Formosa.
 
 Run from the repository root (needs an Earth Engine account for the list of passes, fetched once):
 
+    python prep/fetch_region_gauges.py                       # once: the list of gauges and their readings
     python prep/build_region_timetable.py
-    python prep/build_region_timetable.py --manifest manifiesto_nea.json --added --out <file>     # the four provinces
-
-The second form reads the wider list of gauges written by fetch_region_gauges.py (Paraguay, middle Paraná and the
-Uruguay downstream of Misiones) and writes wherever --out says, so that public/data is not touched.
+    python prep/build_region_timetable.py --first-only --out <file>          # the ten gauges of the first version
+    python prep/build_region_timetable.py --added-companions --out <file>    # a check, see the rules
 
 Inputs, in $UN_LUGAR_CRECIDAS (outside the repository):
-  manifiesto.json          the gauges read by Prefectura Naval and, for each, the other series within 5 km
+  manifiesto_nea.json      the gauges read by Prefectura Naval and, for each, the other series within 5 km
   ina/series.json          the catalogue of Argentina's Instituto Nacional del Agua, with alert and evacuation levels
   ina/obs_<id>.json        readings of each series, https://alerta.ina.gob.ar/a5/obs/puntual/observaciones?series_id=<id>
   nino/nino34_ersstv6.txt  monthly Niño 3.4 anomaly (NOAA PSL, ERSST v6)
@@ -32,12 +32,18 @@ Rules, the same as build_timetable.py:
   Whether that scene shows the water is another question; at El Soberbio it did not.
 - Rises at neighbouring gauges are often the same flood: "floods_distinct" joins the rises of one river whose peaks
   are no more than ten days apart.
-- "totals" repeats the counts for three sets of gauges: all of them; those whose level is known for at least half
-  of the hours ("covered"); and, of these, those whose river is above the level no more than 10 % of the time
-  ("covered_level_ok"), since a level exceeded more often than that does not work as an evacuation level. Each set is
-  also split by river and by reach (the gauges of manifiesto.json against the ones added later).
+- The gauges added on 18 Nov 2026 (every one outside the first ten) use the daily Prefectura reading alone. Their
+  companion telemetry has false jumps of 2 to 4 m that the 5 m rule does not catch: Corrientes at 9.51 m in September
+  2026, above the record of 1983, and Puerto Pilcomayo at 9.62 m in 2024. This rule was set after seeing those jumps.
+  --added-companions runs them with companions, to compare.
+- Two rules, fixed before any result was seen, leave a gauge out of "stations" and of every count, and into
+  "gauges_left_out" with the reason: its level is known for less than half of the hours ("coverage"), or its river is
+  above the level more than 10 % of the time ("level"), since a level exceeded that often does not work as an
+  evacuation level.
 - "floods_overlap" is a second way of joining rises into floods, for long rivers with slow floods: rises of one river
   whose days above the level overlap. "floods_distinct" stays as the main count.
+- "rises_by_year" counts rises by the year of their peak; "passes_per_gauge_by_year" is the median, over the gauges, of
+  the Sentinel-1 passes of each year.
 - El Niño or La Niña at the peak of each rise: three-month mean of the Niño 3.4 anomaly at or beyond 0.5 °C.
 """
 from __future__ import annotations
@@ -62,6 +68,9 @@ S1 = 'COPERNICUS/S1_GRD'
 MIN_KNOWN = 0.5                          # share of hours with a known level for a gauge to enter "covered"
 MAX_ABOVE = 0.10                         # share of time above the level beyond which the level is flagged
 OLD_GROUPS = {'uruguay', 'iguazu', 'parana', 'regulado'}
+RIVERS = ['Iguazú', 'Paraná', 'Uruguay', 'Paraguay']
+NAME = {'73': 'Bonpland'}                # the catalogue writes "Bompland"
+DOWNSTREAM = {131: 12.5}                 # the catalogue numbers each river downstream, but for Puerto Maní
 
 
 def join_by_peak(eps):
@@ -100,14 +109,6 @@ def summary(stations):
             'rises_by_duration': {k: {'rises': sum(f(e['days_above']) for _, e in eps),
                                       'with_a_pass': sum(f(e['days_above']) and e['passes_inside'] > 0 for _, e in eps)}
                                   for k, f in bins.items()}}
-
-
-def split(stations):
-    out = summary(stations)
-    out['by_river'] = {r: summary([s for s in stations if s['river'] == r]) for r in sorted({s['river'] for s in stations})}
-    out['by_river_and_reach'] = {f'{r} / {k}': summary([s for s in stations if s['river'] == r and s['reach'] == k])
-                                 for r, k in sorted({(s['river'], s['reach']) for s in stations})}
-    return out
 
 
 def series(sid: int) -> pd.Series:
@@ -163,23 +164,23 @@ def phase(oni: pd.Series, t: pd.Timestamp) -> str | None:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--manifest', default='manifiesto.json', help='file in $UN_LUGAR_CRECIDAS with the list of gauges')
+    ap.add_argument('--manifest', default='manifiesto_nea.json', help='file in $UN_LUGAR_CRECIDAS with the list of gauges')
     ap.add_argument('--out', default=str(OUT / 'region_timetable.json'))
-    ap.add_argument('--added', action='store_true', help='also the gauges outside Misiones and its two neighbours in Corrientes')
-    ap.add_argument('--added-prefectura-only', action='store_true',
-                    help='for the added gauges use the daily Prefectura reading alone, with no companion series (a check)')
+    ap.add_argument('--first-only', action='store_true', help='only the ten gauges of the first version')
+    ap.add_argument('--added-companions', action='store_true',
+                    help='a check: the added gauges with their companion series instead of the Prefectura reading alone')
     args = ap.parse_args()
     man = json.load(open(CRECIDAS / args.manifest, encoding='utf-8'))['hidrometros']
     cat = {r['id']: r for r in json.load(open(CRECIDAS / 'ina/series.json', encoding='utf-8'))['rows']}
     oni = enso()
-    stations, left_out = [], []
+    stations, no_level = [], []
     for sid, m in man.items():
-        if m['grupo'] not in OLD_GROUPS and not args.added:
-            continue                     # the site's figure is the first ten gauges; the wider set is asked for with --added
+        if m['grupo'] not in OLD_GROUPS and args.first_only:
+            continue
         st = cat[int(sid)]['estacion']
         level = LEVEL_OVERRIDE.get(sid, st['nivel_evacuacion'])
         if level is None:
-            left_out.append(m['nombre'])
+            no_level.append(m['nombre'])
             continue
         lon, lat = st['geom']['coordinates']
         passes = passes_over(sid, lon, lat)
@@ -188,7 +189,7 @@ def main():
         pref = series(int(sid))
         if sid in SERIES_OVERRIDE:
             order = SERIES_OVERRIDE[sid]
-        elif args.added_prefectura_only and m['grupo'] not in OLD_GROUPS:
+        elif m['grupo'] not in OLD_GROUPS and not args.added_companions:
             order = [int(sid)]
         else:
             daily, order = pref[t0:].resample('1D').mean(), []
@@ -218,11 +219,12 @@ def main():
                              'end': e['end'].strftime('%Y-%m-%d'), 'peak_m': round(float(e['peak']), 2),
                              'days_above': round(e['hours'] / 24, 1), 'passes_inside': int(len(inside)),
                              'enso': phase(oni, e['peak_t'])})
+        per_year = pd.Series(1, index=passes).groupby(passes.year).sum()
         known = int(h.notna().sum())
         share = float(up.sum()) / known if known else 0.0
         dur = [e['days_above'] for e in episodes]
         stations.append({
-            'id': int(sid), 'name': m['nombre'], 'river': m['rio'], 'reach': 'first' if m['grupo'] in OLD_GROUPS else 'added',
+            'id': int(sid), 'name': NAME.get(sid, m['nombre']), 'river': m['rio'], 'reach': 'first' if m['grupo'] in OLD_GROUPS else 'added',
             'regulated': m['grupo'] == 'regulado', 'lon': round(lon, 4), 'lat': round(lat, 4),
             'evacuation_level_m': level, 'level_source': 'local press' if sid in LEVEL_OVERRIDE else 'Instituto Nacional del Agua',
             'series': order, 'first': t0.strftime('%Y-%m-%d'), 'last': t1.strftime('%Y-%m-%d'),
@@ -233,38 +235,48 @@ def main():
             'median_rise_days': round(float(np.median(dur)), 1) if dur else None,
             'passes_above': int(sum(e['passes_inside'] for e in episodes)), 'expected_passes_above': round(len(passes) * share, 1),
             'mean_days_between_passes': round((t1 - t0).total_seconds() / 86400 / (len(passes) - 1), 1),
+            'passes_by_year': {str(y): int(per_year.get(y, 0)) for y in range(2015, int(END[:4]) + 1)},
             'episodes': episodes})
         s = stations[-1]
         print(f"{s['name']:<16}{s['river']:<8} level {level:>5}  max {s['max_m']:>6}  rises {s['rises']:>3}  with a pass {s['rises_with_a_pass']:>3}  "
               f"median {s['median_rise_days']} d  days {s['days_above']:>6}  passes {s['passes_total']} ({s['mean_days_between_passes']} d)  "
               f"known {s['gauge_hours_known_share']}  series {order}")
 
+    stations.sort(key=lambda s: (RIVERS.index(s['river']), DOWNSTREAM.get(s['id'], s['id'])))
+    left_out = [{'name': s['name'], 'river': s['river'], 'reason': 'coverage' if s['low_coverage'] else 'level',
+                 'gauge_hours_known_share': s['gauge_hours_known_share'], 'share_above': s['share_above']}
+                for s in stations if s['low_coverage'] or s['level_above_10pct']]
+    stations = [s for s in stations if not (s['low_coverage'] or s['level_above_10pct'])]
     eps = [(s, e) for s in stations for e in s['episodes']]
     short = [e for _, e in eps if e['days_above'] < 3]
     by_enso = {k: sum(1 for _, e in eps if e['enso'] == k) for k in ('nino', 'neutral', 'nina')}
     # rises at neighbouring gauges are often one flood: same river, peaks no more than ten days apart
     floods = join_by_peak(eps)
-    covered = [s for s in stations if not s['low_coverage']]
-    months = oni[stations[0]['first'][:7]:END[:7]]
-    out = {'until': END, 'gauges': len(stations), 'gauges_without_level': left_out,
+    total = summary(stations)
+    years = [str(y) for y in range(2015, int(END[:4]) + 1)]
+    months = oni[next((s for s in stations if str(s['id']) == SOBERBIO), stations[0])['first'][:7]:END[:7]]
+    out = {'until': END, 'gauges': len(stations), 'rivers': [r for r in RIVERS if any(s['river'] == r for s in stations)],
+           'gauges_without_level': no_level, 'gauges_left_out': left_out,
            'gauges_never_above': [s['name'] for s in stations if s['rises'] == 0],
            'rises': len(eps), 'rises_with_a_pass': sum(e['passes_inside'] > 0 for _, e in eps),
            'floods_distinct': len(floods), 'floods_distinct_with_a_pass': sum(f[2] for f in floods),
            'floods_distinct_in_nino_months': sum('nino' in f[3] for f in floods),
+           'floods_overlap': total['floods_overlap'], 'floods_overlap_with_a_pass': total['floods_overlap_with_a_pass'],
            'passes_above': sum(s['passes_above'] for s in stations), 'expected_passes_above': round(sum(s['expected_passes_above'] for s in stations), 1),
            'rises_under_3_days': len(short), 'rises_under_3_days_with_a_pass': sum(e['passes_inside'] > 0 for e in short),
+           'rises_by_duration': total['rises_by_duration'],
+           'rises_by_year': {y: {'rises': sum(e['date'][:4] == y for _, e in eps),
+                                 'with_a_pass': sum(e['date'][:4] == y and e['passes_inside'] > 0 for _, e in eps)} for y in years},
+           'passes_per_gauge_by_year': {y: float(np.median([s['passes_by_year'][y] for s in stations])) for y in years},
            'rises_by_enso': by_enso,
            'months_by_enso': {'nino': int((months >= 0.5).sum()), 'neutral': int(((months > -0.5) & (months < 0.5)).sum()),
                               'nina': int((months <= -0.5).sum())},
            'enso_source': 'Niño 3.4 anomaly, ERSST v6, NOAA PSL; three-month mean at or beyond 0.5 °C',
-           'gauges_low_coverage': [s['name'] for s in stations if s['low_coverage']],
-           'gauges_level_above_10pct': [s['name'] for s in stations if s['level_above_10pct']],
-           'totals': {'all': split(stations), 'covered': split(covered),
-                      'covered_level_ok': split([s for s in covered if not s['level_above_10pct']])},
+           'by_river': {r: summary([s for s in stations if s['river'] == r]) for r in RIVERS if any(s['river'] == r for s in stations)},
            'stations': stations}
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     json.dump(out, open(args.out, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-    print({k: v for k, v in out.items() if k not in ('stations', 'totals')})
+    print({k: v for k, v in out.items() if k not in ('stations', 'by_river')})
 
 
 if __name__ == '__main__':
