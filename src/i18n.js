@@ -9,7 +9,7 @@ export const T = {
     lede: 'El Soberbio sits on the Uruguay River, between Argentina and Brazil. When the river passes thirteen metres, families in the low neighbourhoods leave their homes. This is what each open satellite product sees on this bend of the river, and what it does not.',
     status: 'Frame of 14 by 12 km. Data as of November 2026.',
     footer: `<h2>Who and how</h2>
-      <p><b>Who.</b> Raimundo Elías Gómez, anthropologist. CONICET / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones. In 2021 I coordinated in Misiones the geospatial area of the national survey of Indigenous community lands. What the communities know about this river exists, and it is not mine to publish.</p>
+      <p><b>Who.</b> Raimundo Elías Gómez, anthropologist. CONICET / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones. In 2021 I coordinated in Misiones the geospatial area of the national survey of Indigenous community lands. The rule here comes from that work: what the people of the place know is shown when they decide.</p>
       <p><b>How.</b> The tests are from 2026. The code, written with the assistance of AI coding agents, and the data are open. No note has yet been checked by anyone other than the author of this page, and a note cannot yet be added from here.</p>
       <p><b>Sources.</b> ${SOURCES}</p>
       <p><b>Contact.</b> If you live here and something does not match what you saw: <a href="mailto:nealab@spatia.ar">nealab@spatia.ar</a>.</p>
@@ -21,7 +21,7 @@ export const T = {
         p: [
           'Sentinel-1 is the open radar most flood maps rely on, because it sees through cloud. Between 2015 and 2026 it passed {kept} times over this corridor with good coverage and a reading of the gauge at the port within 48 hours.',
           'With the river between 0 and 12 m, the water it detects stays near {median} hectares: it is the river itself. Only {above} of the {kept} passes found the river above the evacuation level of 13 m. It was on {floodDate}, at {floodH} m, and it detected {floodW} hectares, less than on an ordinary day.',
-          'The cause is not established. The banks are steep and covered with forest, and the water may rise under the trees, where the signal of this radar does not reach. NISAR, a radar built to see under forest, did not confirm it either in two rises of the river in October 2026. SAOCOM, Argentina\'s L-band radar, imaged this bend on 5 November 2023 with the river at 14 m; its images reach CONICET researchers through an agreement with CONAE, the national space agency.'
+          'The cause is not established. The banks are steep and covered with forest, and the water may rise under the trees, where the signal of this radar does not reach. NISAR, a radar built to see under forest, did not confirm it either in two rises of the river in October 2026.'
         ],
         fig: 'Water detected by Sentinel-1 against river height',
         sub: 'Each dot is one satellite pass. Hectares of open water in a 20 × 20 km corridor.',
@@ -83,15 +83,16 @@ export const T = {
         num: '05 · What no sensor holds',
         h: 'This layer is empty on purpose',
         p: [
-          'Mbyá Guaraní families fish this river and sell along the coast road. The official registers of Indigenous communities do not place them here: three public lists count different numbers of communities for the province and none records where people work.'
+          'How far the water came into each house is known to the families of Chivilcoy, Maracaná and Unión. At what height on the gauge each neighbourhood leaves is known to the firefighters. Which streams rise and which roads are cut is known to the farmers of the chacras. How the crossing to Brazil changes with each height of the river is known to the people of the port.',
+          'There are also Mbyá Guaraní families who fish this river and sell along the coast road. The official registers of Indigenous communities do not place them here: three public lists count different numbers of communities for the province and none records where people work.'
         ],
         box: [
-          'What the communities know is not shown.',
-          'It stays empty until a community council decides what may be shown and at what precision. That knowledge is not kept here: it stays in tools the community controls, and only what the community decides to publish leaves them.'
+          'None of that is shown yet.',
+          'Whoever knows it decides. Each person decides about what is theirs, how precisely it is shown, and can withdraw it. What speaks of a whole neighbourhood goes through its neighbourhood commission. What belongs to an Indigenous community goes through its council and is not kept here: it stays in tools the community controls.'
         ],
         blanks: 'Three kinds of blank',
-        blank: { unseen: 'dots: the sensor passed and did not see, or never passed', outside: 'hatching: the product ends, in space or in time', withheld: 'dashes: the knowledge exists and is kept back by decision' },
-        legend: 'Kept back by decision. The frame holds no data.'
+        blank: { unseen: 'dots: the sensor passed and did not see, or never passed', outside: 'hatching: the product ends, in space or in time', withheld: 'dashes: someone knows it and has not yet decided to show it' },
+        legend: 'The people of the place know it. It is shown when they decide.'
       },
       notes: {
         num: '06 · Annotations',
@@ -114,7 +115,7 @@ export const T = {
     lede: 'El Soberbio está sobre el río Uruguay, entre la Argentina y Brasil. Cuando el río pasa los trece metros, las familias de los barrios bajos salen de sus casas. Acá se muestra qué ve cada producto satelital abierto en esta curva del río, y qué no ve.',
     status: 'Recuadro de 14 por 12 km. Datos a noviembre de 2026.',
     footer: `<h2>Quién y cómo</h2>
-      <p><b>Quién.</b> Raimundo Elías Gómez, antropólogo. CONICET / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones. En 2021 coordiné en Misiones el área geoespacial del relevamiento nacional de tierras de comunidades indígenas. Lo que las comunidades saben de este río existe y no me corresponde publicarlo.</p>
+      <p><b>Quién.</b> Raimundo Elías Gómez, antropólogo. CONICET / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones. En 2021 coordiné en Misiones el área geoespacial del relevamiento nacional de tierras de comunidades indígenas. De ese trabajo sale la regla de acá: lo que sabe la gente del lugar se muestra cuando ella lo decide.</p>
       <p><b>Cómo.</b> Las pruebas son de 2026. El código, escrito con asistencia de agentes de programación de IA, y los datos son abiertos. Ninguna nota fue revisada todavía por alguien distinto del autor de esta página, y desde acá todavía no se puede sumar una.</p>
       <p><b>Fuentes.</b> ${SOURCES}</p>
       <p><b>Contacto.</b> Si vivís acá y algo de esto no coincide con lo que viste: <a href="mailto:nealab@spatia.ar">nealab@spatia.ar</a>.</p>
@@ -126,7 +127,7 @@ export const T = {
         p: [
           'Sentinel-1 es el radar abierto que usan casi todos los mapas de inundación, porque ve a través de las nubes. Entre 2015 y 2026 pasó {kept} veces sobre este corredor con buena cobertura y una lectura del hidrómetro del puerto a menos de 48 horas.',
           'Con el río entre 0 y 12 m, el agua que detecta se queda cerca de {median} hectáreas: es el río mismo. Sólo {above} de las {kept} pasadas encontró el río por encima de la cota de evacuación de 13 m. Fue el {floodDate}, con {floodH} m, y detectó {floodW} hectáreas, menos que un día cualquiera.',
-          'La causa no está establecida. Las barrancas son empinadas y tienen monte, y es posible que el agua suba bajo los árboles, donde la señal de este radar no llega. NISAR, un radar hecho para ver bajo el monte, tampoco lo confirmó en dos subidas del río de octubre de 2026. SAOCOM, el radar argentino de banda L, tomó esta curva el 5 de noviembre de 2023 con el río en 14 m; sus imágenes llegan a los investigadores del CONICET por un convenio con la CONAE.'
+          'La causa no está establecida. Las barrancas son empinadas y tienen monte, y es posible que el agua suba bajo los árboles, donde la señal de este radar no llega. NISAR, un radar hecho para ver bajo el monte, tampoco lo confirmó en dos subidas del río de octubre de 2026.'
         ],
         fig: 'Agua detectada por Sentinel-1 según la altura del río',
         sub: 'Cada punto es una pasada del satélite. Hectáreas de agua abierta en un corredor de 20 × 20 km.',
@@ -188,15 +189,16 @@ export const T = {
         num: '05 · Lo que ningún sensor guarda',
         h: 'Esta capa está vacía a propósito',
         p: [
-          'Hay familias mbyá guaraní que pescan en este río y venden a la vera de la ruta costera. Los registros oficiales de comunidades indígenas no las ubican acá: tres listas públicas cuentan cantidades distintas de comunidades en la provincia y ninguna registra dónde trabaja la gente.'
+          'Hasta dónde llegó el agua en cada casa lo saben las familias de Chivilcoy, Maracaná y Unión. A qué altura del hidrómetro sale cada barrio lo saben los bomberos. Qué arroyos crecen y qué caminos se cortan lo saben los colonos de las chacras. Cómo cambia el cruce a Brasil con cada altura del río lo sabe la gente del puerto.',
+          'Hay también familias mbyá guaraní que pescan en este río y venden a la vera de la ruta costera. Los registros oficiales de comunidades indígenas no las ubican acá: tres listas públicas cuentan cantidades distintas de comunidades en la provincia y ninguna registra dónde trabaja la gente.'
         ],
         box: [
-          'Lo que saben las comunidades no se muestra.',
-          'Queda vacía hasta que un consejo comunitario decida qué se puede mostrar y con qué precisión. Ese conocimiento no se guarda acá: queda en herramientas que controla la comunidad, y de ahí sale sólo lo que ella decida publicar.'
+          'Nada de eso se muestra todavía.',
+          'Lo decide quien lo sabe. Cada persona decide sobre lo suyo, con qué precisión se muestra, y puede retirarlo. Lo que habla de un barrio entero pasa por su comisión vecinal. Lo de una comunidad indígena pasa por su consejo y no se guarda acá: queda en herramientas que ella controla.'
         ],
         blanks: 'Tres clases de blanco',
-        blank: { unseen: 'punteado: el sensor pasó y no vio, o nunca pasó', outside: 'rayado: el producto termina, en el espacio o en el tiempo', withheld: 'guiones: el conocimiento existe y se guarda por decisión' },
-        legend: 'Guardado por decisión. El recuadro no tiene datos.'
+        blank: { unseen: 'punteado: el sensor pasó y no vio, o nunca pasó', outside: 'rayado: el producto termina, en el espacio o en el tiempo', withheld: 'guiones: alguien lo sabe y todavía no decidió mostrarlo' },
+        legend: 'Lo sabe la gente del lugar. Se muestra cuando ella lo decida.'
       },
       notes: {
         num: '06 · Anotaciones',

@@ -12,7 +12,7 @@ The page takes a frame of 14 × 12 km and shows, product by product, what each o
 | Relief | Four open elevation models differ by a median of 9.9 m within 300 m of the river. | `public/data/relief.json`, `relief_range.png` |
 | Water | At the river height of November 2023 a terrain-based flood model reaches 1,283 ha; 482 ha of that is land where the Global Surface Water record (1984–2021) never saw water. | `public/data/water.json`, `water_*.png` |
 | Forest | Forest Typology 2020 (ForTy) and MapBiomas disagree about forest in 108 of 1,811 cells, on both banks. In another 124, all on the Argentine side, MapBiomas maps yerba mate or tea and ForTy maps other land. | `public/data/forest.json`, `forest.geojson` |
-| What no sensor holds | Empty on purpose. See [GOVERNANCE.md](GOVERNANCE.md). | — |
+| What no sensor holds | Empty on purpose: what families, firefighters, farmers and the people of the port know is shown when they decide. See [GOVERNANCE.md](GOVERNANCE.md). | — |
 | Annotations | Fifteen notes, each declared as measured, interpreted, situated or speculated, with source and review. | `public/data/annotations.json`, [`annotation.schema.json`](annotation.schema.json) |
 
 ## What it does not do yet
@@ -46,4 +46,4 @@ Raimundo Elías Gómez, CONICET / Facultad de Humanidades y Ciencias Sociales, U
 
 ## Licence
 
-Code: AGPL-3.0-or-later. Community knowledge, when there is any, is not covered by an open licence: see [GOVERNANCE.md](GOVERNANCE.md).
+Code: AGPL-3.0-or-later. What the people of the place contribute, when there is any, is not covered by an open licence: see [GOVERNANCE.md](GOVERNANCE.md).
