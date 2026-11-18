@@ -91,7 +91,9 @@ td .sw { vertical-align: -1px; }
 #tip { position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: #fff; font-size: 12.5px; padding: 6px 8px; border-radius: 4px; max-width: 260px; line-height: 1.35; }
 .marker { cursor: pointer; filter: drop-shadow(0 0 0 #fff) drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
 .maplibregl-ctrl-attrib { font-size: 10.5px; }
-footer { border-top: 1px solid var(--rule); padding-top: 18px; }
+footer { border-top: 1px solid var(--rule); padding-top: 34px; }
+footer p { font-size: 14.5px; color: var(--ink-2); margin: 0 0 10px; }
+footer a { color: inherit; text-underline-offset: 2px; }
 @media (max-width: 860px) {
   #app { display: flex; flex-direction: column; }
   #mapwrap { order: -1; position: sticky; top: 0; height: 44vh; z-index: 5; border-bottom: 1px solid var(--rule); }

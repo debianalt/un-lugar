@@ -25,7 +25,7 @@ function withheldPattern() {
 let lang = 'en';
 try { const v = localStorage.getItem('un_lugar_lang'); if (v === 'es' || v === 'en') lang = v; else if (navigator.language?.startsWith('es')) lang = 'es'; } catch { /* storage may be blocked */ }
 const D = {};
-let map, active = 'radar', waterView = 'm2023';
+let map, active = 'radar', waterView = 'm2014'; // the 2014 flood falls inside the satellite record
 const regOn = Object.fromEntries(REG.map((k) => [k, true]));
 const markers = [];
 
@@ -36,6 +36,8 @@ const pct = (x) => nf(x * 100) + (lang === 'es' ? ' %' : '%');
 const day = (iso, month = 'long') => new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-GB', { day: 'numeric', month, year: 'numeric', timeZone: 'UTC' }).format(new Date(iso + 'T00:00:00Z'));
 // The three kinds of blank the page tells apart (see section 05).
 const blank = (k) => `<i class="sw blank-${k}"></i>`;
+// Annotation fields may be a plain string or one text per language.
+const L = (v) => (v && typeof v === 'object' ? v[lang] ?? v.en : v ?? '');
 const h = (tag, attrs = {}, html = '') => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); e.innerHTML = html; return e; };
 const tip = $('#tip');
 function showTip(ev, html) { tip.innerHTML = html; tip.hidden = false; const x = Math.min(ev.clientX + 12, innerWidth - 270); tip.style.left = x + 'px'; tip.style.top = ev.clientY + 14 + 'px'; }
@@ -128,12 +130,12 @@ function build() {
   document.querySelectorAll('[data-t]').forEach((e) => { e.innerHTML = t[e.dataset.t]; });
   $('#lang').textContent = t.lang;
   const root = $('#sections'); root.innerHTML = '';
-  const sc = D.water.scenarios['2023'], fp = D.radar.flood_passes[0], F = D.forest;
+  const sc = D.water.scenarios['2014'], fp = D.radar.flood_passes[0], F = D.forest;
   const vals = {
     kept: nf(D.radar.passes_kept), median: nf(D.radar.water_ha_median_below_12m), f1a: nf(D.radar.nisar[0].f1, 2), f1b: nf(D.radar.nisar[1].f1, 2),
-    above: nf(D.radar.passes_above_evacuation), low: nf(D.radar.passes_below_6m), floodDate: day(fp.d), floodH: nf(fp.h, 1), floodW: nf(fp.w),
+    above: nf(D.radar.passes_above_evacuation), floodDate: day(fp.d), floodH: nf(fp.h, 1), floodW: nf(fp.w),
     p90: nf(D.relief.range_m.p90_riverbank_300m), bankR: nf(D.relief.range_m.median_riverbank_300m), bank: nf(D.relief.range_m.median_riverbank_300m, 1),
-    reached: nf(sc.reached_ha), never: nf(sc.never_seen_by_jrc_ha), share: pct(sc.share_never_seen),
+    h14: nf(sc.height_m, 1), reached14: nf(sc.reached_ha), never14: nf(sc.never_seen_by_jrc_ha), share14: pct(sc.share_never_seen),
     cells: nf(F.cells), forestN: nf(F.about_forest), forestShare: pct(F.about_forest_share), cropN: nf(F.about_crops), forestIn: nf(Math.round(F.cells / F.about_forest))
   };
   for (const id of ORDER) {
@@ -166,13 +168,11 @@ function build() {
       const fl = h('div', { class: 'filters', role: 'group' });
       for (const k of REG) { const b = h('button', { class: 'chip', type: 'button', 'aria-pressed': String(regOn[k]), title: s.regHelp[k] }, `${shape(k)}${s.reg[k]} · ${D.notes.filter((a) => a.register === k).length}`); b.onclick = () => { regOn[k] = !regOn[k]; b.setAttribute('aria-pressed', String(regOn[k])); syncNotes(); }; fl.append(b); }
       sec.append(fl);
-      const own = ['author', 'nobody yet', 'nobody independent yet']; // anything else is an independent reviewer
-      sec.append(h('p', { class: 'small' }, fill(s.indep, { indep: D.notes.filter((a) => !own.includes(a.review.by)).length, n: D.notes.length })));
       const list = h('div', { id: 'notelist' });
       for (const a of D.notes) {
-        const src = !a.source.url ? a.source.title : `<a href="${a.source.url}" target="_blank" rel="noopener">${a.source.title}</a>`;
+        const src = !a.source.url ? L(a.source.title) : `<a href="${a.source.url}" target="_blank" rel="noopener">${L(a.source.title)}</a>`;
         const n = h('div', { class: 'note', 'data-id': a.id, 'data-reg': a.register, tabindex: '0', style: `border-left-color:${COLOR[a.register]}` },
-          `<div class="meta">${shape(a.register)}<b>${s.reg[a.register]}</b><span>${a.date || ''}</span><span>${a.place}</span></div><p>${a.statement[lang]}</p><div class="src">${s.source}: ${src}</div><details><summary>${s.review}</summary>${s.by}: ${a.review.by}${a.review.date ? ', ' + a.review.date : ''}. ${a.review.method}</details>`);
+          `<div class="meta">${shape(a.register)}<b>${s.reg[a.register]}</b><span>${a.date ? day(a.date, 'short') : ''}</span><span>${L(a.place)}</span></div><p>${a.statement[lang]}</p><div class="src">${s.source}: ${src}</div><details><summary>${s.review}</summary>${s.by}: ${s.who[a.review.by] ?? a.review.by}${a.review.date ? ', ' + day(a.review.date) : ''}. ${L(a.review.method)}</details>`);
         n.addEventListener('click', (ev) => { if (ev.target.closest('a, summary')) return; focusNote(a.id, true); });
         list.append(n);
       }

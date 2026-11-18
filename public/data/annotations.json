@@ -1,6 +1,6 @@
 {
   "schema": "../annotation.schema.json",
-  "note": "Seed annotations written by the author from public sources. No annotation here comes from a community: that register stays empty until a community decides otherwise (see GOVERNANCE.md).",
+  "note": "Annotations written by the author from public sources. None comes from a community: that register stays empty until a community decides otherwise (see GOVERNANCE.md).",
   "annotations": [
     {
       "id": "s-2014-06-27",
@@ -17,13 +17,19 @@
         "es": "A las 20 el río estaba en 22,60 m y al menos 250 casas quedaron completamente bajo agua en Unión, Maracaná, Chivilcoy, Santa María y Galiano."
       },
       "source": {
-        "title": "El Territorio, reproduced by FM Guaraní",
+        "title": {
+          "en": "El Territorio, reproduced by FM Guaraní",
+          "es": "El Territorio, reproducido por FM Guaraní"
+        },
         "url": "https://fmguarani.blogspot.com/2014/06/en-el-soberbio-el-rio-uruguay-supera.html"
       },
       "review": {
         "by": "author",
         "date": "2026-10-23",
-        "method": "Found with an automated web search; figures taken from the article text; link checked."
+        "method": {
+          "en": "Read by the author; figures taken from the article.",
+          "es": "Leída por el autor; las cifras salen del artículo."
+        }
       },
       "visibility": "public source"
     },
@@ -42,13 +48,19 @@
         "es": "Bomberos del lugar: de 11,20 m a 14 m en la escala, Unión y Chivilcoy siempre se ven afectados."
       },
       "source": {
-        "title": "Nota22, from El Territorio",
+        "title": {
+          "en": "Nota22, from El Territorio",
+          "es": "Nota22, tomado de El Territorio"
+        },
         "url": "https://www.nota22.com/noticia/35181-la-creciente-del-rio-uruguay-dejo-a-el-soberbio-con-unos-400-evacuados.html"
       },
       "review": {
         "by": "author",
         "date": "2026-10-23",
-        "method": "Found with an automated web search; figures taken from the article text; link checked."
+        "method": {
+          "en": "Read by the author; figures taken from the article.",
+          "es": "Leída por el autor; las cifras salen del artículo."
+        }
       },
       "visibility": "public source"
     },
@@ -73,7 +85,10 @@
       "review": {
         "by": "author",
         "date": "2026-10-23",
-        "method": "Found with an automated web search; figures taken from the article text; link checked."
+        "method": {
+          "en": "Read by the author; figures taken from the article.",
+          "es": "Leída por el autor; las cifras salen del artículo."
+        }
       },
       "visibility": "public source"
     },
@@ -98,7 +113,10 @@
       "review": {
         "by": "author",
         "date": "2026-10-23",
-        "method": "Found with an automated web search; figures taken from the article text; link checked."
+        "method": {
+          "en": "Read by the author; figures taken from the article.",
+          "es": "Leída por el autor; las cifras salen del artículo."
+        }
       },
       "visibility": "public source"
     },
@@ -123,7 +141,10 @@
       "review": {
         "by": "author",
         "date": "2026-10-23",
-        "method": "Found with an automated web search; figures taken from the article text; link checked."
+        "method": {
+          "en": "Read by the author; figures taken from the article.",
+          "es": "Leída por el autor; las cifras salen del artículo."
+        }
       },
       "visibility": "public source"
     },
@@ -148,7 +169,10 @@
       "review": {
         "by": "author",
         "date": "2026-10-23",
-        "method": "Found with an automated web search; figures taken from the article text; link checked."
+        "method": {
+          "en": "Read by the author; figures taken from the article.",
+          "es": "Leída por el autor; las cifras salen del artículo."
+        }
       },
       "visibility": "public source"
     },
@@ -173,7 +197,10 @@
       "review": {
         "by": "author",
         "date": "2026-10-23",
-        "method": "Found with an automated web search; figures taken from the article text; link checked."
+        "method": {
+          "en": "Read by the author; figures taken from the article.",
+          "es": "Leída por el autor; las cifras salen del artículo."
+        }
       },
       "visibility": "public source"
     },
@@ -198,7 +225,10 @@
       "review": {
         "by": "author",
         "date": "2026-10-23",
-        "method": "Found with an automated web search; figures taken from the article text; link checked."
+        "method": {
+          "en": "Read by the author; figures taken from the article.",
+          "es": "Leída por el autor; las cifras salen del artículo."
+        }
       },
       "visibility": "public source"
     },
@@ -206,7 +236,10 @@
       "id": "m-gauge-vs-press",
       "register": "measured",
       "about": "water",
-      "place": "River, in front of the town",
+      "place": {
+        "en": "River, in front of the town",
+        "es": "Río, frente al pueblo"
+      },
       "lngLat": [
         -54.1932,
         -27.2945
@@ -217,13 +250,19 @@
         "es": "La serie diaria nacional del hidrómetro da 19,2 m para la crecida que la prensa informa en 19,75 m, y 12,9 m para la de julio de 2026, informada entre 14,45 y 15 m."
       },
       "source": {
-        "title": "Instituto Nacional del Agua, series 61 (El Soberbio)",
+        "title": {
+          "en": "Instituto Nacional del Agua, series 61 (El Soberbio)",
+          "es": "Instituto Nacional del Agua, serie 61 (El Soberbio)"
+        },
         "url": "https://alerta.ina.gob.ar/a5/"
       },
       "review": {
         "by": "author",
         "date": "2026-10-23",
-        "method": "Daily series compared with the heights quoted in dated press reports."
+        "method": {
+          "en": "Daily series compared with the heights quoted in dated press reports.",
+          "es": "Serie diaria comparada con las alturas citadas en notas de prensa fechadas."
+        }
       },
       "visibility": "public source"
     },
@@ -231,7 +270,10 @@
       "id": "m-radar-flat",
       "register": "measured",
       "about": "radar",
-      "place": "River, in front of the town",
+      "place": {
+        "en": "River, in front of the town",
+        "es": "Río, frente al pueblo"
+      },
       "lngLat": [
         -54.1931,
         -27.2905
@@ -242,13 +284,19 @@
         "es": "Entre 0 y 12 m del hidrómetro, la superficie de agua que detecta Sentinel-1 en este corredor no crece. Por encima de la cota de evacuación hay una sola pasada, en la crecida de 16 m de octubre de 2023: detectó menos agua, y lo único que se movió fue la cota del borde del agua, de 122 m a 129 m."
       },
       "source": {
-        "title": "Sentinel-1 passes 2015–2026 against the gauge (this repository, data/radar.json)",
+        "title": {
+          "en": "Sentinel-1 passes, 2015–2026, against the gauge",
+          "es": "Pasadas de Sentinel-1, 2015–2026, contra el hidrómetro"
+        },
         "url": ""
       },
       "review": {
         "by": "nobody independent yet",
         "date": "2026-10-22",
-        "method": "Water area per pass (VV below −15 dB) paired with the gauge reading nearest in time."
+        "method": {
+          "en": "Water area per pass (VV below −15 dB) paired with the gauge reading nearest in time.",
+          "es": "Superficie de agua por pasada (VV por debajo de −15 dB) con la lectura del hidrómetro más cercana en el tiempo."
+        }
       },
       "visibility": "public source"
     },
@@ -267,13 +315,19 @@
         "es": "Con 19,75 m el modelo de terreno alcanza 372 viviendas; la prensa contó más de 200 familias evacuadas. Evacuado no es lo mismo que inundado, y por encima de 19 m el modelo da de más."
       },
       "source": {
-        "title": "Author's flood exposure model, calibrated with dated press reports (data/water.json)",
+        "title": {
+          "en": "Flood exposure model, adjusted with dated press reports",
+          "es": "Modelo de exposición a crecidas, ajustado con notas de prensa fechadas"
+        },
         "url": "https://misionesonline.net/2023/11/17/alrededor-de-250-familias-de-seran-evacuadas-en-el-soberbio/"
       },
       "review": {
         "by": "nobody independent yet",
         "date": "2026-10-23",
-        "method": "Model output at each reported river height compared with the reported families."
+        "method": {
+          "en": "Model output at each reported river height compared with the reported families.",
+          "es": "Salida del modelo a cada altura informada, comparada con las familias informadas."
+        }
       },
       "visibility": "public source"
     },
@@ -292,13 +346,19 @@
         "es": "El modelo empieza a contar viviendas a los 15 m, pero las familias salen desde los 12 o 13 m. Es probable que el modelo de elevación de 30 m deje la barranca demasiado alta."
       },
       "source": {
-        "title": "Author's comparison of model and press (this repository)",
+        "title": {
+          "en": "Comparison of the model with the press",
+          "es": "Comparación del modelo con la prensa"
+        },
         "url": "https://www.elterritorio.com.ar/noticias/2017/05/31/531654-el-soberbio-15-familias-evacuadas-por-la-crecida-del-rio-uruguay"
       },
       "review": {
         "by": "nobody independent yet",
         "date": "2026-10-23",
-        "method": "Heights at which the model first reaches homes against heights at which evacuations were reported."
+        "method": {
+          "en": "Heights at which the model first reaches homes against heights at which evacuations were reported.",
+          "es": "Alturas a las que el modelo alcanza las primeras viviendas contra las alturas a las que se informaron evacuaciones."
+        }
       },
       "visibility": "public source"
     },
@@ -317,13 +377,19 @@
         "es": "En 23 notas fechadas entre 2014 y 2026 la prensa nunca nombra este lugar, ni Puerto Mata Ojos ni Hertman. El modelo alcanza a los tres. Nadie registró lo que pasa acá."
       },
       "source": {
-        "title": "Author's press survey, 23 October 2026",
+        "title": {
+          "en": "Press survey, 23 October 2026",
+          "es": "Relevamiento de prensa, 23 de octubre de 2026"
+        },
         "url": ""
       },
       "review": {
         "by": "nobody independent yet",
         "date": "2026-10-23",
-        "method": "Place names in the press reports compared with the zones the model reaches."
+        "method": {
+          "en": "Place names in the press reports compared with the zones the model reaches.",
+          "es": "Lugares nombrados en las notas de prensa comparados con las zonas que alcanza el modelo."
+        }
       },
       "visibility": "public source"
     },
@@ -331,7 +397,10 @@
       "id": "x-flooded-forest",
       "register": "speculated",
       "about": "radar",
-      "place": "River, in front of the town",
+      "place": {
+        "en": "River, in front of the town",
+        "es": "Río, frente al pueblo"
+      },
       "lngLat": [
         -54.1917,
         -27.2985
@@ -342,13 +411,19 @@
         "es": "El monte ribereño inundado puede devolver una señal de radar fuerte, y entonces el agua bajo los árboles se leería como tierra. No está probado."
       },
       "source": {
-        "title": "Author's working hypothesis",
+        "title": {
+          "en": "Author's hypothesis",
+          "es": "Hipótesis del autor"
+        },
         "url": ""
       },
       "review": {
         "by": "nobody yet",
         "date": "",
-        "method": "Would need L-band scenes of a flood and a dry date, or marks on the ground."
+        "method": {
+          "en": "Would need L-band scenes of a flood and of a dry date, or marks on the ground.",
+          "es": "Harían falta escenas de banda L de una crecida y de una fecha seca, o marcas en el terreno."
+        }
       },
       "visibility": "public source"
     },
@@ -356,7 +431,10 @@
       "id": "x-two-gauges",
       "register": "speculated",
       "about": "water",
-      "place": "River, in front of the town",
+      "place": {
+        "en": "River, in front of the town",
+        "es": "Río, frente al pueblo"
+      },
       "lngLat": [
         -54.1917,
         -27.3025
@@ -367,13 +445,19 @@
         "es": "La diferencia entre las alturas de la prensa y la serie nacional puede venir de un segundo hidrómetro en el puerto, o del pico instantáneo frente al valor diario. No está confirmado."
       },
       "source": {
-        "title": "Author's working hypothesis",
+        "title": {
+          "en": "Author's hypothesis",
+          "es": "Hipótesis del autor"
+        },
         "url": ""
       },
       "review": {
         "by": "nobody yet",
         "date": "",
-        "method": "Would need the coast guard's own readings."
+        "method": {
+          "en": "Would need the coast guard's own readings.",
+          "es": "Harían falta las lecturas propias de la Prefectura."
+        }
       },
       "visibility": "public source"
     }

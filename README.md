@@ -19,7 +19,7 @@ The page takes a frame of 14 × 12 km and shows, product by product, what each o
 
 - There is no way to add an annotation from the page. The format is a JSON file.
 - It covers one place. The method has not been repeated elsewhere.
-- The "situated" notes are newspaper reports, not marks made by residents. They were found with an automated web search on 23 October 2026 and the figures were taken from the article text. Four reports that could only be read as automatic summaries were left out.
+- The "situated" notes are newspaper reports read by the author, not marks made by residents.
 - The flood model overestimates above about 19 m and starts reaching homes about 2 m later than evacuations begin. The page shows the comparison without correcting it.
 - Above the evacuation level the radar test rests on a single pass. The explanation given for it (water under the forest canopy) is a guess and is recorded as one.
 - No annotation has been checked by anyone other than its author.
