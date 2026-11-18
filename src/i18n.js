@@ -9,8 +9,8 @@ export const T = {
     lede: 'El Soberbio sits on the Uruguay River, between Argentina and Brazil. When the river passes thirteen metres, families in the low neighbourhoods leave their homes. This is what each open satellite product sees on this bend of the river, and what it does not.',
     status: 'Frame of 14 by 12 km. Data as of November 2026.',
     footer: `<h2>Who and how</h2>
-      <p><b>Who.</b> Raimundo Elías Gómez, anthropologist. CONICET / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones. In 2021 I coordinated the mapping of Indigenous community lands in Misiones for the national survey. That knowledge exists and it is not mine to publish.</p>
-      <p><b>How.</b> The tests are from 2026. The code, written with AI coding agents, and the data are open. No note has yet been checked by anyone other than its author, and a note cannot yet be added from this page.</p>
+      <p><b>Who.</b> Raimundo Elías Gómez, anthropologist. CONICET / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones. In 2021 I coordinated in Misiones the geospatial area of the national survey of Indigenous community lands. What the communities know about this river exists, and it is not mine to publish.</p>
+      <p><b>How.</b> The tests are from 2026. The code, written with the assistance of AI coding agents, and the data are open. No note has yet been checked by anyone other than the author of this page, and a note cannot yet be added from here.</p>
       <p><b>Sources.</b> ${SOURCES}</p>
       <p><b>Contact.</b> If you live here and something does not match what you saw: <a href="mailto:nealab@spatia.ar">nealab@spatia.ar</a>.</p>
       <p><a href="https://eliasgomez.netlify.app/lab/radar-el-soberbio/">The river rose sixteen metres and the radar saw less water</a> · <a href="https://github.com/debianalt/un-lugar">Code and data</a> · <a href="https://spatia.ar">Spatia</a></p>`,
@@ -101,7 +101,7 @@ export const T = {
         ],
         reg: { measured: 'Measured', interpreted: 'Interpreted', situated: 'Situated', speculated: 'Speculated' },
         regHelp: { measured: 'an instrument reading', interpreted: 'a reading of the data by someone', situated: 'what people in the place saw or said', speculated: 'a guess nobody has tested' },
-        who: { author: 'the author', 'nobody yet': 'nobody yet', 'nobody independent yet': 'nobody but the author' },
+        who: { author: 'the author of this page', 'nobody yet': 'nobody yet', 'nobody independent yet': 'nobody but the author of this page' },
         review: 'How it was checked', by: 'Checked by', source: 'Source',
         legend: 'Annotations by kind of statement'
       }
@@ -114,8 +114,8 @@ export const T = {
     lede: 'El Soberbio está sobre el río Uruguay, entre la Argentina y Brasil. Cuando el río pasa los trece metros, las familias de los barrios bajos salen de sus casas. Acá se muestra qué ve cada producto satelital abierto en esta curva del río, y qué no ve.',
     status: 'Recuadro de 14 por 12 km. Datos a noviembre de 2026.',
     footer: `<h2>Quién y cómo</h2>
-      <p><b>Quién.</b> Raimundo Elías Gómez, antropólogo. CONICET / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones. En 2021 coordiné en Misiones el mapeo de tierras de comunidades indígenas para el relevamiento nacional. Ese conocimiento existe y no me corresponde publicarlo.</p>
-      <p><b>Cómo.</b> Las pruebas son de 2026. El código, escrito con agentes de programación de IA, y los datos son abiertos. Ninguna nota fue revisada todavía por alguien distinto de su autor, y desde esta página todavía no se puede sumar una.</p>
+      <p><b>Quién.</b> Raimundo Elías Gómez, antropólogo. CONICET / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones. En 2021 coordiné en Misiones el área geoespacial del relevamiento nacional de tierras de comunidades indígenas. Lo que las comunidades saben de este río existe y no me corresponde publicarlo.</p>
+      <p><b>Cómo.</b> Las pruebas son de 2026. El código, escrito con asistencia de agentes de programación de IA, y los datos son abiertos. Ninguna nota fue revisada todavía por alguien distinto del autor de esta página, y desde acá todavía no se puede sumar una.</p>
       <p><b>Fuentes.</b> ${SOURCES}</p>
       <p><b>Contacto.</b> Si vivís acá y algo de esto no coincide con lo que viste: <a href="mailto:nealab@spatia.ar">nealab@spatia.ar</a>.</p>
       <p><a href="https://eliasgomez.netlify.app/es/lab/radar-el-soberbio/">El río subió dieciséis metros y el radar vio menos agua</a> · <a href="https://github.com/debianalt/un-lugar">Código y datos</a> · <a href="https://spatia.ar">Spatia</a></p>`,
@@ -206,7 +206,7 @@ export const T = {
         ],
         reg: { measured: 'Medido', interpreted: 'Interpretado', situated: 'Situado', speculated: 'Especulado' },
         regHelp: { measured: 'la lectura de un instrumento', interpreted: 'una lectura de los datos hecha por alguien', situated: 'lo que vio o dijo la gente del lugar', speculated: 'una conjetura que nadie probó' },
-        who: { author: 'el autor', 'nobody yet': 'nadie todavía', 'nobody independent yet': 'nadie más que el autor' },
+        who: { author: 'el autor de esta página', 'nobody yet': 'nadie todavía', 'nobody independent yet': 'nadie más que el autor de esta página' },
         review: 'Cómo se revisó', by: 'Revisó', source: 'Fuente',
         legend: 'Anotaciones por clase de afirmación'
       }

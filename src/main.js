@@ -1,4 +1,9 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
+import '@fontsource/archivo/400.css';
+import '@fontsource/archivo/500.css';
+import '@fontsource/archivo/600.css';
+import '@fontsource/chivo-mono/400.css';
+import '@fontsource/chivo-mono/500.css';
 import './style.css';
 import * as maplibregl from 'maplibre-gl';
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
@@ -12,7 +17,7 @@ const REG = ['measured', 'interpreted', 'situated', 'speculated'];
 const COLOR = { measured: '#1f5ea2', interpreted: '#c56a1b', situated: '#7a5195', speculated: '#1c7b4c' };
 const DEM = { fabdem: ['#1f5ea2', ''], glo30: ['#c56a1b', '6 3'], aw3d30: ['#7a5195', '2 3'], merit: ['#1c7b4c', '9 3 2 3'] };
 const RADAR_BOX = [-54.30, -27.40, -54.10, -27.20];
-const FOREST = { agree: '#a6caad', mixed: '#cfccc3', crop: '#d9a441', forest: '#c56a1b' };
+const FOREST = { agree: '#a6caad', mixed: '#cfcfcf', crop: '#d9a441', forest: '#c56a1b' };
 
 // Short horizontal dashes: the page's mark for knowledge that exists and is kept back by decision.
 function withheldPattern() {

@@ -1,18 +1,17 @@
 :root {
-  --paper: #f9f8f4;
+  --paper: #ffffff;
   --card: #ffffff;
-  --ink: #17181a;
+  --ink: #111214;
   --ink-2: #4b4d52;
   --ink-3: #74777d;
-  --rule: #dedbd2;
+  --rule: #dcdde0;
   --measured: #1f5ea2;
   --interpreted: #c56a1b;
   --situated: #7a5195;
   --speculated: #1c7b4c;
   --river: #4b81b9;
-  --sans: 'IBM Plex Sans', system-ui, sans-serif;
-  --serif: 'Newsreader', Georgia, serif;
-  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --sans: 'Archivo', system-ui, sans-serif;
+  --mono: 'Chivo Mono', ui-monospace, monospace;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.5; }
@@ -24,15 +23,19 @@ html, body { margin: 0; background: var(--paper); color: var(--ink); font-family
 .kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
 #lang { font: 500 12px var(--mono); background: none; border: 1px solid var(--rule); border-radius: 4px; padding: 4px 8px; color: var(--ink-2); cursor: pointer; }
 #lang:hover, #lang:focus-visible { border-color: var(--ink-2); }
-h1 { font-family: var(--serif); font-weight: 500; font-size: 40px; line-height: 1.05; margin: 18px 0 12px; letter-spacing: -.01em; }
-h2 { font-family: var(--serif); font-weight: 500; font-size: 26px; line-height: 1.15; margin: 0 0 10px; }
-.lede { font-family: var(--serif); font-size: 20px; line-height: 1.4; color: var(--ink-2); margin: 0 0 12px; }
+h1 { font-weight: 600; font-size: 40px; line-height: 1.05; margin: 18px 0 12px; letter-spacing: -.02em; }
+h2 { font-weight: 600; font-size: 25px; line-height: 1.16; margin: 0 0 12px; letter-spacing: -.012em; }
+.lede { font-size: 18.5px; line-height: 1.42; color: var(--ink-2); margin: 0 0 12px; }
 .small { font-size: 13px; color: var(--ink-3); margin: 0 0 8px; }
 .small a, p a { color: inherit; text-underline-offset: 2px; }
 section { padding: 34px 0 30px; border-top: 1px solid var(--rule); min-height: 62vh; opacity: .45; transition: opacity .25s; }
 section.on { opacity: 1; }
 section .num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); display: block; margin-bottom: 6px; }
 section p { margin: 0 0 12px; }
+/* Running text is justified, with hyphenation in the page language so a narrow column does not open rivers. */
+.lede, section > p, .empty p, footer p { text-align: justify; hyphens: auto; -webkit-hyphens: auto; hyphenate-limit-chars: 9 4 4; }
+/* Lists of names and links are not justified: product names must not be broken. */
+section > p.small, footer p:nth-of-type(3), footer p:last-child { text-align: left; hyphens: manual; -webkit-hyphens: manual; }
 .figure { background: var(--card); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 14px 10px; margin: 16px 0; }
 .figure h3 { font: 600 14px var(--sans); margin: 0 0 2px; }
 .figure .sub { font-size: 12.5px; color: var(--ink-3); margin: 0 0 8px; }
@@ -43,7 +46,7 @@ svg.chart .grid { stroke: var(--rule); stroke-width: 1; }
 svg.chart .axis { stroke: var(--ink-3); stroke-width: 1; }
 .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 14px 0; }
 .stat { background: var(--card); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px; }
-.stat b { display: block; font: 500 26px var(--serif); line-height: 1.1; }
+.stat b { display: block; font: 600 26px var(--sans); line-height: 1.1; }
 .stat span { font-size: 12.5px; color: var(--ink-2); }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th, td { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--rule); vertical-align: top; }
@@ -82,7 +85,7 @@ td .sw { vertical-align: -1px; }
 .mk { width: 14px; height: 14px; display: inline-block; flex: none; }
 .pix { display: flex; align-items: flex-end; gap: 12px; margin: 10px 0 2px; }
 .pix div { text-align: center; font-size: 11.5px; color: var(--ink-3); }
-.pix i { display: block; margin: 0 auto 4px; background: #d9d5ca; border: 1px solid var(--ink-3); }
+.pix i { display: block; margin: 0 auto 4px; background: #dcdde0; border: 1px solid var(--ink-3); }
 #legend { position: absolute; left: 12px; top: 12px; background: rgba(255,255,255,.94); border: 1px solid var(--rule); border-radius: 6px; padding: 9px 11px; font-size: 12.5px; color: var(--ink-2); max-width: 300px; }
 #legend:empty { display: none; }
 #legend b { display: block; color: var(--ink); font-weight: 600; margin-bottom: 4px; }
