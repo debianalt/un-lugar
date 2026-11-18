@@ -6,7 +6,7 @@ export const T = {
     title: 'One Place, Every Eye',
     lede: 'El Soberbio is a town of about 26,000 people on the Uruguay River, between Argentina and Brazil. This page takes one bend of that river and shows what each open Earth-observation product sees there, and what it does not.',
     status: 'This is a first, read-only version built from tests I ran in 2026. The frame is 14 by 12 km. Every number comes from a file in the repository.',
-    footer: 'Sources: Sentinel-1 (Copernicus), FABDEM, Copernicus GLO-30, ALOS AW3D30 (JAXA), MERIT, JRC Global Surface Water, MapBiomas Argentina and MapBiomas Brasil, Forest Typology 2020 (Google DeepMind, Google Research, WRI, IIASA), Instituto Nacional del Agua. Code under AGPL-3.0. Built by Raimundo Elías Gómez (CONICET, Universidad Nacional de Misiones) with AI coding agents; the tests, the choices and the mistakes are mine. <a href="https://github.com/debianalt/un-lugar">Repository</a> · <a href="https://spatia.ar">Spatia</a>',
+    footer: 'Sources: Sentinel-1 (Copernicus), FABDEM, Copernicus GLO-30, ALOS AW3D30 (JAXA), MERIT, JRC Global Surface Water, MapBiomas Argentina and MapBiomas Brasil, Forest Typology 2020 (Google DeepMind, Google Research, WRI, IIASA), Instituto Nacional del Agua. Code under AGPL-3.0. Built by Raimundo Elías Gómez (CONICET / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones) with AI coding agents; the tests, the choices and the mistakes are mine. <a href="https://github.com/debianalt/un-lugar">Repository</a> · <a href="https://spatia.ar">Spatia</a>',
     s: {
       radar: {
         num: '01 · Radar',
@@ -110,7 +110,7 @@ export const T = {
     title: 'Un lugar, todos los ojos',
     lede: 'El Soberbio es un pueblo de unas 26.000 personas sobre el río Uruguay, entre la Argentina y Brasil. Esta página toma una curva de ese río y muestra qué ve ahí cada producto abierto de observación de la Tierra, y qué no ve.',
     status: 'Es una primera versión, sólo de lectura, hecha con pruebas que corrí en 2026. El recuadro mide 14 por 12 km. Cada número sale de un archivo del repositorio.',
-    footer: 'Fuentes: Sentinel-1 (Copernicus), FABDEM, Copernicus GLO-30, ALOS AW3D30 (JAXA), MERIT, JRC Global Surface Water, MapBiomas Argentina y MapBiomas Brasil, Forest Typology 2020 (Google DeepMind, Google Research, WRI, IIASA), Instituto Nacional del Agua. Código con licencia AGPL-3.0. Hecho por Raimundo Elías Gómez (CONICET, Universidad Nacional de Misiones) con agentes de programación de IA; las pruebas, las decisiones y los errores son míos. <a href="https://github.com/debianalt/un-lugar">Repositorio</a> · <a href="https://spatia.ar">Spatia</a>',
+    footer: 'Fuentes: Sentinel-1 (Copernicus), FABDEM, Copernicus GLO-30, ALOS AW3D30 (JAXA), MERIT, JRC Global Surface Water, MapBiomas Argentina y MapBiomas Brasil, Forest Typology 2020 (Google DeepMind, Google Research, WRI, IIASA), Instituto Nacional del Agua. Código con licencia AGPL-3.0. Hecho por Raimundo Elías Gómez (CONICET / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones) con agentes de programación de IA; las pruebas, las decisiones y los errores son míos. <a href="https://github.com/debianalt/un-lugar">Repositorio</a> · <a href="https://spatia.ar">Spatia</a>',
     s: {
       radar: {
         num: '01 · Radar',
