@@ -12,6 +12,15 @@ const REG = ['measured', 'interpreted', 'situated', 'speculated'];
 const COLOR = { measured: '#1f5ea2', interpreted: '#c56a1b', situated: '#7a5195', speculated: '#1c7b4c' };
 const DEM = { fabdem: ['#1f5ea2', ''], glo30: ['#c56a1b', '6 3'], aw3d30: ['#7a5195', '2 3'], merit: ['#1c7b4c', '9 3 2 3'] };
 const RADAR_BOX = [-54.30, -27.40, -54.10, -27.20];
+const FOREST = { agree: '#a6caad', mixed: '#cfccc3', crop: '#d9a441', forest: '#c56a1b' };
+
+// Short horizontal dashes: the page's mark for knowledge that exists and is kept back by decision.
+function withheldPattern() {
+  const c = document.createElement('canvas'); c.width = c.height = 16;
+  const g = c.getContext('2d'); g.strokeStyle = '#74777d'; g.lineWidth = 1.5;
+  g.beginPath(); g.moveTo(2, 4); g.lineTo(9, 4); g.moveTo(10, 12); g.lineTo(16, 12); g.moveTo(0, 12); g.lineTo(1, 12); g.stroke();
+  return g.getImageData(0, 0, 16, 16);
+}
 
 let lang = 'en';
 try { const v = localStorage.getItem('un_lugar_lang'); if (v === 'es' || v === 'en') lang = v; else if (navigator.language?.startsWith('es')) lang = 'es'; } catch { /* storage may be blocked */ }
@@ -24,6 +33,9 @@ const $ = (s, el = document) => el.querySelector(s);
 const fill = (str, o) => str.replace(/\{(\w+)\}/g, (_, k) => o[k] ?? '');
 const nf = (x, d = 0) => new Intl.NumberFormat(lang === 'es' ? 'es-AR' : 'en-GB', { maximumFractionDigits: d, minimumFractionDigits: d }).format(x);
 const pct = (x) => nf(x * 100) + (lang === 'es' ? ' %' : '%');
+const day = (iso, month = 'long') => new Intl.DateTimeFormat(lang === 'es' ? 'es-AR' : 'en-GB', { day: 'numeric', month, year: 'numeric', timeZone: 'UTC' }).format(new Date(iso + 'T00:00:00Z'));
+// The three kinds of blank the page tells apart (see section 05).
+const blank = (k) => `<i class="sw blank-${k}"></i>`;
 const h = (tag, attrs = {}, html = '') => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); e.innerHTML = html; return e; };
 const tip = $('#tip');
 function showTip(ev, html) { tip.innerHTML = html; tip.hidden = false; const x = Math.min(ev.clientX + 12, innerWidth - 270); tip.style.left = x + 'px'; tip.style.top = ev.clientY + 14 + 'px'; }
@@ -51,9 +63,16 @@ function radarChart(t) {
   for (let v = 0; v <= ymax; v += 500) s += `<line class="grid" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${nf(v)}</text>`;
   for (let v = 0; v <= 18; v += 3) s += `<text x="${x(v)}" y="${H - B + 15}" text-anchor="middle">${v}</text>`;
   s += `<line class="axis" x1="${L}" x2="${W - R}" y1="${y(0)}" y2="${y(0)}"/>`;
-  s += `<line x1="${x(13)}" x2="${x(13)}" y1="${Tp}" y2="${y(0)}" stroke="#74777d" stroke-dasharray="3 3"/><text class="lab" x="${x(13) + 5}" y="${Tp + 10}">${t.evac}</text>`;
+  const ev = D.radar.evacuation_level_m, years = D.radar.last_year - D.radar.first_year;
+  // Above the evacuation level the sensor has almost never looked: drawn as dots, the page's mark for "not observed".
+  s += `<defs><pattern id="unseen" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#9a9da3"/></pattern></defs><rect x="${x(ev)}" y="${Tp}" width="${x(18) - x(ev)}" height="${y(0) - Tp}" fill="url(#unseen)"/>`;
+  s += `<line x1="${x(ev)}" x2="${x(ev)}" y1="${Tp}" y2="${y(0)}" stroke="#74777d" stroke-dasharray="3 3"/><text class="lab" x="${x(ev) - 6}" y="${Tp + 10}" text-anchor="end">${t.evac}</text><text x="${x(ev) - 6}" y="${Tp + 24}" text-anchor="end">${fill(t.unseen, { above: D.radar.passes_above_evacuation, years })}</text>`;
   s += `<text x="${(L + W - R) / 2}" y="${H - 4}" text-anchor="middle">${t.x}</text><text x="${L}" y="${Tp - 1}" text-anchor="start" dy="-2">${t.y}</text>`;
-  pts.forEach((p, i) => { s += `<circle data-i="${i}" cx="${x(Math.min(p.h, 18)).toFixed(1)}" cy="${y(p.w).toFixed(1)}" r="3.2" fill="${COLOR.measured}" fill-opacity=".55" stroke="#fff" stroke-width=".8"/>`; });
+  pts.forEach((p, i) => {
+    const hi = p.h >= ev; // the passes that caught a flood stand out
+    s += `<circle data-i="${i}" cx="${x(Math.min(p.h, 18)).toFixed(1)}" cy="${y(p.w).toFixed(1)}" r="${hi ? 5 : 3.2}" fill="${COLOR.measured}" fill-opacity="${hi ? 1 : 0.55}" stroke="${hi ? '#17181a' : '#fff'}" stroke-width="${hi ? 1.5 : 0.8}"/>`;
+    if (hi) s += `<text class="lab" x="${x(Math.min(p.h, 18)).toFixed(1)}" y="${(y(p.w) + 19).toFixed(1)}" text-anchor="middle" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">${day(p.d, 'short')}</text>`;
+  });
   s += '</svg>';
   const el = h('div', {}, s);
   el.addEventListener('pointermove', (ev) => { const i = ev.target.dataset?.i; if (i == null) return hideTip(); const p = pts[i]; showTip(ev, fill(t.tip, { d: p.d, h: nf(p.h, 1), w: nf(p.w) })); });
@@ -109,12 +128,13 @@ function build() {
   document.querySelectorAll('[data-t]').forEach((e) => { e.innerHTML = t[e.dataset.t]; });
   $('#lang').textContent = t.lang;
   const root = $('#sections'); root.innerHTML = '';
-  const sc = D.water.scenarios['2023'], tops = D.forest.disagreements[0];
+  const sc = D.water.scenarios['2023'], fp = D.radar.flood_passes[0], F = D.forest;
   const vals = {
     kept: nf(D.radar.passes_kept), median: nf(D.radar.water_ha_median_below_12m), f1a: nf(D.radar.nisar[0].f1, 2), f1b: nf(D.radar.nisar[1].f1, 2),
+    above: nf(D.radar.passes_above_evacuation), low: nf(D.radar.passes_below_6m), floodDate: day(fp.d), floodH: nf(fp.h, 1), floodW: nf(fp.w),
     p90: nf(D.relief.range_m.p90_riverbank_300m), bankR: nf(D.relief.range_m.median_riverbank_300m), bank: nf(D.relief.range_m.median_riverbank_300m, 1),
     reached: nf(sc.reached_ha), never: nf(sc.never_seen_by_jrc_ha), share: pct(sc.share_never_seen),
-    cells: nf(D.forest.cells), hard: nf(D.forest.hard), hardShare: pct(D.forest.hard_share), top: nf(tops.cells)
+    cells: nf(F.cells), forestN: nf(F.about_forest), forestShare: pct(F.about_forest_share), cropN: nf(F.about_crops), forestIn: nf(Math.round(F.cells / F.about_forest))
   };
   for (const id of ORDER) {
     const s = t.s[id], sec = h('section', { id, 'data-id': id });
@@ -126,21 +146,28 @@ function build() {
       const seg = h('div', { class: 'seg', role: 'group' });
       for (const k of ['jrc', 'm2026', 'm2023', 'm2014']) { const b = h('button', { type: 'button', 'aria-pressed': String(k === waterView), 'data-k': k }, s.btn[k]); b.onclick = () => { waterView = k; seg.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.k === k))); if (active === 'water') show('water'); }; seg.append(b); }
       sec.append(seg);
-      const rows = D.water.events.map((e) => `<tr><td class="nw">${e.date}</td><td class="n nw">${nf(e.height_m, 2)} m</td><td class="n">${nf(e.reported_families)}</td><td class="n">${nf(e.model_homes)}</td><td>${e.source}</td></tr>`).join('');
-      sec.append(h('div', { class: 'figure' }, `<h3>${s.fig}</h3><p class="sub">${s.sub}</p><table><thead><tr>${s.th.map((x, i) => `<th${i > 0 && i < 4 ? ' class="n"' : ''}>${x}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>`));
+      const end = D.water.jrc_period.split('-')[1]; // floods after this year fall outside the satellite record
+      const rows = D.water.events.map((e) => `<tr><td class="nw">${e.date.slice(0, 4) > end ? blank('outside') + ' ' : ''}${e.date}</td><td class="n nw">${nf(e.height_m, 2)} m</td><td class="n">${nf(e.reported_families)}</td><td class="n">${nf(e.model_homes)}</td><td>${e.source}</td></tr>`).join('');
+      sec.append(h('div', { class: 'figure' }, `<h3>${s.fig}</h3><p class="sub">${s.sub}</p><table><thead><tr>${s.th.map((x, i) => `<th${i > 0 && i < 4 ? ' class="n"' : ''}>${x}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table><div class="key" style="margin-top:8px"><span>${blank('outside')}${s.after}</span></div>`));
     }
     if (id === 'forest') {
       const f = D.forest, n = f.cells;
-      const bar = `<div class="bars"><i style="flex:${f.agree};background:#a6caad"></i><i class="hatch" style="flex:${f.soft}"></i><i style="flex:${f.hard};background:#c56a1b"></i></div>
-        <div class="key"><span><i class="sw" style="background:#a6caad"></i>${s.agree} · ${pct(f.agree / n)}</span><span><i class="sw hatch"></i>${s.soft} · ${pct(f.soft / n)}</span><span><i class="sw" style="background:#c56a1b"></i>${s.hard} · ${pct(f.hard / n)}</span></div>`;
-      const rows = f.disagreements.filter((d) => d.cells >= 5).map((d) => `<tr><td>${s.cls[d.forty]}</td><td>${s.cls[d.mapbiomas]}</td><td class="n">${nf(d.cells)}</td></tr>`).join('');
-      sec.append(h('div', { class: 'figure' }, `<h3>${s.fig}</h3><p class="sub">${s.sub}</p>${bar}<table style="margin-top:10px"><thead><tr><th>${s.th[0]}</th><th>${s.th[1]}</th><th class="n">${s.th[2]}</th></tr></thead><tbody>${rows}</tbody></table>`));
+      const part = [['agree', f.agree], ['mixed', f.mixed], ['crop', f.about_crops], ['forest', f.about_forest]];
+      const bar = `<div class="bars">${part.map(([k, v]) => `<i style="flex:${v};background:${FOREST[k]}"></i>`).join('')}</div>
+        <div class="key">${part.map(([k, v]) => `<span><i class="sw" style="background:${FOREST[k]}"></i>${s[k]} · ${pct(v / n)}</span>`).join('')}</div>`;
+      const rows = f.disagreements.filter((d) => d.cells >= 5).map((d) => `<tr><td>${s.cls[d.forty]}</td><td>${s.cls[d.mapbiomas]}</td><td>${s.side[d.side]}</td><td class="n">${nf(d.cells)}</td></tr>`).join('');
+      sec.append(h('div', { class: 'figure' }, `<h3>${s.fig}</h3><p class="sub">${s.sub}</p>${bar}<table style="margin-top:10px"><thead><tr><th>${s.th[0]}</th><th>${s.th[1]}</th><th>${s.th[2]}</th><th class="n">${s.th[3]}</th></tr></thead><tbody>${rows}</tbody></table>`));
     }
-    if (id === 'empty') sec.append(h('div', { class: 'empty' }, `<p><b>${s.box[0]}</b></p><p>${s.box[1]}</p>`));
+    if (id === 'empty') {
+      sec.append(h('div', { class: 'empty' }, `<p><b>${s.box[0]}</b></p><p>${s.box[1]}</p>`));
+      sec.append(h('div', { class: 'figure' }, `<h3>${s.blanks}</h3><div class="key blanks">${['unseen', 'outside', 'withheld'].map((k) => `<span>${blank(k)}${s.blank[k]}</span>`).join('')}</div>`));
+    }
     if (id === 'notes') {
       const fl = h('div', { class: 'filters', role: 'group' });
       for (const k of REG) { const b = h('button', { class: 'chip', type: 'button', 'aria-pressed': String(regOn[k]), title: s.regHelp[k] }, `${shape(k)}${s.reg[k]} · ${D.notes.filter((a) => a.register === k).length}`); b.onclick = () => { regOn[k] = !regOn[k]; b.setAttribute('aria-pressed', String(regOn[k])); syncNotes(); }; fl.append(b); }
       sec.append(fl);
+      const own = ['author', 'nobody yet', 'nobody independent yet']; // anything else is an independent reviewer
+      sec.append(h('p', { class: 'small' }, fill(s.indep, { indep: D.notes.filter((a) => !own.includes(a.review.by)).length, n: D.notes.length })));
       const list = h('div', { id: 'notelist' });
       for (const a of D.notes) {
         const src = !a.source.url ? a.source.title : `<a href="${a.source.url}" target="_blank" rel="noopener">${a.source.title}</a>`;
@@ -172,8 +199,10 @@ function initMap() {
     img('jrc', 'water_jrc.png', D.water.corners);
     for (const k of ['2026', '2023', '2014']) img('m' + k, `water_model_${k}.png`, D.water.corners);
     map.addSource('forest', { type: 'geojson', data: BASE + 'forest.geojson' });
-    map.addLayer({ id: 'forest', type: 'fill', source: 'forest', layout: { visibility: 'none' }, paint: { 'fill-color': ['match', ['get', 'k'], 'agree', '#a6caad', 'hard', '#c56a1b', '#b9b6ad'], 'fill-opacity': ['match', ['get', 'k'], 'agree', 0.5, 'hard', 0.85, 0.35], 'fill-outline-color': 'rgba(255,255,255,.7)' } });
+    map.addLayer({ id: 'forest', type: 'fill', source: 'forest', layout: { visibility: 'none' }, paint: { 'fill-color': ['match', ['get', 'k'], 'agree', FOREST.agree, 'forest', FOREST.forest, 'crop', FOREST.crop, FOREST.mixed], 'fill-opacity': ['match', ['get', 'k'], 'agree', 0.5, 'forest', 0.85, 'crop', 0.85, 0.4], 'fill-outline-color': 'rgba(255,255,255,.7)' } });
     map.addSource('frame', { type: 'geojson', data: poly(D.places.frame) });
+    map.addImage('withheld', withheldPattern());
+    map.addLayer({ id: 'withheld', type: 'fill', source: 'frame', layout: { visibility: 'none' }, paint: { 'fill-pattern': 'withheld', 'fill-opacity': 0.6 } });
     map.addLayer({ id: 'frame', type: 'line', source: 'frame', paint: { 'line-color': '#17181a', 'line-width': 1.5, 'line-dasharray': [3, 2] } });
     map.addSource('radarbox', { type: 'geojson', data: poly(RADAR_BOX) });
     map.addLayer({ id: 'radarbox', type: 'line', source: 'radarbox', layout: { visibility: 'none' }, paint: { 'line-color': COLOR.measured, 'line-width': 2 } });
@@ -211,12 +240,12 @@ function legend(id) {
   const t = T[lang].s, L = $('#legend');
   L.dataset.id = id;
   const sw = (c, label, cls = '') => `<span><i class="sw ${cls}" style="background:${c}"></i>${label}</span>`;
-  if (id === 'radar') L.innerHTML = `<b>${t.radar.legend}</b>`;
+  if (id === 'radar') L.innerHTML = `<b>${t.radar.legend}</b><div class="key"><span>${blank('unseen')}${fill(t.radar.unseen, { above: D.radar.passes_above_evacuation, years: D.radar.last_year - D.radar.first_year })}</span></div>`;
   else if (id === 'relief') L.innerHTML = `<b>${t.relief.legend}</b><div class="grad" style="background:linear-gradient(90deg,#f7f4ec,#e3cc93,#c56a1b,#6b1d0c)"></div><div style="display:flex;justify-content:space-between"><span>0 m</span><span>8</span><span>16</span><span>30 m +</span></div>`;
   else if (id === 'water' && waterView === 'jrc') L.innerHTML = `<b>${t.water.legendJrc}</b><div class="grad" style="background:linear-gradient(90deg,#aec6dd,#4b81b9,#0b3c79)"></div><div style="display:flex;justify-content:space-between"><span>${t.water.lo}</span><span>${t.water.hi}</span></div>`;
   else if (id === 'water') L.innerHTML = `<b>${t.water.legendModel}</b><div class="key">${sw('#4b81b9', t.water.seen)}${sw('#c56a1b', t.water.never)}</div>`;
-  else if (id === 'forest') L.innerHTML = `<b>${t.forest.legend}</b><div class="key">${sw('#a6caad', t.forest.agree)}${sw('', t.forest.soft, 'hatch')}${sw('#c56a1b', t.forest.hard)}</div>`;
-  else if (id === 'empty') L.innerHTML = `<b>${t.empty.legend}</b>`;
+  else if (id === 'forest') L.innerHTML = `<b>${t.forest.legend}</b><div class="key">${['agree', 'mixed', 'crop', 'forest'].map((k) => sw(FOREST[k], t.forest[k])).join('')}</div>`;
+  else if (id === 'empty') L.innerHTML = `<div class="key"><span>${blank('withheld')}<b style="margin:0">${t.empty.legend}</b></span></div>`;
   else L.innerHTML = `<b>${t.notes.legend}</b><div class="key">${REG.map((k) => `<span>${shape(k)}${t.notes.reg[k]}: ${t.notes.regHelp[k]}</span>`).join('')}</div>`;
 }
 
@@ -229,6 +258,7 @@ function show(id) {
   vis('jrc', id === 'water' && waterView === 'jrc');
   for (const k of ['2026', '2023', '2014']) vis('m' + k, id === 'water' && waterView === 'm' + k);
   vis('forest', id === 'forest');
+  vis('withheld', id === 'empty');
   syncNotes();
   const f = D.places.frame, town = [[-54.225, -27.318], [-54.172, -27.275]];
   const b = id === 'radar' ? [RADAR_BOX.slice(0, 2), RADAR_BOX.slice(2)] : id === 'notes' || id === 'relief' ? town : [f.slice(0, 2), f.slice(2)];

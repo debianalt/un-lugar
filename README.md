@@ -8,10 +8,10 @@ The page takes a frame of 14 × 12 km and shows, product by product, what each o
 
 | Section | Finding in this frame | File |
 |---|---|---|
-| Radar | In 360 Sentinel-1 passes (2015–2026) the detected water area does not grow as the river rises from 0 to 16 m. Two NISAR L-band scenes failed a pass criterion fixed before the data were downloaded. | `public/data/radar.json` |
+| Radar | Of 360 usable Sentinel-1 passes (2015–2026), one found the river above the evacuation level of 13 m, and it detected less water (1,142 ha) than the median below 12 m (1,298 ha). The cause is not established. Two NISAR L-band scenes failed a pass criterion fixed before the data were downloaded. | `public/data/radar.json` |
 | Relief | Four open elevation models differ by a median of 9.9 m within 300 m of the river. | `public/data/relief.json`, `relief_range.png` |
 | Water | At the river height of November 2023 a terrain-based flood model reaches 1,283 ha; 482 ha of that is land where the Global Surface Water record (1984–2021) never saw water. | `public/data/water.json`, `water_*.png` |
-| Forest | MapBiomas Argentina and the JRC Forest Types map name a different dominant cover for 2020 in 191 of 1,223 cells. Both stop at the border. | `public/data/forest.json`, `forest.geojson` |
+| Forest | Forest Typology 2020 (ForTy) and MapBiomas disagree about forest in 108 of 1,811 cells, on both banks. In another 124, all on the Argentine side, MapBiomas maps yerba mate or tea and ForTy maps other land. | `public/data/forest.json`, `forest.geojson` |
 | What no sensor holds | Empty on purpose. See [GOVERNANCE.md](GOVERNANCE.md). | — |
 | Annotations | Fifteen notes, each declared as measured, interpreted, situated or speculated, with source and review. | `public/data/annotations.json`, [`annotation.schema.json`](annotation.schema.json) |
 
@@ -21,12 +21,14 @@ The page takes a frame of 14 × 12 km and shows, product by product, what each o
 - It covers one place. The method has not been repeated elsewhere.
 - The "situated" notes are newspaper reports, not marks made by residents. They were found with an automated web search on 23 October 2026 and the figures were taken from the article text. Four reports that could only be read as automatic summaries were left out.
 - The flood model overestimates above about 19 m and starts reaching homes about 2 m later than evacuations begin. The page shows the comparison without correcting it.
-- The Brazilian bank has no land-cover data in either source used.
+- Above the evacuation level the radar test rests on a single pass. The explanation given for it (water under the forest canopy) is a guess and is recorded as one.
+- No annotation has been checked by anyone other than its author.
+- The page tells three kinds of blank apart (not observed, outside the product, kept back by decision), with one example of each. It does not yet draw them on every layer.
 - Light theme only.
 
 ## Sources
 
-Sentinel-1 (Copernicus, ESA); NISAR (NASA–ISRO); FABDEM (University of Bristol); Copernicus GLO-30; ALOS AW3D30 (JAXA); MERIT DEM; JRC Global Surface Water; MapBiomas Argentina, Collection 3; JRC Global Forest Types 2020; river gauge series 61 of the Instituto Nacional del Agua; OpenStreetMap contributors; basemap © CARTO. Each derived file keeps the terms of its source.
+Sentinel-1 (Copernicus, ESA); NISAR (NASA–ISRO); FABDEM (University of Bristol); Copernicus GLO-30; ALOS AW3D30 (JAXA); MERIT DEM; JRC Global Surface Water; MapBiomas Argentina, Collection 3; MapBiomas Brasil, Collection 11; Forest Typology (ForTy) 2020 v1.0 (Google DeepMind, Google Research, WRI, IIASA); river gauge series 61 of the Instituto Nacional del Agua; OpenStreetMap contributors; basemap © CARTO. Each derived file keeps the terms of its source.
 
 ## Build
 
@@ -36,7 +38,7 @@ npm run dev        # http://localhost:5173
 npm run build      # static site in dist/
 ```
 
-The files in `public/data/` are already built. `prep/build_data.py` regenerates them from local research outputs that are not redistributed here (elevation rasters, the per-cell land-cover tables, the flood model outputs); it needs the environment variables `UN_LUGAR_DEMO` and `UN_LUGAR_FUENTES`.
+The files in `public/data/` are already built. `prep/build_data.py` regenerates them from local research outputs that are not redistributed here (elevation rasters, the flood model outputs); it needs the environment variables `UN_LUGAR_DEMO` and `UN_LUGAR_FUENTES`. The forest comparison can be repeated by anyone with an Earth Engine account: `prep/fetch_forest_frame.py` downloads both products for the frame.
 
 ## Who
 

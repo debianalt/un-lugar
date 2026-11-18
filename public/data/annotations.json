@@ -238,15 +238,15 @@
       ],
       "date": "2026-10-22",
       "statement": {
-        "en": "Between 0 and 16 m on the gauge, the water area that Sentinel-1 detects in this corridor does not grow. In the 16 m flood of October 2023 the only thing that moved was the height of the water's edge, from 122 m to 129 m.",
-        "es": "Entre 0 y 16 m del hidrómetro, la superficie de agua que detecta Sentinel-1 en este corredor no crece. En la crecida de 16 m de octubre de 2023 lo único que se movió fue la cota del borde del agua, de 122 m a 129 m."
+        "en": "Between 0 and 12 m on the gauge, the water area that Sentinel-1 detects in this corridor does not grow. Above the evacuation level there is a single pass, in the 16 m flood of October 2023: it detected less water, and the only thing that moved was the height of the water's edge, from 122 m to 129 m.",
+        "es": "Entre 0 y 12 m del hidrómetro, la superficie de agua que detecta Sentinel-1 en este corredor no crece. Por encima de la cota de evacuación hay una sola pasada, en la crecida de 16 m de octubre de 2023: detectó menos agua, y lo único que se movió fue la cota del borde del agua, de 122 m a 129 m."
       },
       "source": {
         "title": "Sentinel-1 passes 2015–2026 against the gauge (this repository, data/radar.json)",
         "url": ""
       },
       "review": {
-        "by": "author",
+        "by": "nobody independent yet",
         "date": "2026-10-22",
         "method": "Water area per pass (VV below −15 dB) paired with the gauge reading nearest in time."
       },
@@ -271,7 +271,7 @@
         "url": "https://misionesonline.net/2023/11/17/alrededor-de-250-familias-de-seran-evacuadas-en-el-soberbio/"
       },
       "review": {
-        "by": "author",
+        "by": "nobody independent yet",
         "date": "2026-10-23",
         "method": "Model output at each reported river height compared with the reported families."
       },
@@ -296,7 +296,7 @@
         "url": "https://www.elterritorio.com.ar/noticias/2017/05/31/531654-el-soberbio-15-familias-evacuadas-por-la-crecida-del-rio-uruguay"
       },
       "review": {
-        "by": "author",
+        "by": "nobody independent yet",
         "date": "2026-10-23",
         "method": "Heights at which the model first reaches homes against heights at which evacuations were reported."
       },
@@ -321,7 +321,7 @@
         "url": ""
       },
       "review": {
-        "by": "author",
+        "by": "nobody independent yet",
         "date": "2026-10-23",
         "method": "Place names in the press reports compared with the zones the model reaches."
       },

@@ -21,15 +21,15 @@ A statement can change register when evidence arrives. The change is recorded, a
 
 ## Review
 
-Each annotation shows who checked it and against what. "Nobody yet" is shown as plainly as a review. A reviewer cannot be the only source of the statement they review. Disagreement between a note and a layer is kept on the map, since it is what the map is for.
+Each annotation shows who checked it and against what. "Nobody yet" is shown as plainly as a review. A reviewer cannot be the only source of the statement they review: the author's own tests are marked "nobody independent yet" until someone else has checked them, and the page counts how many notes have an independent reviewer. Today the count is zero. Disagreement between a note and a layer is kept on the map, since it is what the map is for.
 
 ## Community knowledge
 
 These rules are a proposal to put before a community council. Nothing is collected until one has answered.
 
-- **Closed by default.** Knowledge shared by a community is visible only to the people that community names.
+- **Kept outside this repository.** This repository is public and so is its history. Knowledge shared by a community is not stored here. It stays in tools the community controls, such as CoMapeo or Terrastories, and the map shows only what the community decides to publish.
 - **Precision is theirs to set.** A place can be shown exactly, blurred to a cell or a stretch of river, named without a location, or not shown.
-- **Withdrawal.** Anything can be taken back at any time. Withdrawn items are removed from the public files and from their history.
+- **Withdrawal.** Anything published can be taken back at any time, and it leaves the map at the next build. Once something has been public, copies may exist that nobody can recall. That is said to the community before it publishes anything, not after.
 - **No inference.** The project does not publish where families live, fish or farm from other data when they have not said so themselves.
 - **Payment.** People who do the work of recording and reviewing are paid as co-researchers from the project budget.
 - **Open licences apply to the code and to public-source data.** They do not apply to community knowledge, which keeps the terms its owners set.

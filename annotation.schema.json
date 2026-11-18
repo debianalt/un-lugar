@@ -24,12 +24,12 @@
     },
     "review": {
       "type": "object", "required": ["by", "method"],
-      "description": "Who checked the statement and against what. 'nobody yet' is a valid answer and must be shown.",
+      "description": "Who checked the statement and against what. 'nobody yet' is a valid answer and must be shown. When the person who checked it is also its only source, write 'nobody independent yet'.",
       "properties": { "by": { "type": "string" }, "date": { "type": "string" }, "method": { "type": "string" } }
     },
     "visibility": {
       "enum": ["public source", "public by decision of the owners", "shared with named groups", "withdrawn"],
-      "description": "Who may see it. Community knowledge is never 'public source'."
+      "description": "Who may see it. Community knowledge is never 'public source'. Only 'public source' and 'public by decision of the owners' may be stored in a public repository; 'shared with named groups' describes a record kept in a tool its owners control, and 'withdrawn' leaves an id with no statement."
     },
     "decided_by": { "type": "string", "description": "For community knowledge: the body that decided the visibility, and when." }
   }

@@ -19,7 +19,6 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
-import duckdb
 import h3
 import numpy as np
 import rasterio
@@ -29,7 +28,7 @@ from rasterio.windows import from_bounds
 from shapely.geometry import shape
 
 DEMO = Path(os.environ['UN_LUGAR_DEMO'])        # folder with the flood model outputs and the radar test
-FUENTES = Path(os.environ['UN_LUGAR_FUENTES'])  # folder with the elevation models and the per-cell land-cover tables
+FUENTES = Path(os.environ['UN_LUGAR_FUENTES'])  # folder with the elevation models and the output of fetch_forest_frame.py
 SALIDA = DEMO / '10_demo_el_nino/salida'
 OUT = Path(__file__).resolve().parents[1] / 'public' / 'data'
 
@@ -71,6 +70,9 @@ def ramp(values, stops):
 
 
 # ---------------------------------------------------------------- 1. radar
+EVAC_M = 13.0   # evacuation level on the gauge at the port (annotation s-2025-06-30)
+
+
 def radar():
     rows = []
     src = DEMO / '06_pruebas/prueba_soberbio_2026-10-22/soberbio_pairs3.csv'
@@ -88,7 +90,11 @@ def radar():
         best = e['f1_por_delta'][str(e['mejor_delta_m'])]
         ev.append({'date': e['fecha'], 'height_m': e['altura_m'], 'new_water_ha': e['agua_nueva_observada_ha'],
                    'flooded_forest_ha': e['bosque_inundado_ha'], 'f1': best['f1'], 'verdict': e['veredicto']})
+    flood = [p for p in pts if p['h'] >= EVAC_M]
     json.dump({'passes_total': len(rows), 'passes_kept': len(pts),
+               'evacuation_level_m': EVAC_M, 'passes_above_evacuation': len(flood),
+               'passes_below_6m': sum(p['h'] < 6 for p in pts), 'first_year': min(p['d'] for p in pts)[:4], 'last_year': max(p['d'] for p in pts)[:4],
+               'flood_passes': [{'d': p['d'], 'h': p['h'], 'w': p['w']} for p in flood],
                'filter': 'coverage >= 85 % of the corridor and a gauge reading within 48 h',
                'water_ha_median_below_12m': r(float(np.median(low)), 0),
                'water_ha_p10_p90_below_12m': [r(float(np.percentile(low, 10)), 0), r(float(np.percentile(low, 90)), 0)],
@@ -184,52 +190,61 @@ def water():
 
 
 # ---------------------------------------------------------------- 4. forest
-MB = {3: 'forest', 4: 'forest', 6: 'forest', 9: 'plantation', 36: 'treecrop'}
+GROUPS = ['forest', 'plantation', 'treecrop', 'other', 'nodata']
+WOODED = ('forest', 'plantation')
 
 
 def forest():
-    cells = sorted(h3.polygon_to_cells(h3.LatLngPoly([(S, W), (S, E), (N, E), (N, W)]), 9))
-    con = duckdb.connect()
-    con.execute('CREATE TABLE c(h3 VARCHAR)')
-    con.executemany('INSERT INTO c VALUES (?)', [(c,) for c in cells])
-    fo = con.execute(f"""SELECT f.h3, px_total - sin_dato, primario + regeneracion, plantado + plantacion, cultivo_arboreo
-                         FROM '{(FUENTES / 'forty/forty_h3.parquet').as_posix()}' f JOIN c USING (h3)""").fetchall()
-    mb = con.execute(f"""SELECT u.h3, clase, n_px FROM '{(FUENTES / 'uso/uso_h3_anio_clase.parquet').as_posix()}' u
-                         JOIN c USING (h3) WHERE anio = 2020""").fetchall()
-    mbc: dict[str, dict[str, int]] = {}
-    for h, cl, n in mb:
-        mbc.setdefault(h, {}).setdefault(MB.get(cl, 'other'), 0)
-        mbc[h][MB.get(cl, 'other')] += n
-
+    """Per-cell comparison of ForTy 2020 and MapBiomas 2020 on both banks. Input: prep/fetch_forest_frame.py."""
     def top(d):
-        tot = sum(d.values())
-        if tot == 0:
+        seen = sum(v for k, v in d.items() if k != 'nodata')
+        if seen < 0.5 * sum(d.values()) or seen == 0:
             return 'nodata'
-        k = max(d, key=d.get)
-        return k if d[k] >= 0.5 * tot else 'mixed'
+        k = max((g for g in GROUPS if g != 'nodata'), key=d.get)
+        return k if d[k] >= 0.5 * seen else 'mixed'
 
-    feats, tally, kinds = [], {}, {}
-    for h, tot, nat, pla, crop in fo:
-        a = top({'forest': nat, 'plantation': pla, 'treecrop': crop, 'other': max(tot - nat - pla - crop, 0)}) if tot else 'nodata'
-        b = top(mbc.get(h, {}))
-        kind = 'agree' if a == b else ('soft' if 'mixed' in (a, b) or 'nodata' in (a, b) else 'hard')
-        kinds[kind] = kinds.get(kind, 0) + 1
-        key = 'agree' if a == b else f'{a}|{b}'
-        tally[key] = tally.get(key, 0) + 1
-        ring = [[round(lng, 6), round(lat, 6)] for lat, lng in h3.cell_to_boundary(h)]
-        feats.append({'type': 'Feature', 'properties': {'a': a, 'b': b, 'k': kind},
-                      'geometry': {'type': 'Polygon', 'coordinates': [ring + [ring[0]]]}})
+    feats, ids, kinds, tally, side_n = [], [], {}, {}, {'argentina': 0, 'brasil': 0}
+    with open(FUENTES / 'un_lugar/forest_frame.csv', newline='') as f:
+        for x in csv.DictReader(f):
+            a = top({g: int(x[f'forty_{g}']) for g in GROUPS})
+            b = top({g: int(x[f'mb_{g}']) for g in GROUPS})
+            side = 'argentina' if int(x['mb_px_argentina']) >= int(x['mb_px_brasil']) else 'brasil'
+            if 'nodata' in (a, b):
+                kind = 'nodata'
+            elif a == b:
+                kind = 'agree'
+            elif 'mixed' in (a, b):
+                kind = 'mixed'
+            elif a in WOODED or b in WOODED:
+                kind = 'forest'          # one map says forest or forest plantation and the other does not, or they differ on which
+            else:
+                kind = 'crop'            # neither says forest: tree crop against other land
+            kinds[kind] = kinds.get(kind, 0) + 1
+            side_n[side] += 1
+            if kind in ('forest', 'crop'):
+                tally[(a, b, side)] = tally.get((a, b, side), 0) + 1
+            ids.append(x['h3'])
+            ring = [[round(lng, 6), round(lat, 6)] for lat, lng in h3.cell_to_boundary(x['h3'])]
+            feats.append({'type': 'Feature', 'properties': {'a': a, 'b': b, 'k': kind, 's': side},
+                          'geometry': {'type': 'Polygon', 'coordinates': [ring + [ring[0]]]}})
     json.dump({'type': 'FeatureCollection', 'features': feats}, open(OUT / 'forest.geojson', 'w'), separators=(',', ':'))
     n = len(feats)
-    ha = float(np.mean([h3.cell_area(f, unit='km^2') for f in cells[:200]])) * 100
-    pairs = sorted(((k, v) for k, v in tally.items() if k != 'agree'), key=lambda kv: -kv[1])
-    json.dump({'year': 2020, 'cells': n, 'cell_ha': r(ha, 1), 'agree': tally.get('agree', 0),
-               'agree_share': r(tally.get('agree', 0) / n, 3), 'hard': kinds.get('hard', 0), 'soft': kinds.get('soft', 0),
-               'hard_share': r(kinds.get('hard', 0) / n, 3),
-               'note': 'Both sources stop at the Argentine border: the Brazilian half of the frame has no cells.',
-               'disagreements': [{'forty': k.split('|')[0], 'mapbiomas': k.split('|')[1], 'cells': v} for k, v in pairs if 'mixed' not in k and 'nodata' not in k][:6]},
+    ha = float(np.mean([h3.cell_area(c, unit='km^2') for c in ids[:200]])) * 100
+    pairs = sorted(tally.items(), key=lambda kv: -kv[1])
+    by_side = {s: {k: sum(1 for f in feats if f['properties']['s'] == s and f['properties']['k'] == k)
+                   for k in ('agree', 'forest', 'crop', 'mixed', 'nodata')} for s in side_n}
+    json.dump({'year': 2020, 'cells': n, 'cell_ha': r(ha, 1), 'cells_by_side': side_n,
+               'agree': kinds.get('agree', 0), 'about_forest': kinds.get('forest', 0), 'about_crops': kinds.get('crop', 0),
+               'mixed': kinds.get('mixed', 0), 'nodata': kinds.get('nodata', 0),
+               'about_forest_share': r(kinds.get('forest', 0) / n, 3), 'about_crops_share': r(kinds.get('crop', 0) / n, 3),
+               'by_side': by_side,
+               'sources': {'forty': 'Forest Typology (ForTy) 2020 v1.0', 'mapbiomas_argentina': 'MapBiomas Argentina, Collection 3',
+                           'mapbiomas_brasil': 'MapBiomas Brasil, Collection 11'},
+               'note': 'ForTy is one global product. MapBiomas is two national products that meet at the river.',
+               'disagreements': [{'forty': a, 'mapbiomas': b, 'side': s, 'cells': v, 'about': 'forest' if a in WOODED or b in WOODED else 'crops'}
+                                 for (a, b, s), v in pairs]},
               open(OUT / 'forest.json', 'w'), separators=(',', ':'))
-    print(f'forest: {n} cells, {tally.get("agree", 0) / n:.1%} agree; top disagreements {pairs[:3]}')
+    print(f'forest: {n} cells; {kinds}; top {pairs[:4]}')
 
 
 # ---------------------------------------------------------------- 5. places (names only)

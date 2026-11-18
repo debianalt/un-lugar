@@ -6,20 +6,21 @@ export const T = {
     title: 'One Place, Every Eye',
     lede: 'El Soberbio is a town of about 26,000 people on the Uruguay River, between Argentina and Brazil. This page takes one bend of that river and shows what each open Earth-observation product sees there, and what it does not.',
     status: 'This is a first, read-only version built from tests I ran in 2026. The frame is 14 by 12 km. Every number comes from a file in the repository.',
-    footer: 'Sources: Sentinel-1 (Copernicus), FABDEM, Copernicus GLO-30, ALOS AW3D30 (JAXA), MERIT, JRC Global Surface Water, MapBiomas Argentina, JRC Forest Types, Instituto Nacional del Agua. Code under AGPL-3.0. Built by Raimundo Elías Gómez (CONICET, Universidad Nacional de Misiones) with AI coding agents; the tests, the choices and the mistakes are mine. <a href="https://github.com/debianalt/un-lugar">Repository</a> · <a href="https://spatia.ar">Spatia</a>',
+    footer: 'Sources: Sentinel-1 (Copernicus), FABDEM, Copernicus GLO-30, ALOS AW3D30 (JAXA), MERIT, JRC Global Surface Water, MapBiomas Argentina and MapBiomas Brasil, Forest Typology 2020 (Google DeepMind, Google Research, WRI, IIASA), Instituto Nacional del Agua. Code under AGPL-3.0. Built by Raimundo Elías Gómez (CONICET, Universidad Nacional de Misiones) with AI coding agents; the tests, the choices and the mistakes are mine. <a href="https://github.com/debianalt/un-lugar">Repository</a> · <a href="https://spatia.ar">Spatia</a>',
     s: {
       radar: {
         num: '01 · Radar',
-        h: 'The river rises sixteen metres and the radar sees the same water',
+        h: 'In {kept} radar passes, one flood, and less water than on an ordinary day',
         p: [
           'Sentinel-1 is the open radar satellite most flood maps rely on, because it sees through cloud. I paired {kept} of its passes over this corridor, from 2015 to 2026, with the river gauge at the port.',
-          'Between 0 and 12 m on the gauge the detected water stays near {median} hectares, which is the river itself. The banks here are steep and covered with forest, and the C-band signal does not reach water under the trees. Even in the 16 m flood of October 2023 the detected area did not grow.',
+          'Between 0 and 12 m on the gauge the detected water stays near {median} hectares, which is the river itself. Only {above} of the {kept} passes found the river above the evacuation level of 13 m; {low} found it below 6 m. That pass, on {floodDate} with the river at {floodH} m, detected {floodW} hectares: less than on an ordinary day.',
+          'I do not know why. The banks here are steep and covered with forest, and my guess is that the C-band signal does not reach water under the trees. It is recorded in the annotations as speculation, not as a finding.',
           'In November 2026 I repeated the test with L-band scenes from NISAR, a radar meant to see under canopy. For two rises of the river in October, the water it showed did not match the water my terrain model expected: the best overlap score was {f1a} and {f1b} out of 1. I had written down the pass criterion before downloading the data, and the result failed it.'
         ],
         fig: 'Water detected by Sentinel-1 against river height',
         sub: 'Each dot is one satellite pass. Hectares of open water in a 20 × 20 km corridor.',
         x: 'River height at the gauge (m)', y: 'Water detected (ha)',
-        evac: 'evacuation level, 13 m',
+        evac: 'evacuation level, 13 m', unseen: 'not observed: {above} pass in {years} years',
         tip: '{d}: river at {h} m, {w} ha of water detected',
         legend: 'Corridor used for the radar test (20 × 20 km)'
       },
@@ -53,22 +54,24 @@ export const T = {
         legendJrc: 'How often Landsat saw water here, 1984–2021',
         legendModel: 'Reached by the model at this river height',
         seen: 'water seen at least once by the satellite record', never: 'never seen by the satellite record',
-        lo: 'rarely', hi: 'always'
+        lo: 'rarely', hi: 'always',
+        after: 'flood after 2021: outside the satellite record, which ends that year'
       },
       forest: {
         num: '04 · Forest',
-        h: 'Two maps of the same year disagree on one cell in six',
+        h: 'Two maps of the same year disagree about forest on one cell in {forestIn}',
         p: [
-          'MapBiomas Argentina and the European Commission\'s Forest Types map both classify 2020. Whether a plot counts as forest, plantation or crop decides if its produce may be sold in Europe under the deforestation regulation.',
-          'In {cells} cells of about 9 hectares, the two maps name a different dominant cover in {hard}, or {hardShare}. The most common case, {top} cells, is land that MapBiomas calls yerba mate or tea and the Forest Types map does not see as trees at all.',
-          'Both maps stop at the border. The Brazilian half of this frame is empty in both, and the river that people cross every day is the edge of the data.'
+          'Forest Typology 2020 (ForTy), from Google DeepMind, Google Research, WRI and IIASA, and MapBiomas both classify the year 2020. Whether a plot counts as forest, plantation or crop matters for what may be sold in Europe under the deforestation regulation.',
+          'In {cells} cells of about 9 hectares, {forestN}, or {forestShare}, are forest or forest plantation in one map and something else in the other. In another {cropN} neither map sees forest and they still disagree: MapBiomas calls the land yerba mate or tea, and ForTy, which has a class for tree crops, calls it other land.',
+          'ForTy is one global product. MapBiomas is two national ones, made by different teams, that meet in the middle of the river. All {cropN} of those tree-crop cells are on the Argentine side; on the Brazilian side MapBiomas maps no perennial crop in this frame.'
         ],
         fig: 'Dominant cover in each cell, 2020',
-        sub: 'Argentine side of the frame only.',
-        agree: 'same dominant cover', soft: 'one of the two has no dominant cover', hard: 'different dominant cover',
-        th: ['Forest Types 2020', 'MapBiomas 2020', 'Cells'],
-        cls: { forest: 'natural forest', plantation: 'tree plantation', treecrop: 'tree crop (yerba, tea)', other: 'not trees', mixed: 'no dominant cover', nodata: 'no data' },
-        tip: 'Forest Types: {a} · MapBiomas: {b}',
+        sub: 'Both banks of the frame.',
+        agree: 'same dominant cover', mixed: 'one of the two has no dominant cover', crop: 'they disagree, and neither says forest', forest: 'they disagree about forest',
+        th: ['ForTy 2020', 'MapBiomas 2020', 'Bank', 'Cells'],
+        side: { argentina: 'Argentina', brasil: 'Brazil' },
+        cls: { forest: 'natural forest', plantation: 'forest plantation', treecrop: 'tree crop (yerba, tea)', other: 'other land', mixed: 'no dominant cover', nodata: 'no data' },
+        tip: 'ForTy: {a} · MapBiomas: {b}',
         legend: 'Do the two maps agree on the dominant cover?'
       },
       empty: {
@@ -80,9 +83,11 @@ export const T = {
         ],
         box: [
           'No community knowledge is shown in this prototype.',
-          'It stays empty until a community council decides what may be shown, at what precision, and who can see it. Anything shared can be withdrawn. The rules are in GOVERNANCE.md.'
+          'It stays empty until a community council decides what may be shown and at what precision. Community knowledge is not kept in this repository: it stays in tools the community controls, and this page would show only what the community publishes. The rules are in GOVERNANCE.md.'
         ],
-        legend: 'Nothing is drawn here. See the text.'
+        blanks: 'A blank on a map can mean three things, and this page draws them differently.',
+        blank: { unseen: 'the sensor passed and did not see, or never passed (section 01)', outside: 'the product ends here, in space or in time (section 03)', withheld: 'the knowledge exists and is kept back by decision (this section)' },
+        legend: 'Kept back by decision. The frame holds no data.'
       },
       notes: {
         num: '06 · Annotations',
@@ -94,6 +99,7 @@ export const T = {
         reg: { measured: 'Measured', interpreted: 'Interpreted', situated: 'Situated', speculated: 'Speculated' },
         regHelp: { measured: 'an instrument reading', interpreted: 'a reading of the data by someone', situated: 'what people in the place saw or said', speculated: 'a guess nobody has tested' },
         review: 'How it was checked', by: 'Checked by', source: 'Source',
+        indep: 'Notes checked by someone other than their author: {indep} of {n}.',
         legend: 'Annotations by kind of statement'
       }
     }
@@ -104,20 +110,21 @@ export const T = {
     title: 'Un lugar, todos los ojos',
     lede: 'El Soberbio es un pueblo de unas 26.000 personas sobre el río Uruguay, entre la Argentina y Brasil. Esta página toma una curva de ese río y muestra qué ve ahí cada producto abierto de observación de la Tierra, y qué no ve.',
     status: 'Es una primera versión, sólo de lectura, hecha con pruebas que corrí en 2026. El recuadro mide 14 por 12 km. Cada número sale de un archivo del repositorio.',
-    footer: 'Fuentes: Sentinel-1 (Copernicus), FABDEM, Copernicus GLO-30, ALOS AW3D30 (JAXA), MERIT, JRC Global Surface Water, MapBiomas Argentina, JRC Forest Types, Instituto Nacional del Agua. Código con licencia AGPL-3.0. Hecho por Raimundo Elías Gómez (CONICET, Universidad Nacional de Misiones) con agentes de programación de IA; las pruebas, las decisiones y los errores son míos. <a href="https://github.com/debianalt/un-lugar">Repositorio</a> · <a href="https://spatia.ar">Spatia</a>',
+    footer: 'Fuentes: Sentinel-1 (Copernicus), FABDEM, Copernicus GLO-30, ALOS AW3D30 (JAXA), MERIT, JRC Global Surface Water, MapBiomas Argentina y MapBiomas Brasil, Forest Typology 2020 (Google DeepMind, Google Research, WRI, IIASA), Instituto Nacional del Agua. Código con licencia AGPL-3.0. Hecho por Raimundo Elías Gómez (CONICET, Universidad Nacional de Misiones) con agentes de programación de IA; las pruebas, las decisiones y los errores son míos. <a href="https://github.com/debianalt/un-lugar">Repositorio</a> · <a href="https://spatia.ar">Spatia</a>',
     s: {
       radar: {
         num: '01 · Radar',
-        h: 'El río sube dieciséis metros y el radar ve la misma agua',
+        h: 'En {kept} pasadas de radar, una crecida, y menos agua que un día cualquiera',
         p: [
           'Sentinel-1 es el satélite de radar abierto que usan casi todos los mapas de inundación, porque ve a través de las nubes. Comparé {kept} pasadas sobre este corredor, de 2015 a 2026, con el hidrómetro del puerto.',
-          'Entre 0 y 12 m de altura del río, el agua detectada se queda cerca de {median} hectáreas, que son el río mismo. Las barrancas son empinadas y tienen monte, y la señal de banda C no llega al agua que está bajo los árboles. Ni en la crecida de 16 m de octubre de 2023 creció la superficie detectada.',
+          'Entre 0 y 12 m de altura del río, el agua detectada se queda cerca de {median} hectáreas, que son el río mismo. Sólo {above} de las {kept} pasadas encontró el río por encima de la cota de evacuación de 13 m; {low} lo encontraron por debajo de 6 m. Esa pasada, el {floodDate} con el río en {floodH} m, detectó {floodW} hectáreas: menos que un día cualquiera.',
+          'No sé por qué. Las barrancas son empinadas y tienen monte, y mi conjetura es que la señal de banda C no llega al agua que está bajo los árboles. Está anotada más abajo como especulación, no como hallazgo.',
           'En noviembre de 2026 repetí la prueba con escenas de banda L de NISAR, un radar pensado para ver bajo el dosel. En dos subidas del río de octubre, el agua que mostró no coincidió con la que esperaba mi modelo de terreno: el mejor puntaje de coincidencia fue {f1a} y {f1b} sobre 1. Había anotado el criterio de aprobación antes de bajar los datos, y el resultado no lo cumplió.'
         ],
         fig: 'Agua detectada por Sentinel-1 según la altura del río',
         sub: 'Cada punto es una pasada del satélite. Hectáreas de agua abierta en un corredor de 20 × 20 km.',
         x: 'Altura del río en el hidrómetro (m)', y: 'Agua detectada (ha)',
-        evac: 'cota de evacuación, 13 m',
+        evac: 'cota de evacuación, 13 m', unseen: 'sin observar: {above} pasada en {years} años',
         tip: '{d}: río en {h} m, {w} ha de agua detectada',
         legend: 'Corredor de la prueba de radar (20 × 20 km)'
       },
@@ -151,22 +158,24 @@ export const T = {
         legendJrc: 'Con qué frecuencia Landsat vio agua acá, 1984–2021',
         legendModel: 'Alcanzado por el modelo a esta altura del río',
         seen: 'agua vista al menos una vez por el registro satelital', never: 'nunca vista por el registro satelital',
-        lo: 'rara vez', hi: 'siempre'
+        lo: 'rara vez', hi: 'siempre',
+        after: 'crecida posterior a 2021: fuera del registro satelital, que termina ese año'
       },
       forest: {
         num: '04 · Bosque',
-        h: 'Dos mapas del mismo año discrepan en una celda de cada seis',
+        h: 'Dos mapas del mismo año discrepan sobre el bosque en una celda de cada {forestIn}',
         p: [
-          'MapBiomas Argentina y el mapa de Tipos de Bosque de la Comisión Europea clasifican el año 2020. Que un lote cuente como bosque, plantación o cultivo decide si su producción puede venderse en Europa con el reglamento de deforestación.',
-          'En {cells} celdas de unas 9 hectáreas, los dos mapas nombran una cobertura dominante distinta en {hard}, el {hardShare}. El caso más común, {top} celdas, es tierra que MapBiomas llama yerba mate o té y que el mapa de Tipos de Bosque no ve como árboles.',
-          'Los dos mapas terminan en la frontera. La mitad brasileña del recuadro está vacía en ambos, y el río que la gente cruza todos los días es el borde de los datos.'
+          'Forest Typology 2020 (ForTy), de Google DeepMind, Google Research, WRI e IIASA, y MapBiomas clasifican el año 2020. Que un lote cuente como bosque, plantación o cultivo pesa en lo que puede venderse en Europa con el reglamento de deforestación.',
+          'En {cells} celdas de unas 9 hectáreas, {forestN}, el {forestShare}, son bosque o plantación forestal en un mapa y otra cosa en el otro. En otras {cropN} ninguno de los dos ve bosque y tampoco coinciden: MapBiomas llama a esa tierra yerba mate o té, y ForTy, que tiene una clase para cultivos arbóreos, la llama otras tierras.',
+          'ForTy es un solo producto global. MapBiomas son dos productos nacionales, hechos por equipos distintos, que se encuentran en el medio del río. Las {cropN} celdas de cultivo arbóreo están todas del lado argentino; del lado brasileño MapBiomas no marca ningún cultivo perenne en este recuadro.'
         ],
         fig: 'Cobertura dominante en cada celda, 2020',
-        sub: 'Sólo el lado argentino del recuadro.',
-        agree: 'misma cobertura dominante', soft: 'uno de los dos no tiene cobertura dominante', hard: 'cobertura dominante distinta',
-        th: ['Tipos de Bosque 2020', 'MapBiomas 2020', 'Celdas'],
-        cls: { forest: 'bosque nativo', plantation: 'plantación forestal', treecrop: 'cultivo arbóreo (yerba, té)', other: 'sin árboles', mixed: 'sin cobertura dominante', nodata: 'sin dato' },
-        tip: 'Tipos de Bosque: {a} · MapBiomas: {b}',
+        sub: 'Las dos costas del recuadro.',
+        agree: 'misma cobertura dominante', mixed: 'uno de los dos no tiene cobertura dominante', crop: 'no coinciden, y ninguno dice bosque', forest: 'no coinciden sobre el bosque',
+        th: ['ForTy 2020', 'MapBiomas 2020', 'Costa', 'Celdas'],
+        side: { argentina: 'Argentina', brasil: 'Brasil' },
+        cls: { forest: 'bosque nativo', plantation: 'plantación forestal', treecrop: 'cultivo arbóreo (yerba, té)', other: 'otras tierras', mixed: 'sin cobertura dominante', nodata: 'sin dato' },
+        tip: 'ForTy: {a} · MapBiomas: {b}',
         legend: '¿Coinciden los dos mapas en la cobertura dominante?'
       },
       empty: {
@@ -178,9 +187,11 @@ export const T = {
         ],
         box: [
           'En este prototipo no se muestra ningún conocimiento comunitario.',
-          'Queda vacía hasta que un consejo comunitario decida qué se puede mostrar, con qué precisión y quién lo puede ver. Todo lo que se comparta se puede retirar. Las reglas están en GOVERNANCE.md.'
+          'Queda vacía hasta que un consejo comunitario decida qué se puede mostrar y con qué precisión. El conocimiento comunitario no se guarda en este repositorio: queda en herramientas que controla la comunidad, y esta página mostraría sólo lo que la comunidad publique. Las reglas están en GOVERNANCE.md.'
         ],
-        legend: 'Acá no se dibuja nada. Ver el texto.'
+        blanks: 'Un blanco en un mapa puede querer decir tres cosas, y esta página las dibuja distinto.',
+        blank: { unseen: 'el sensor pasó y no vio, o nunca pasó (sección 01)', outside: 'el producto termina acá, en el espacio o en el tiempo (sección 03)', withheld: 'el conocimiento existe y se guarda por decisión (esta sección)' },
+        legend: 'Guardado por decisión. El recuadro no tiene datos.'
       },
       notes: {
         num: '06 · Anotaciones',
@@ -192,6 +203,7 @@ export const T = {
         reg: { measured: 'Medido', interpreted: 'Interpretado', situated: 'Situado', speculated: 'Especulado' },
         regHelp: { measured: 'la lectura de un instrumento', interpreted: 'una lectura de los datos hecha por alguien', situated: 'lo que vio o dijo la gente del lugar', speculated: 'una conjetura que nadie probó' },
         review: 'Cómo se revisó', by: 'Revisó', source: 'Fuente',
+        indep: 'Notas revisadas por alguien que no es su autor: {indep} de {n}.',
         legend: 'Anotaciones por clase de afirmación'
       }
     }
