@@ -311,13 +311,13 @@
       ],
       "date": "2023-11-18",
       "statement": {
-        "en": "At 19.75 m the terrain model reaches 372 homes; the press counted more than 200 evacuated families. Evacuated is not the same as flooded, and above 19 m the model runs high.",
-        "es": "Con 19,75 m el modelo de terreno alcanza 372 viviendas; la prensa contó más de 200 familias evacuadas. Evacuado no es lo mismo que inundado, y por encima de 19 m el modelo da de más."
+        "en": "At 19.75 m the flood simulation reaches 372 homes; the press counted more than 200 evacuated families. Evacuated is not the same as flooded, and above 19 m the simulation runs high.",
+        "es": "Con 19,75 m la simulación de crecida alcanza 372 viviendas; la prensa contó más de 200 familias evacuadas. Evacuado no es lo mismo que inundado, y por encima de 19 m la simulación da de más."
       },
       "source": {
         "title": {
-          "en": "Flood exposure model, adjusted with dated press reports",
-          "es": "Modelo de exposición a crecidas, ajustado con notas de prensa fechadas"
+          "en": "Spatia's flood simulation, adjusted with dated press reports",
+          "es": "Simulación de crecida de Spatia, ajustada con notas de prensa fechadas"
         },
         "url": "https://misionesonline.net/2023/11/17/alrededor-de-250-familias-de-seran-evacuadas-en-el-soberbio/"
       },
@@ -325,8 +325,8 @@
         "by": "nobody independent yet",
         "date": "2026-10-23",
         "method": {
-          "en": "Model output at each reported river height compared with the reported families.",
-          "es": "Salida del modelo a cada altura informada, comparada con las familias informadas."
+          "en": "Simulation output at each reported river height compared with the reported families.",
+          "es": "Salida de la simulación a cada altura informada, comparada con las familias informadas."
         }
       },
       "visibility": "public source"
@@ -342,13 +342,13 @@
       ],
       "date": "2026-10-23",
       "statement": {
-        "en": "The model starts counting homes at 15 m, but families leave from 12 to 13 m. The 30 m elevation model probably leaves the riverbank too high.",
-        "es": "El modelo empieza a contar viviendas a los 15 m, pero las familias salen desde los 12 o 13 m. Es probable que el modelo de elevación de 30 m deje la barranca demasiado alta."
+        "en": "The flood simulation starts counting homes at 15 m, but families leave from 12 to 13 m. The 30 m elevation model probably leaves the riverbank too high.",
+        "es": "La simulación de crecida empieza a contar viviendas a los 15 m, pero las familias salen desde los 12 o 13 m. Es probable que el modelo de elevación de 30 m deje la barranca demasiado alta."
       },
       "source": {
         "title": {
-          "en": "Comparison of the model with the press",
-          "es": "Comparación del modelo con la prensa"
+          "en": "Comparison of the flood simulation with the press",
+          "es": "Comparación de la simulación de crecida con la prensa"
         },
         "url": "https://www.elterritorio.com.ar/noticias/2017/05/31/531654-el-soberbio-15-familias-evacuadas-por-la-crecida-del-rio-uruguay"
       },
@@ -356,8 +356,8 @@
         "by": "nobody independent yet",
         "date": "2026-10-23",
         "method": {
-          "en": "Heights at which the model first reaches homes against heights at which evacuations were reported.",
-          "es": "Alturas a las que el modelo alcanza las primeras viviendas contra las alturas a las que se informaron evacuaciones."
+          "en": "Heights at which the simulation first reaches homes against heights at which evacuations were reported.",
+          "es": "Alturas a las que la simulación alcanza las primeras viviendas contra las alturas a las que se informaron evacuaciones."
         }
       },
       "visibility": "public source"
@@ -373,8 +373,8 @@
       ],
       "date": "2026-10-23",
       "statement": {
-        "en": "In 23 dated reports from 2014 to 2026 the press never names this place, nor Puerto Mata Ojos or Hertman. The model reaches all three. Nobody has recorded what happens here.",
-        "es": "En 23 notas fechadas entre 2014 y 2026 la prensa nunca nombra este lugar, ni Puerto Mata Ojos ni Hertman. El modelo alcanza a los tres. Nadie registró lo que pasa acá."
+        "en": "In 23 dated reports from 2014 to 2026 the press never names this place, nor Puerto Mata Ojos or Hertman. The flood simulation reaches all three. Nobody has recorded what happens here.",
+        "es": "En 23 notas fechadas entre 2014 y 2026 la prensa nunca nombra este lugar, ni Puerto Mata Ojos ni Hertman. La simulación de crecida alcanza a los tres. Nadie registró lo que pasa acá."
       },
       "source": {
         "title": {
@@ -387,8 +387,8 @@
         "by": "nobody independent yet",
         "date": "2026-10-23",
         "method": {
-          "en": "Place names in the press reports compared with the zones the model reaches.",
-          "es": "Lugares nombrados en las notas de prensa comparados con las zonas que alcanza el modelo."
+          "en": "Place names in the press reports compared with the zones the simulation reaches.",
+          "es": "Lugares nombrados en las notas de prensa comparados con las zonas que alcanza la simulación."
         }
       },
       "visibility": "public source"

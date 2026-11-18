@@ -49,15 +49,15 @@ export const T = {
         h: 'Thirty-eight years of satellite images did not see {never14} of these {reached14} hectares',
         p: [
           'The Global Surface Water record marks every 30 m cell where the Landsat satellites saw water at least once between 1984 and 2021. Floods here come with days of cloud, and those satellites do not see through it.',
-          'In June 2014 the river passed 22 m, within that period. At {h14} m, a model built from the terrain and the gauge, adjusted with what the newspapers reported in six floods, reaches {reached14} hectares in this frame, the river included. In {never14} of them, {share14}, the record never saw water.',
-          'The model is not the truth either. The newspapers say families leave from 12 or 13 m, and the model starts reaching homes at 15 m. In the orange area the model says water and the satellite never saw it; which of the two is wrong in each cell cannot be known without someone who was there.'
+          'In June 2014 the river passed 22 m, within that period. The maps of this section come from a flood simulation made for Spatia from the terrain and the gauge, adjusted with what the newspapers reported in six floods. At {h14} m it reaches {reached14} hectares in this frame, the river included. In {never14} of them, {share14}, the record never saw water.',
+          'The simulation is not the truth either. The newspapers say families leave from 12 or 13 m, and the simulation starts reaching homes at 15 m. In the orange area the simulation says water and the satellite never saw it; which of the two is wrong in each cell cannot be known without someone who was there.'
         ],
-        btn: { jrc: 'Satellite record', m2026: 'Model, 15 m', m2023: 'Model, 19.75 m', m2014: 'Model, 22.8 m' },
-        fig: 'What the press counted and what the model counts',
-        sub: 'Families reported as evacuated and homes the model reaches at the same river height.',
-        th: ['Flood', 'Height', 'Families (press)', 'Homes (model)', 'Source'],
+        btn: { jrc: 'Satellite record', m2026: 'Simulation, 15 m', m2023: 'Simulation, 19.75 m', m2014: 'Simulation, 22.8 m' },
+        fig: 'What the press counted and what the simulation counts',
+        sub: 'Families reported as evacuated and homes the flood simulation reaches at the same river height.',
+        th: ['Flood', 'Height', 'Families (press)', 'Homes (simulation)', 'Source'],
         legendJrc: 'How often Landsat saw water here, 1984–2021',
-        legendModel: 'Reached by the model at this river height',
+        legendModel: 'Reached by the flood simulation at this river height',
         seen: 'water seen at least once by the satellite record', never: 'never seen by the satellite record',
         lo: 'rarely', hi: 'always',
         after: 'flood after 2021: outside the satellite record, which ends that year'
@@ -169,15 +169,15 @@ export const T = {
         h: 'Treinta y ocho años de imágenes satelitales no vieron {never14} de estas {reached14} hectáreas',
         p: [
           'El registro Global Surface Water marca cada celda de 30 m donde los satélites Landsat vieron agua al menos una vez entre 1984 y 2021. Acá las crecidas llegan con días de nubes, y esos satélites no ven a través de ellas.',
-          'En junio de 2014 el río pasó los 22 m, dentro de ese período. A {h14} m, un modelo hecho con el terreno y el hidrómetro, ajustado con lo que publicaron los diarios en seis crecidas, alcanza {reached14} hectáreas en este recuadro, con el río incluido. En {never14} de ellas, el {share14}, el registro nunca vio agua.',
-          'El modelo tampoco es la verdad. Los diarios dicen que las familias salen desde los 12 o 13 m, y el modelo empieza a alcanzar viviendas a los 15 m. En el área naranja el modelo dice agua y el satélite nunca la vio; cuál de los dos se equivoca en cada celda no se sabe sin alguien que haya estado ahí.'
+          'En junio de 2014 el río pasó los 22 m, dentro de ese período. Los mapas de esta sección salen de una simulación de crecida hecha para Spatia con el terreno y el hidrómetro, ajustada con lo que publicaron los diarios en seis crecidas. A {h14} m alcanza {reached14} hectáreas en este recuadro, con el río incluido. En {never14} de ellas, el {share14}, el registro nunca vio agua.',
+          'La simulación tampoco es la verdad. Los diarios dicen que las familias salen desde los 12 o 13 m, y la simulación empieza a alcanzar viviendas a los 15 m. En el área naranja la simulación dice agua y el satélite nunca la vio; cuál de los dos se equivoca en cada celda no se sabe sin alguien que haya estado ahí.'
         ],
-        btn: { jrc: 'Registro satelital', m2026: 'Modelo, 15 m', m2023: 'Modelo, 19,75 m', m2014: 'Modelo, 22,8 m' },
-        fig: 'Lo que contó la prensa y lo que cuenta el modelo',
-        sub: 'Familias informadas como evacuadas y viviendas que el modelo alcanza a la misma altura del río.',
-        th: ['Crecida', 'Altura', 'Familias (prensa)', 'Viviendas (modelo)', 'Fuente'],
+        btn: { jrc: 'Registro satelital', m2026: 'Simulación, 15 m', m2023: 'Simulación, 19,75 m', m2014: 'Simulación, 22,8 m' },
+        fig: 'Lo que contó la prensa y lo que cuenta la simulación',
+        sub: 'Familias informadas como evacuadas y viviendas que la simulación de crecida alcanza a la misma altura del río.',
+        th: ['Crecida', 'Altura', 'Familias (prensa)', 'Viviendas (simulación)', 'Fuente'],
         legendJrc: 'Con qué frecuencia Landsat vio agua acá, 1984–2021',
-        legendModel: 'Alcanzado por el modelo a esta altura del río',
+        legendModel: 'Alcanzado por la simulación de crecida a esta altura del río',
         seen: 'agua vista al menos una vez por el registro satelital', never: 'nunca vista por el registro satelital',
         lo: 'rara vez', hi: 'siempre',
         after: 'crecida posterior a 2021: fuera del registro satelital, que termina ese año'
