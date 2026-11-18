@@ -12,7 +12,7 @@ const TXT = {
     none: 'no pass', one: '1 pass',
     tip: '<b>{date}</b><br>Peak {peak} m, {d} days above 13 m.<br>Last pass {b} days before the river crossed 13 m; next pass {a} days after it fell below.',
     tipIn: '<b>{date}</b><br>Peak {peak} m, {d} days above 13 m.<br>One pass with the river above 13 m.',
-    src: 'Gauge readings: Instituto Nacional del Agua, three series of the same site. Passes: every Sentinel-1 acquisition over the corridor, {passes} on {dates} dates.',
+    src: 'Gauge readings: Prefectura Naval Argentina and the Red Hidrológica Nacional, as published by the Instituto Nacional del Agua; three series of the same site. Passes: every Sentinel-1 acquisition over the corridor, {passes} on {dates} dates.',
     unseen: 'above 13 m, not observed', seen: 'above 13 m, observed'
   },
   es: {
@@ -24,7 +24,7 @@ const TXT = {
     none: 'sin pasada', one: '1 pasada',
     tip: '<b>{date}</b><br>Pico {peak} m, {d} días sobre 13 m.<br>Última pasada {b} días antes de que el río cruzara los 13 m; la siguiente, {a} días después de que bajara.',
     tipIn: '<b>{date}</b><br>Pico {peak} m, {d} días sobre 13 m.<br>Una pasada con el río sobre 13 m.',
-    src: 'Lecturas del hidrómetro: Instituto Nacional del Agua, tres series del mismo sitio. Pasadas: todas las adquisiciones de Sentinel-1 sobre el corredor, {passes} en {dates} fechas.',
+    src: 'Lecturas del hidrómetro: Prefectura Naval Argentina y Red Hidrológica Nacional, publicadas por el Instituto Nacional del Agua; tres series del mismo sitio. Pasadas: todas las adquisiciones de Sentinel-1 sobre el corredor, {passes} en {dates} fechas.',
     unseen: 'sobre 13 m, no observado', seen: 'sobre 13 m, observado'
   }
 };

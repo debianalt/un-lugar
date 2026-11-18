@@ -1,5 +1,5 @@
 // All visible text, in English and Spanish. {curly} tokens are filled from the data files.
-const SOURCES = 'Sentinel-1 (Copernicus), NISAR (NASA–ISRO), FABDEM, Copernicus GLO-30, ALOS AW3D30 (JAXA), MERIT, JRC Global Surface Water, MapBiomas Argentina, MapBiomas Brasil, Forest Typology 2020 (Google DeepMind, Google Research, WRI, IIASA), GLAD (University of Maryland), Instituto Nacional del Agua, NOAA PSL (Niño 3.4), FAO GAUL, OpenStreetMap.';
+const SOURCES = 'Sentinel-1 (Copernicus), NISAR (NASA–ISRO), FABDEM, Copernicus GLO-30, ALOS AW3D30 (JAXA), MERIT, JRC Global Surface Water, MapBiomas Argentina, MapBiomas Brasil, Forest Typology 2020 (Google DeepMind, Google Research, WRI, IIASA), GLAD (University of Maryland), Prefectura Naval Argentina, Red Hidrológica Nacional, Instituto Nacional del Agua, NOAA PSL (Niño 3.4), FAO GAUL, OpenStreetMap.';
 
 export const T = {
   en: {

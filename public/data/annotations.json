@@ -251,8 +251,8 @@
       },
       "source": {
         "title": {
-          "en": "Instituto Nacional del Agua, series 61 (El Soberbio)",
-          "es": "Instituto Nacional del Agua, serie 61 (El Soberbio)"
+          "en": "Prefectura Naval Argentina, daily gauge at El Soberbio; published by the Instituto Nacional del Agua (series 61)",
+          "es": "Prefectura Naval Argentina, hidrómetro diario de El Soberbio; publicado por el Instituto Nacional del Agua (serie 61)"
         },
         "url": "https://alerta.ina.gob.ar/a5/"
       },
@@ -260,8 +260,8 @@
         "by": "author",
         "date": "2026-10-23",
         "method": {
-          "en": "Daily series compared with the heights quoted in dated press reports.",
-          "es": "Serie diaria comparada con las alturas citadas en notas de prensa fechadas."
+          "en": "The readings are taken and checked by Prefectura Naval Argentina. Here the daily series is compared with the heights quoted in dated press reports.",
+          "es": "Las lecturas las toma y las controla la Prefectura Naval Argentina. Acá la serie diaria se compara con las alturas citadas en notas de prensa fechadas."
         }
       },
       "visibility": "public source"
