@@ -148,7 +148,7 @@ function build() {
   };
   const RT = D.regionT, RF = D.regionF;
   if (RT && RF) Object.assign(vals, {
-    rGauges: nf(RT.gauges), rRises: nf(RT.rises), rSeen: nf(RT.rises_with_a_pass), rShort: nf(RT.rises_under_3_days), rShortSeen: nf(RT.rises_under_3_days_with_a_pass),
+    rGauges: nf(RT.gauges), rFloods: nf(RT.floods_distinct), rFloodsSeen: nf(RT.floods_distinct_with_a_pass), rFloodHa: nf(RF.mapbiomas_forest_forty_other.by_leading_mapbiomas_class.flooded_forest.ha / 1e6, 1), rRises: nf(RT.rises), rSeen: nf(RT.rises_with_a_pass), rShort: nf(RT.rises_under_3_days), rShortSeen: nf(RT.rises_under_3_days_with_a_pass),
     rNino: nf(RT.rises_by_enso.nino), rNinoM: nf(RT.months_by_enso.nino), rMonths: nf(RT.months_by_enso.nino + RT.months_by_enso.neutral + RT.months_by_enso.nina),
     rAbove: nf(RT.gauges - RT.gauges_never_above.length), rNever: RT.gauges_never_above.join(lang === 'es' ? ' y ' : ' and '),
     rCells: nf(RF.region.cells / 1e6, 1), rShare: pct(RF.region.about_forest_share), rHa: nf(RF.region.about_forest_ha / 1e6, 1),

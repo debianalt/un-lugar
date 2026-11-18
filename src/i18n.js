@@ -84,7 +84,7 @@ export const T = {
         h: 'This layer is empty on purpose',
         p: [
           'How far the water came into each house is known to the families of Chivilcoy, Maracaná and Unión. At what height on the gauge each neighbourhood leaves is known to the firefighters. Which streams rise and which roads are cut is known to the farmers of the chacras. How the crossing to Brazil changes with each height of the river is known to the people of the port.',
-          'There are also Mbyá Guaraní families who fish this river and sell along the coast road. The official registers of Indigenous communities do not place them here: three public lists count different numbers of communities for the province and none records where people work.'
+          'The official registers of Indigenous communities are one more eye with its own blanks: three public lists count different numbers of communities for the province, and none records where people work.'
         ],
         box: [
           'None of that is shown yet.',
@@ -111,11 +111,11 @@ export const T = {
       },
       region: {
         num: '07 · The region',
-        h: 'Beyond this bend: {rGauges} gauges, {rRises} rises, a radar pass during {rSeen}',
+        h: 'Beyond this bend: {rFloods} floods at {rGauges} gauges, the radar overhead during {rFloodsSeen}',
         p: [
           'El Soberbio is one case. North-eastern Argentina lies between the Paraná and the Uruguay, with the Iberá wetlands, the Chaco plains and what remains of the Atlantic Forest, beside pine and eucalyptus plantations, yerba mate, tea, crops and cattle. The two tests that need no fieldwork, the timetable and the forest maps, run here over the whole region.',
-          '{rGauges} gauges on the Uruguay, the Iguazú and the Paraná have an evacuation level. Between 2015 and October 2026 the river stood above it {rRises} times at {rAbove} of them; at {rNever}, never. A Sentinel-1 scene covering the gauge started during {rSeen} of those rises. Of the {rShort} that lasted under three days, during {rShortSeen}. {rNino} of the {rRises} came in El Niño months, which were {rNinoM} of the {rMonths} months of the period.',
-          'The forest test covers {rCells} million cells in Misiones, Corrientes, Chaco and Formosa. ForTy and MapBiomas disagree about forest on {rShare} of them, {rHa} million hectares, and in Formosa on one cell in {rFormosaIn}. On another {rCropHa} hectares, {rCropMis} of them in Misiones, MapBiomas maps a perennial crop such as yerba mate or tea and ForTy other land. With a third map, GLAD tree height, and one question only, whether half the cell is under trees, the three give different answers on {rSplit} of the cells.'
+          '{rGauges} gauges on the Uruguay, the Iguazú and the Paraná have an evacuation level. Between 2015 and October 2026 the river stood above it {rRises} times at {rAbove} of them; at {rNever}, never. Rises at neighbouring gauges are often the same flood: they are {rFloods} floods, and a Sentinel-1 scene started during {rFloodsSeen}. Counted gauge by gauge, a scene started during {rSeen} of the {rRises} rises. Of the {rShort} that lasted under three days, during {rShortSeen}. {rNino} of the {rRises} came in El Niño months, which were {rNinoM} of the {rMonths} months of the period.',
+          'The forest test covers {rCells} million cells in Misiones, Corrientes, Chaco and Formosa. ForTy and MapBiomas disagree about forest on {rShare} of them, {rHa} million hectares, and in Formosa on one cell in {rFormosaIn}. On {rFloodHa} million of those hectares the difference is in the legend: MapBiomas calls flooded forest a cover of trees, shrubs or both, and ForTy follows the forest definition of FAO. On another {rCropHa} hectares, {rCropMis} of them in Misiones, MapBiomas maps a perennial crop such as yerba mate or tea and ForTy other land. With a third map, GLAD tree height, and one question only, whether half the cell is under trees, the three give different answers on {rSplit} of the cells.'
         ],
         legend: 'Cells where two 2020 maps disagree about forest',
         gauge: 'river gauge; larger with more rises',
@@ -206,7 +206,7 @@ export const T = {
         h: 'Esta capa está vacía a propósito',
         p: [
           'Hasta dónde llegó el agua en cada casa lo saben las familias de Chivilcoy, Maracaná y Unión. A qué altura del hidrómetro sale cada barrio lo saben los bomberos. Qué arroyos crecen y qué caminos se cortan lo saben los colonos de las chacras. Cómo cambia el cruce a Brasil con cada altura del río lo sabe la gente del puerto.',
-          'Hay también familias mbyá guaraní que pescan en este río y venden a la vera de la ruta costera. Los registros oficiales de comunidades indígenas no las ubican acá: tres listas públicas cuentan cantidades distintas de comunidades en la provincia y ninguna registra dónde trabaja la gente.'
+          'Los registros oficiales de comunidades indígenas son un ojo más, con sus propios blancos: tres listas públicas cuentan cantidades distintas de comunidades en la provincia, y ninguna registra dónde trabaja la gente.'
         ],
         box: [
           'Nada de eso se muestra todavía.',
@@ -233,11 +233,11 @@ export const T = {
       },
       region: {
         num: '07 · La región',
-        h: 'Más allá de esta curva: {rGauges} hidrómetros, {rRises} subidas, una pasada de radar durante {rSeen}',
+        h: 'Más allá de esta curva: {rFloods} crecidas en {rGauges} hidrómetros, el radar pasó durante {rFloodsSeen}',
         p: [
           'El Soberbio es un caso. El nordeste argentino está entre el Paraná y el Uruguay, con los esteros del Iberá, la llanura chaqueña y lo que queda de la selva paranaense, junto a plantaciones de pino y eucalipto, yerba mate, té, cultivos y ganadería. Las dos pruebas que no necesitan trabajo de campo, el horario y los mapas de bosque, se corren acá sobre toda la región.',
-          '{rGauges} hidrómetros del Uruguay, el Iguazú y el Paraná tienen cota de evacuación. Entre 2015 y octubre de 2026 el río estuvo sobre esa cota {rRises} veces en {rAbove} de ellos; en {rNever}, nunca. Una escena de Sentinel-1 que cubre el hidrómetro empezó durante {rSeen} de esas subidas. De las {rShort} que duraron menos de tres días, durante {rShortSeen}. {rNino} de las {rRises} llegaron en meses de El Niño, que fueron {rNinoM} de los {rMonths} meses del período.',
-          'La prueba de bosque cubre {rCells} millones de celdas de Misiones, Corrientes, Chaco y Formosa. ForTy y MapBiomas no coinciden sobre el bosque en el {rShare}, {rHa} millones de hectáreas, y en Formosa en una celda de cada {rFormosaIn}. En otras {rCropHa} hectáreas, el {rCropMis} en Misiones, MapBiomas marca un cultivo perenne como la yerba mate o el té y ForTy otras tierras. Con un tercer mapa, la altura de árboles de GLAD, y una sola pregunta, si la mitad de la celda tiene árboles, los tres responden distinto en el {rSplit} de las celdas.'
+          '{rGauges} hidrómetros del Uruguay, el Iguazú y el Paraná tienen cota de evacuación. Entre 2015 y octubre de 2026 el río estuvo sobre esa cota {rRises} veces en {rAbove} de ellos; en {rNever}, nunca. Las subidas de hidrómetros vecinos suelen ser la misma crecida: son {rFloods} crecidas, y una escena de Sentinel-1 empezó durante {rFloodsSeen}. Contadas hidrómetro por hidrómetro, una escena empezó durante {rSeen} de las {rRises} subidas. De las {rShort} que duraron menos de tres días, durante {rShortSeen}. {rNino} de las {rRises} llegaron en meses de El Niño, que fueron {rNinoM} de los {rMonths} meses del período.',
+          'La prueba de bosque cubre {rCells} millones de celdas de Misiones, Corrientes, Chaco y Formosa. ForTy y MapBiomas no coinciden sobre el bosque en el {rShare}, {rHa} millones de hectáreas, y en Formosa en una celda de cada {rFormosaIn}. En {rFloodHa} millones de esas hectáreas la diferencia está en la leyenda: MapBiomas llama bosque inundable a una cobertura de árboles, arbustos o ambos, y ForTy sigue la definición de bosque de la FAO. En otras {rCropHa} hectáreas, el {rCropMis} en Misiones, MapBiomas marca un cultivo perenne como la yerba mate o el té y ForTy otras tierras. Con un tercer mapa, la altura de árboles de GLAD, y una sola pregunta, si la mitad de la celda tiene árboles, los tres responden distinto en el {rSplit} de las celdas.'
         ],
         legend: 'Celdas donde dos mapas de 2020 no coinciden sobre el bosque',
         gauge: 'hidrómetro; más grande con más subidas',
