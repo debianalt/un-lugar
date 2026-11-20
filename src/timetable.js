@@ -64,9 +64,17 @@ export function timetable(TT, lang, { h, fill, nf, day, showTip, hideTip }) {
     const x = (d) => ox + ((d + half) / (2 * half)) * pw, y = (m) => oy + ph - (Math.min(m, ymax) / ymax) * ph;
     const pts = e.curve.filter((c) => c[1] != null), seen = e.passes_inside > 0;
     s += `<g data-i="${i}"><text class="lab" x="${ox}" y="${oy - 14}">${day(e.date, 'short')}</text><text x="${ox}" y="${oy - 3}">${nf(e.peak_m, 1)} m · ${seen ? t.one : t.none}</text>`;
-    // the part of the rise above the level: dots when no pass fell on it, solid when one did
-    const over = pts.map((c) => `${x(c[0]).toFixed(1)} ${y(Math.max(c[1], ev)).toFixed(1)}`).join(' L');
-    s += `<path d="M${x(pts[0][0]).toFixed(1)} ${y(ev)} L${over} L${x(pts.at(-1)[0]).toFixed(1)} ${y(ev)} Z" fill="${seen ? BLUE : 'url(#tt-unseen)'}" fill-opacity="${seen ? 0.35 : 1}"/>`;
+    // each stretch above the level: dots when no pass fell on it, solid when one did. Judged stretch by stretch, by its own
+    // passes: twenty days can hold the tail of a neighbouring rise, which must not take this rise's status.
+    for (let k = 0; k < pts.length; ) {
+      if (pts[k][1] <= ev) { k++; continue; }
+      let j = k; while (j + 1 < pts.length && pts[j + 1][1] > ev) j++;
+      const lo = Math.max(k - 1, 0), hi = Math.min(j + 1, pts.length - 1);   // one point either side: the crossings
+      const hit = e.passes.some((d) => d >= pts[lo][0] && d <= pts[hi][0]);
+      const over = pts.slice(lo, hi + 1).map((c) => `${x(c[0]).toFixed(1)} ${y(Math.max(c[1], ev)).toFixed(1)}`).join(' L');
+      s += `<path d="M${x(pts[lo][0]).toFixed(1)} ${y(ev)} L${over} L${x(pts[hi][0]).toFixed(1)} ${y(ev)} Z" fill="${hit ? BLUE : 'url(#tt-unseen)'}" fill-opacity="${hit ? 0.35 : 1}"/>`;
+      k = j + 1;
+    }
     for (const d of e.passes) s += `<line x1="${x(d).toFixed(1)}" x2="${x(d).toFixed(1)}" y1="${oy}" y2="${oy + ph}" stroke="${BLUE}" stroke-width="1.4"/>`;
     s += `<line x1="${ox}" x2="${ox + pw}" y1="${y(ev)}" y2="${y(ev)}" stroke="#74777d" stroke-dasharray="3 3"/>`;
     s += `<path d="${pts.map((c, k) => `${k ? 'L' : 'M'}${x(c[0]).toFixed(1)} ${y(c[1]).toFixed(1)}`).join(' ')}" fill="none" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>`;
